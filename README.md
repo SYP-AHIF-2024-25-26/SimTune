@@ -17,18 +17,20 @@
 
 ## 2. Zielsetzung
 
-+  Unser Ziel für das Projekt ist, das wir eine angenehme und nützliche App für alle Musiker schaffen, in der nicht nur die grundlegende Musiktheorie vermittlert wird, sondern auch eine interaktive Übungssimulation bietet, die speziell für die Vorbereitung auf Instrumentalzertifikate optimiert ist
+Unser Ziel für das Projekt ist, das wir eine interaktive Lernplattform für die Vorbereitung für Übertrittprüfungen gestalten.
 
++ Freier Übungsbereich
+    + Interaktive Übungen zum Erkennen von Tönen und Intervallen
+    + Üben von Vokabular
+    + Eigene Übungen sind konfigurierbar
+    + Kategorisierung von Übungen in Töne, Rhythmus, Intervalle und Tonarten
+    + Progressionssystem: Verfolgen des Lernfortschrittes, basierend auf den Leistungen. Eventuell ein Belohnungssystem
+    + optional: AI-gestützte Feedback-Funktion: Bleibt genug Zeit, bauen wir eine persönlisierte Feedback-AI ein 
+     
 + Prüfungssimulation
-    + Realistische Nachbildung von Zertifikatsprüfungen, in denen Nutzer ihre Fähigkeiten testen können
-+ Interaktives Lernen
-    + Übungen, die speziell auf die Inhalte der Zertifikatsprüfungen zugeschnitten sind
-+ Progressionssystem
-    + Verfolgen des Lernfortschrittes, basierend auf den Leistungen. Eventuell ein Belohnungssystem
-+ Musik-Theorie und Praxis in einem
-    + Theorievermittlung gekoppelt mit praktischen Übungen
-+ AI-gestützte Feedback-Funktion
-    + Bleibt genug Zeit, bauen wir eine persönlisierte Feedback-AI ein 
+    + Erstellung einer konkreten Aufgabenkonstellation für eine Prüfungssimulation, aus einem Fragenpool
+    + Ergebnisberechnung: Zeit und Korrektheit der Fragen ergeben Bestanden oder Nicht Bestanden (auch mit %)
+    + Fortschrittstracking und Statistiken über mehrere Simulationen
 
 ## 3. Chancen und Risiken
 
