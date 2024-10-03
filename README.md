@@ -3,17 +3,17 @@
 ## 1.1. Ist-Situation
 + Musikschüler, die sich auf Instrumentalzertifikate vorbereiten, nutzen zurzeit eine Vielzahl von Ressourcen, darunter Lernbücher und verschiedene Musik-App's. 
 
-+ Eine App ist 'Musicca', welche die grundlegenden Funktionen zur Musikausbildung bietet. Allerdings ist Musicca recht schlicht gehalten und bietet keine Möglichkeit, realistische Prüfungssimulationen oder gezielte Übungsfunktionen für die Zertifikatsprüfung durchzuführen. 
++ Eine App ist 'musiklehre.at', welche die grundlegenden Funktionen zur Musikausbildung bietet. Allerdings ist die Website recht schlicht gehalten und bietet keine Möglichkeit, realistische Prüfungssimulationen oder gezielte Übungsfunktionen für die Zertifikatsprüfung durchzuführen. 
 
 + Schüler können zwar den theoretischen Inhalt lernen, doch es fehlt noch ein interaktives Element für eine praxisnahe Vorbereitung.
 
 ## 1.2. Verbesserungspotenziale
 
-+ Die bestehende App 'Musicca' weist deutliche Lücken auf. Es gibt keine integrierten Übungssimulationen, die den Prüfungsprozess realistisch nachbilden. Darüber hinaus fehlt eine strukturierte Unterstüzung für die Vorbereitung auf Zertifikate. 
++ Die bestehende Websiten weisen deutliche Lücken auf. Es gibt keine integrierten Übungssimulationen, die den Prüfungsprozess realistisch nachbilden. Darüber hinaus fehlt eine strukturierte Unterstüzung mit einsehbarem Lernfortschritt für die Vorbereitung auf Zertifikate. 
 
 + Musikschüler benötigen eine Lösung, die ihnen ermöglicht, unter realitätsnahen Bedingungen zu üben und ihren Fortschritt zu überprüfen
 
-+ Durch eine Erweiterung der Funktionen in einer neuen App können diese Lücken geschlossen und den Nutzern bessere Werkzeuge zur Verfügung gestellt werden. Es besteht ein klarer Handlungsbedarf, um eine fortschrittlichere & praxisorientierte Lernplattform zu schaffen
++ Durch eine Erweiterung der Funktionen in unserem Projekt können diese Lücken geschlossen und den Nutzern bessere Werkzeuge zur Verfügung gestellt werden. Es besteht ein klarer Handlungsbedarf, um eine fortschrittlichere & praxisorientierte Lernplattform zu schaffen
 
 ## 2. Zielsetzung
 
