@@ -31,22 +31,26 @@ Unser Ziel für das Projekt ist, das wir eine interaktive Lernplattform für die
     + Erstellung einer konkreten Aufgabenkonstellation für eine Prüfungssimulation, aus einem Fragenpool
     + Ergebnisberechnung: Zeit und Korrektheit der Fragen ergeben Bestanden oder Nicht Bestanden (auch mit %)
     + Fortschrittstracking und Statistiken über mehrere Simulationen
+ 
++ Rollensystem
+  + Lehrer bildet Schülergruppen und erstellt Übungspläne, kann den Progress von Schülern einsehen
+  + Schüler kann sich in mehrere Gruppen über eine Lehrereinladung einschreiben
 
 ## 3. Chancen und Risiken
 
 #### Chancen
-+ Markvorteil durch einzigartige Funktionen: Indem das wir Übungssimulationen und sonstiges einbauen & eine Feedback Funktion einbauen, haben wir einen klaren Vorteil im Gegensatz zur Konkurrenz
++ Erhöhung der Erfolgschance bei Übertrittsprüfungen
 + Zielgruppenbindung: Die App bietet einen Mehrwert für die Musikschüler, die sich auf Zertifikate vorbereiten, und dadurch schaffen wir langfristige Nutzerbindung.
 + Skalierbarkeit: Das Konzept ist ewig lang erweiterbar, indem man andere Instrumente, welche nicht verbreitet sind, einbindet
 
 #### Risiken
 + Technische Umsetzung: Die Integration mit KI könnte eine technische Herausforderung werden
-+ Zeit- & Ressourcenmanagment: Da das Projekt im Rahmen des Schuljahres abgeschlossen werden soll, besteht das Risiko, dass der Umfang zu groß ist, um ihn fristgerecht abzugeben
++ Zeit- & Ressourcenmanagment: Da das Projekt im Rahmen d Schuljahres abgeschlossen werden soll, besteht das Risiko, dass der Umfang zu groß ist, um ihn fristgerecht abzugeben
++ Aufgrund anderer Schulfächer keine Zeit
 
 ## 4. Planung
-+ 1 Teil 
-    + Grundlegende Funktionen einbinden um gleichauf mit der Konkurrenz zu sein
-+ 2 Teil
-    + Prüfungssimluation, eigene Lernsets und ein Belohnungssystem integrieren
-+ 3 Teil
-    + Wie erwähnt, wenn genug Zeit bleibt bauen wir in dem Teil die AI ein
++ Übungsbereich mit interaktiven Übungen in allen Kategorien            - Semesterferien
++ Erstellen von Simulationen mit Ergebnisberechnung (ohne Progress)     - Osterferien
++ Progressionssystem                                                    - Sommerferien
++ Rollensystem                                                          - 5. Klasse
++ Optional: Feedbackfunktion                                            - 5. Klasse
