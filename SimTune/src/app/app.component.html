@@ -1,0 +1,19 @@
+<div class="flex justify-between items-center p-2 bg-costumGray  drop-shadow-md">
+  <a routerLink="/homepage" class="flex items-center space-x-2 ml-5">
+    <img src="assets/images/Logo.png" class="h-10 w-auto">
+    <span class="text-lg font-semibold">SimTune</span>
+  </a>
+
+  <div class="flex space-x-6 text-right italic underline text-lg font-medium">
+    <a routerLink="/uebungen" class="hover:text-blue-600">Übungen</a>
+    <a routerLink="/pruefungen" class="hover:text-blue-600">Prüfungen</a>
+    <a routerLink="/unterlagen" class="hover:text-blue-600">Unterlagen</a>
+  </div>
+
+  <div>
+    <a routerLink="/login" class="bg-costumBlue text-white p-1 px-4 rounded-3xl mr-5 text-lg hover:bg-blue-600">Anmelden</a>
+    <a routerLink="/konto-erstellen" class="bg-costumBlue text-white p-1 px-4 rounded-3xl mr-8 text-lg hover:bg-blue-600">Konto erstellen</a>
+  </div>
+</div>
+
+<router-outlet />

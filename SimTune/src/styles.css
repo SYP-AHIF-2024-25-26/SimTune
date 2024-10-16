@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+html, body {
+  margin: 0; /* Entfernt den Standard-Margin */
+  padding: 0; /* Entfernt den Standard-Padding */
+  width: 100%; /* Setzt die Breite auf 100% */
+  height: 100%; /* Setzt die Höhe auf 100% */
+}
