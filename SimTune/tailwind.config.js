@@ -10,6 +10,9 @@ module.exports = {
         costumBlue: '#6496FF',
         costumLightGray: '#F0F0F0',
       },
+      boxShadow: {
+        'even': '0 0 10px 1px rgba(0, 0, 0, 0.5)',
+      },
     },
   },
   plugins: [],
