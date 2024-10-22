@@ -1,1 +1,18 @@
-<p>uebungen works!</p>
+<h1 class="text-3xl font-bold mt-5 ml-8 underline">{{ content()?.header }}</h1>
+
+@for (group of content()?.groups; track group['group-header']) {
+  <h2 class="text-3xl font-bold mt-5 text-center">{{ group['group-header'] }}</h2>
+
+  <div class="mt-14 text-center grid grid-cols-2 gap-y-16 gap-x-0 place-items-center w-2/3 mx-auto">
+
+    @for (card of group['cards']; track card['card-header'];) {
+      <a routerLink="{{ card['card-url']}}">
+        <div class="bg-costumGray w-96 rounded-2xl h-56 hover:shadow-even transition-shadow duration-0 shadow-lg">
+          <p class="font-semibold text-3xl pt-3">{{ card['card-header']}}</p>
+
+          <img src="{{ card['card-image-url']}}" class="object-contain px-3 rounded-b-2xl my-4">
+        </div>
+      </a>
+    }
+  </div>
+}
