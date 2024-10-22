@@ -1,0 +1,16 @@
+<div class="flex text-2xl ml-32 mt-12">
+  <p class="text-gray-400">Töne → Klavier →</p>
+  <p class="font-semibold ml-2">Stammtöne</p>
+</div>
+
+<div id="container" class="flex flex-wrap gap-20 p-20 items-center justify-center">
+  <div *ngFor="let item of texts" class="bg-costumLightBlue w-80 rounded-lg border-solid border border-black text-center p-4 text-xl hover:shadow-even transition-shadow duration-200 shadow-lg">
+    <p class="font-semibold text-2xl">{{ item.text }}</p>
+    <p class="mt-1">Stammtöne</p>
+    <p class="bg-blue-300 rounded-xl mt-4 p-1 drop-shadow-2xl hover:bg-blue-400 duration-100"
+       (click)="goToKlavier(item.text)">
+      Anfangen
+    </p>
+  </div>
+</div>
+

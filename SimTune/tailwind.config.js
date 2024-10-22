@@ -1,13 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{html,ts}",
+    "./src/**/*.{html,ts,css}",
   ],
   theme: {
     extend: {
       colors: {
         costumGray: '#D9D9D9',
         costumBlue: '#6496FF',
+        costumLightBlue: 'rgba(100, 150, 255, 0.25)',
         costumLightGray: '#F0F0F0',
       },
       boxShadow: {
