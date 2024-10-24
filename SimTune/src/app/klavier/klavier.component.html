@@ -7,4 +7,62 @@
   <div *ngIf="!action || !letters" class="mt-4 text-red-500">
     <p>Keine Daten verfügbar.</p>
   </div>
+
+  <div class="flex justify-center">
+    <button
+      #button
+      [disabled]="!letters?.includes('c')"
+      [ngClass]="{'enabled-button': letters?.includes('c'), 'disabled-button': !letters?.includes('c')}"
+      class="mr-4"
+      (click)="checkIfRight('c', button)">
+      c
+    </button>
+    <button
+      #button
+      [disabled]="!letters?.includes('d')"
+      [ngClass]="{'enabled-button': letters?.includes('d'), 'disabled-button': !letters?.includes('d')}"
+      class="mr-4"
+      (click)="checkIfRight('d', button)">
+      d
+    </button>
+    <button
+      #button
+      [disabled]="!letters?.includes('e')"
+      [ngClass]="{'enabled-button': letters?.includes('e'), 'disabled-button': !letters?.includes('e')}"
+      class="mr-4"
+      (click)="checkIfRight('e', button)">
+      e
+    </button>
+    <button
+      #button
+      [disabled]="!letters?.includes('f')"
+      [ngClass]="{'enabled-button': letters?.includes('f'), 'disabled-button': !letters?.includes('f')}"
+      class="mr-4"
+      (click)="checkIfRight('f', button)">
+      f
+    </button>
+    <button
+      #button
+      [disabled]="!letters?.includes('g')"
+      [ngClass]="{'enabled-button': letters?.includes('g'), 'disabled-button': !letters?.includes('g')}"
+      class="mr-4"
+      (click)="checkIfRight('g', button)">
+      g
+    </button>
+    <button
+      #button
+      [disabled]="!letters?.includes('a')"
+      [ngClass]="{'enabled-button': letters?.includes('a'), 'disabled-button': !letters?.includes('a')}"
+      class="mr-4"
+      (click)="checkIfRight('a', button)">
+      a
+    </button>
+    <button
+      #button
+      [disabled]="!letters?.includes('h')"
+      [ngClass]="{'enabled-button': letters?.includes('h'), 'disabled-button': !letters?.includes('h')}"
+      (click)="checkIfRight('h', button)">
+      h
+    </button>
+  </div>
 </div>

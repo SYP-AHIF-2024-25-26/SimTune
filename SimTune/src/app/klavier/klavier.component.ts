@@ -21,4 +21,15 @@ export class KlavierComponent {
       this.letters = params['letters'];
     });
   }
+
+  checkIfRight(letter: string, button: HTMLButtonElement): void {
+    if (this.isCorrect(letter)) {
+      button.style.backgroundColor = '#1E9C27';
+      button.style.color = 'white';
+    }
+  }
+
+  isCorrect(letter: string): boolean {
+    return true;
+  }
 }
