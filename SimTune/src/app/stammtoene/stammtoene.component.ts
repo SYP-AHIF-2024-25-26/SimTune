@@ -26,10 +26,10 @@ export class StammtoeneComponent {
 
   constructor(private router: Router) {}
 
-  goToKlavier(text: string): void {
+  goToTask(text: string): void {
     const action = text.startsWith('Markiere') ? 'markiere' : 'lies';
     const foundItem = this.texts.find(item => item.text === text);
     const letters = foundItem ? foundItem.value : '';
-    this.router.navigate(['/klavier'], { queryParams: { action, letters } });
+    this.router.navigate(['/task'], { queryParams: { action, letters } });
   }
 }

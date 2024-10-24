@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-klavier',
+  selector: 'app-task',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './klavier.component.html',
-  styleUrl: './klavier.component.css'
+  templateUrl: './task.component.html',
+  styleUrl: './task.component.css'
 })
-export class KlavierComponent {
+export class TaskComponent {
   action: string | null = null;
   letters: string | null = null;
 
@@ -26,6 +26,11 @@ export class KlavierComponent {
     if (this.isCorrect(letter)) {
       button.style.backgroundColor = '#1E9C27';
       button.style.color = 'white';
+
+      setTimeout(() => {
+        button.style.backgroundColor = 'none';
+        button.style.color = 'black;';
+      }, 2000)
     }
   }
 

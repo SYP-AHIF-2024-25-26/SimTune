@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KlavierComponent } from './klavier.component';
+import { TaskComponent } from './task.component';
 
-describe('KlavierComponent', () => {
-  let component: KlavierComponent;
-  let fixture: ComponentFixture<KlavierComponent>;
+describe('TaskComponent', () => {
+  let component: TaskComponent;
+  let fixture: ComponentFixture<TaskComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KlavierComponent]
+      imports: [TaskComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(KlavierComponent);
+    fixture = TestBed.createComponent(TaskComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
