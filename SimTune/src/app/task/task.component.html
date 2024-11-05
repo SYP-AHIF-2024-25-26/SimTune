@@ -26,7 +26,11 @@
     </ng-template>
   </div>
 
-  <div *ngIf="progress < totalSegments" class="flex justify-center mt-24">
+  <div *ngIf="progress < totalSegments" class="flex justify-center mt-24 flex-col">
+
+    <app-piano></app-piano>
+
+  <div class="flex justify-center">
     <button
       #buttonC
       [disabled]="!letters?.includes('c')"

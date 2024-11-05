@@ -6,6 +6,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { StammtoeneComponent } from './stammtoene/stammtoene.component';
 import { toeneData, uebungenData } from './uebungen/task-data';
 import { TaskComponent } from './task/task.component';
+import { PianoComponent } from './piano/piano.component';
 
 export const routes: Routes = [
   { path: 'uebungen', component: UebungenComponent, data: { content: uebungenData } },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'homepage', component: HomepageComponent},
   { path: 'stammtoene', component: StammtoeneComponent},
   { path: 'task', component: TaskComponent},
+  { path: 'piano', component: PianoComponent},
   { path: '', redirectTo: '/homepage', pathMatch: 'full' }
 ];
