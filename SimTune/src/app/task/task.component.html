@@ -1,68 +1,159 @@
 <div class="p-4">
-  <h1 class="text-2xl font-bold">Klavier</h1>
-  <div *ngIf="action && letters" class="mt-4">
-    <p>Aktion: {{ action }}</p>
-    <p>Buchstaben: {{ letters }}</p>
-  </div>
-  <div *ngIf="!action || !letters" class="mt-4 text-red-500">
-    <p>Keine Daten verfügbar.</p>
+  <div class="flex justify-center items-center ml-52 mr-52 mt-12 mb-8">
+    <button (click)="goBack()" class="">
+      <img src="assets/images/X.png" class="h-6 w-auto">
+    </button>
+
+    <div class="h-6 w-3/4 bg-costumGray rounded-2xl shadow-lg mx-12 relative">
+      <div class="absolute h-full bg-blue-500 rounded-2xl transition-all duration-300" [style.width.%]="(progress / totalSegments) * 100"></div>
+    </div>
+
+    <button (click)="extendQuestion()" class="">
+      <img src="assets/images/question-mark.png" class="h-6 w-auto">
+    </button>
   </div>
 
-  <div class="flex justify-center">
+  <div *ngIf="showHelpMessage" class="absolute right-0 max-w-xs z-10 bg-costumLightGray p-4 rounded shadow-lg text-right mr-24">
+    Wir sind nicht die wo antworten haben
+  </div>
+
+  <div *ngIf="progress < totalSegments" class="mt-4 justify-center items-center flex font-semibold text-4xl">
+    <ng-container *ngIf="action === 'lies'; else otherAction">
+      Bezeichne die Note: {{ currentQuestion }}
+    </ng-container>
+    <ng-template #otherAction>
+      Markiere die Note: {{ currentQuestion }}
+    </ng-template>
+  </div>
+
+  <div *ngIf="progress < totalSegments" class="flex justify-center mt-24">
     <button
-      #button
+      #buttonC
       [disabled]="!letters?.includes('c')"
-      [ngClass]="{'enabled-button': letters?.includes('c'), 'disabled-button': !letters?.includes('c')}"
-      class="mr-4"
-      (click)="checkIfRight('c', button)">
+      [ngClass]="{
+        'bg-green-500 text-white': lastPressedLetter === 'c',
+        'enabled-button': letters?.includes('c'),
+        'disabled-button': !letters?.includes('c')
+      }"
+      class="mr-4 p-2 rounded"
+      (click)="checkIfRight('c', buttonC)">
       c
     </button>
+
     <button
-      #button
+      #buttonD
       [disabled]="!letters?.includes('d')"
-      [ngClass]="{'enabled-button': letters?.includes('d'), 'disabled-button': !letters?.includes('d')}"
-      class="mr-4"
-      (click)="checkIfRight('d', button)">
+      [ngClass]="{
+        'bg-green-500 text-white': lastPressedLetter === 'd',
+        'enabled-button': letters?.includes('d'),
+        'disabled-button': !letters?.includes('d')
+      }"
+      class="mr-4 p-2 rounded"
+      (click)="checkIfRight('d', buttonD)">
       d
     </button>
+
     <button
-      #button
+      #buttonE
       [disabled]="!letters?.includes('e')"
-      [ngClass]="{'enabled-button': letters?.includes('e'), 'disabled-button': !letters?.includes('e')}"
-      class="mr-4"
-      (click)="checkIfRight('e', button)">
+      [ngClass]="{
+        'bg-green-500 text-white': lastPressedLetter === 'e',
+        'enabled-button': letters?.includes('e'),
+        'disabled-button': !letters?.includes('e')
+      }"
+      class="mr-4 p-2 rounded"
+      (click)="checkIfRight('e', buttonE)">
       e
     </button>
+
     <button
-      #button
+      #buttonF
       [disabled]="!letters?.includes('f')"
-      [ngClass]="{'enabled-button': letters?.includes('f'), 'disabled-button': !letters?.includes('f')}"
-      class="mr-4"
-      (click)="checkIfRight('f', button)">
+      [ngClass]="{
+        'bg-green-500 text-white': lastPressedLetter === 'f',
+        'enabled-button': letters?.includes('f'),
+        'disabled-button': !letters?.includes('f')
+      }"
+      class="mr-4 p-2 rounded"
+      (click)="checkIfRight('f', buttonF)">
       f
     </button>
+
     <button
-      #button
+      #buttonG
       [disabled]="!letters?.includes('g')"
-      [ngClass]="{'enabled-button': letters?.includes('g'), 'disabled-button': !letters?.includes('g')}"
-      class="mr-4"
-      (click)="checkIfRight('g', button)">
+      [ngClass]="{
+        'bg-green-500 text-white': lastPressedLetter === 'g',
+        'enabled-button': letters?.includes('g'),
+        'disabled-button': !letters?.includes('g')
+      }"
+      class="mr-4 p-2 rounded"
+      (click)="checkIfRight('g', buttonG)">
       g
     </button>
+
     <button
-      #button
+      #buttonA
       [disabled]="!letters?.includes('a')"
-      [ngClass]="{'enabled-button': letters?.includes('a'), 'disabled-button': !letters?.includes('a')}"
-      class="mr-4"
-      (click)="checkIfRight('a', button)">
+      [ngClass]="{
+        'bg-green-500 text-white': lastPressedLetter === 'a',
+        'enabled-button': letters?.includes('a'),
+        'disabled-button': !letters?.includes('a')
+      }"
+      class="mr-4 p-2 rounded"
+      (click)="checkIfRight('a', buttonA)">
       a
     </button>
+
     <button
-      #button
+      #buttonH
       [disabled]="!letters?.includes('h')"
-      [ngClass]="{'enabled-button': letters?.includes('h'), 'disabled-button': !letters?.includes('h')}"
-      (click)="checkIfRight('h', button)">
+      [ngClass]="{
+        'bg-green-500 text-white': lastPressedLetter === 'h',
+        'enabled-button': letters?.includes('h'),
+        'disabled-button': !letters?.includes('h')
+      }"
+      class="mr-4 p-2 rounded"
+      (click)="checkIfRight('h', buttonH)">
       h
     </button>
   </div>
+
+  <div *ngIf="progress === totalSegments" class="flex flex-col justify-center items-center p-6">
+    <p class="text-4xl font-semibold">Du hast die Übung erfolgreich abgeschlossen!</p>
+
+    <div class="relative my-4">
+      <svg width="200" height="200" viewBox="0 0 100 100" class="mx-auto">
+        <circle
+            cx="50"
+            cy="50"
+            r="45"
+            stroke="#6496FF"
+            stroke-width="10"
+            fill="none"
+            stroke-linecap="round"
+        />
+        <circle
+            cx="50"
+            cy="50"
+            r="45"
+            stroke="#FFFFFF"
+            stroke-width="11"
+            fill="none"
+            [attr.stroke-dasharray]="dashArray + ', 1000'"
+            [attr.stroke-dashoffset]="dashOffset"
+            transform="rotate(-90 50 50)"
+        />
+        <text x="50%" y="50%" text-anchor="middle" dy=".3em" class="text-xl font-bold">Super!</text>
+      </svg>
+    </div>
+
+
+
+    <p class="text-2xl font-semibold">Bewertung</p>
+    <span class="font-bold text-xl text-green-600">{{ evaluation }}</span>
+    <p class="text-lg">
+        <span class="font-bold">{{ correctAnswers }}</span>/{{ totalQuestions }} Fragen richtig
+    </p>
+  	</div>
 </div>
