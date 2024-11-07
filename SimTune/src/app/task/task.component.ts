@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { PianoComponent } from "../piano/piano.component";
@@ -12,12 +12,15 @@ import { PianoComponent } from "../piano/piano.component";
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent {
+  @ViewChild(PianoComponent) pianoComponent!: PianoComponent;
+
   action: string | null = null;
   letters: string | null = null;
   availableLetters: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   currentQuestion: string = '';
   randomizedQuestions: string[] = [];
   questionIndex: number = 0;
+  selectedKey: string | null = null;
   lastPressedLetter: string | null = null;
   progress: number = 0;
   correctAnswers: number = 0;
@@ -61,6 +64,42 @@ export class TaskComponent {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+  }
+
+  checkIfRightMarkieren() {
+    if (this.isCorrect('a')) {
+      this.updateProgress();
+
+      if(this.firstAttemptCorrect) {
+        this.correctAnswers++;
+      }
+
+      this.nextQuestion();
+    } else {
+    }
+  }
+
+  checkIfRightMark(){
+    const selectedKey = localStorage.getItem('selectedKey');
+    const letter = selectedKey?.split('-')[0];
+
+    if (letter && this.isCorrect(letter)) {
+      this.updateProgress();
+      this.pianoComponent.changeMarkColor('green');
+
+      if(this.firstAttemptCorrect) {
+        this.correctAnswers++;
+      }
+
+      this.nextQuestion();
+    } else {
+      this.firstAttemptCorrect = false;
+      this.pianoComponent.changeMarkColor('red');
+    }
+
+    setTimeout(() => {
+      this.pianoComponent.selectedKey = null;
+    }, 1000);
   }
 
   checkIfRight(letter: string, button: HTMLButtonElement): void {
@@ -128,11 +167,7 @@ export class TaskComponent {
     this.showHelpMessage = !this.showHelpMessage;
   }
 
-  onEnableButton(enabled: boolean) {
-    this.buttonDisabled = !enabled;
-  }
-
-  playTone(frequency: number) {
-
+  onSelectedKeyChanged(selectedKey: boolean) {
+    this.buttonDisabled = !selectedKey;
   }
 }
