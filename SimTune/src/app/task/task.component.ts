@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { PianoComponent } from "../piano/piano.component";
@@ -27,6 +27,7 @@ export class TaskComponent {
   private firstAttemptCorrect: boolean = true;
   evaluation: string = '';
   Math: any;
+  buttonDisabled = true;
 
   constructor(private route: ActivatedRoute, private location: Location) {}
 
@@ -125,5 +126,13 @@ export class TaskComponent {
 
   extendQuestion(): void {
     this.showHelpMessage = !this.showHelpMessage;
+  }
+
+  enableButton() {
+    this.buttonDisabled = false;
+  }
+
+  playTone(frequency: number) {
+
   }
 }

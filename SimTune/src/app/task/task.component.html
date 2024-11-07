@@ -27,100 +27,107 @@
   </div>
 
   <div *ngIf="progress < totalSegments" class="flex justify-center mt-24 flex-col">
+    <app-piano (buttonPressed)="enableButton()"></app-piano>
 
-    <app-piano></app-piano>
+    <div *ngIf="action === 'lies'" class="flex justify-center">
+      <button
+        #buttonC
+        [disabled]="!letters?.includes('c')"
+        [ngClass]="{
+          'bg-green-500 text-white': lastPressedLetter === 'c',
+          'enabled-button': letters?.includes('c'),
+          'disabled-button': !letters?.includes('c')
+        }"
+        class="mr-4 p-2 rounded"
+        (click)="checkIfRight('c', buttonC)">
+        c
+      </button>
 
-  <div class="flex justify-center">
-    <button
-      #buttonC
-      [disabled]="!letters?.includes('c')"
-      [ngClass]="{
-        'bg-green-500 text-white': lastPressedLetter === 'c',
-        'enabled-button': letters?.includes('c'),
-        'disabled-button': !letters?.includes('c')
-      }"
-      class="mr-4 p-2 rounded"
-      (click)="checkIfRight('c', buttonC)">
-      c
-    </button>
+      <button
+        #buttonD
+        [disabled]="!letters?.includes('d')"
+        [ngClass]="{
+          'bg-green-500 text-white': lastPressedLetter === 'd',
+          'enabled-button': letters?.includes('d'),
+          'disabled-button': !letters?.includes('d')
+        }"
+        class="mr-4 p-2 rounded"
+        (click)="checkIfRight('d', buttonD)">
+        d
+      </button>
 
-    <button
-      #buttonD
-      [disabled]="!letters?.includes('d')"
-      [ngClass]="{
-        'bg-green-500 text-white': lastPressedLetter === 'd',
-        'enabled-button': letters?.includes('d'),
-        'disabled-button': !letters?.includes('d')
-      }"
-      class="mr-4 p-2 rounded"
-      (click)="checkIfRight('d', buttonD)">
-      d
-    </button>
+      <button
+        #buttonE
+        [disabled]="!letters?.includes('e')"
+        [ngClass]="{
+          'bg-green-500 text-white': lastPressedLetter === 'e',
+          'enabled-button': letters?.includes('e'),
+          'disabled-button': !letters?.includes('e')
+        }"
+        class="mr-4 p-2 rounded"
+        (click)="checkIfRight('e', buttonE)">
+        e
+      </button>
 
-    <button
-      #buttonE
-      [disabled]="!letters?.includes('e')"
-      [ngClass]="{
-        'bg-green-500 text-white': lastPressedLetter === 'e',
-        'enabled-button': letters?.includes('e'),
-        'disabled-button': !letters?.includes('e')
-      }"
-      class="mr-4 p-2 rounded"
-      (click)="checkIfRight('e', buttonE)">
-      e
-    </button>
+      <button
+        #buttonF
+        [disabled]="!letters?.includes('f')"
+        [ngClass]="{
+          'bg-green-500 text-white': lastPressedLetter === 'f',
+          'enabled-button': letters?.includes('f'),
+          'disabled-button': !letters?.includes('f')
+        }"
+        class="mr-4 p-2 rounded"
+        (click)="checkIfRight('f', buttonF)">
+        f
+      </button>
 
-    <button
-      #buttonF
-      [disabled]="!letters?.includes('f')"
-      [ngClass]="{
-        'bg-green-500 text-white': lastPressedLetter === 'f',
-        'enabled-button': letters?.includes('f'),
-        'disabled-button': !letters?.includes('f')
-      }"
-      class="mr-4 p-2 rounded"
-      (click)="checkIfRight('f', buttonF)">
-      f
-    </button>
+      <button
+        #buttonG
+        [disabled]="!letters?.includes('g')"
+        [ngClass]="{
+          'bg-green-500 text-white': lastPressedLetter === 'g',
+          'enabled-button': letters?.includes('g'),
+          'disabled-button': !letters?.includes('g')
+        }"
+        class="mr-4 p-2 rounded"
+        (click)="checkIfRight('g', buttonG)">
+        g
+      </button>
 
-    <button
-      #buttonG
-      [disabled]="!letters?.includes('g')"
-      [ngClass]="{
-        'bg-green-500 text-white': lastPressedLetter === 'g',
-        'enabled-button': letters?.includes('g'),
-        'disabled-button': !letters?.includes('g')
-      }"
-      class="mr-4 p-2 rounded"
-      (click)="checkIfRight('g', buttonG)">
-      g
-    </button>
+      <button
+        #buttonA
+        [disabled]="!letters?.includes('a')"
+        [ngClass]="{
+          'bg-green-500 text-white': lastPressedLetter === 'a',
+          'enabled-button': letters?.includes('a'),
+          'disabled-button': !letters?.includes('a')
+        }"
+        class="mr-4 p-2 rounded"
+        (click)="checkIfRight('a', buttonA)">
+        a
+      </button>
 
-    <button
-      #buttonA
-      [disabled]="!letters?.includes('a')"
-      [ngClass]="{
-        'bg-green-500 text-white': lastPressedLetter === 'a',
-        'enabled-button': letters?.includes('a'),
-        'disabled-button': !letters?.includes('a')
-      }"
-      class="mr-4 p-2 rounded"
-      (click)="checkIfRight('a', buttonA)">
-      a
-    </button>
+      <button
+        #buttonH
+        [disabled]="!letters?.includes('h')"
+        [ngClass]="{
+          'bg-green-500 text-white': lastPressedLetter === 'h',
+          'enabled-button': letters?.includes('h'),
+          'disabled-button': !letters?.includes('h')
+        }"
+        class="mr-4 p-2 rounded"
+        (click)="checkIfRight('h', buttonH)">
+        h
+      </button>
+    </div>
 
-    <button
-      #buttonH
-      [disabled]="!letters?.includes('h')"
-      [ngClass]="{
-        'bg-green-500 text-white': lastPressedLetter === 'h',
-        'enabled-button': letters?.includes('h'),
-        'disabled-button': !letters?.includes('h')
-      }"
-      class="mr-4 p-2 rounded"
-      (click)="checkIfRight('h', buttonH)">
-      h
-    </button>
+    <div class="flex justify-center" *ngIf="action === 'markiere'">
+      <button [disabled]="buttonDisabled"
+              class="p-2 border border-black rounded w-32 hover:bg-costumLightGray">
+          Antworten
+      </button>
+    </div>
   </div>
 
   <div *ngIf="progress === totalSegments" class="flex flex-col justify-center items-center p-6">
