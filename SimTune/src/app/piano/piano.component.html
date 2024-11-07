@@ -1,36 +1,68 @@
 <div class="flex items-center justify-center my-10">
   <div class="flex relative">
-    <!-- Weiße Tasten -->
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
-    <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl"></button>
+    @for (whiteKey of whiteKeys; track $index) {
+      <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl" [id]="whiteKey.id" (click)="onKeyClick(whiteKey.id)">
+        @if (selectedKey === whiteKey.id) {
+          <div class="relative mt-36 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-costumDarkGray rounded-full"></div>
+        }
+      </button>
+    }
 
-    <!-- Schwarze Tasten (relativ positioniert) -->
     <div class="absolute top-0 flex">
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-11 rounded-lg"></button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg"></button>
-      <div class="w-16"></div> <!-- Abstand für fehlende schwarze Taste -->
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg"></button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg"></button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg"></button>
-      <div class="w-12"></div> <!-- Abstand für fehlende schwarze Taste -->
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-10 rounded-lg"></button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg"></button>
-      <div class="w-16"></div> <!-- Abstand für fehlende schwarze Taste -->
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg"></button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg"></button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg"></button>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-11 rounded-lg" id="cis-1" (click)="onKeyClick('cis-1')">
+        @if (selectedKey === 'cis-1') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="dis-1" (click)="onKeyClick('dis-1')">
+        @if (selectedKey === 'dis-1') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <div class="w-16"></div>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="fis-1" (click)="onKeyClick('fis-1')">
+        @if (selectedKey === 'fis-1') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="gis-1" (click)="onKeyClick('gis-1')">
+        @if (selectedKey === 'gis-1') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="ais-1" (click)="onKeyClick('ais-1')">
+        @if (selectedKey === 'ais-1') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <div class="w-12"></div>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-10 rounded-lg" id="cis-2" (click)="onKeyClick('cis-2')">
+        @if (selectedKey === 'cis-2') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="dis-2" (click)="onKeyClick('dis-2')">
+        @if (selectedKey === 'dis-2') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <div class="w-16"></div>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="fis-2" (click)="onKeyClick('fis-2')">
+        @if (selectedKey === 'fis-2') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="gis-2" (click)="onKeyClick('gis-2')">
+        @if (selectedKey === 'gis-2') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
+      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="ais-2" (click)="onKeyClick('ais-2')">
+        @if (selectedKey === 'ais-2') {
+          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+        }
+      </button>
     </div>
   </div>
 </div>
+
