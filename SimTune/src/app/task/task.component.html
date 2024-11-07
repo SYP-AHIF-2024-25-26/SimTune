@@ -27,7 +27,7 @@
   </div>
 
   <div *ngIf="progress < totalSegments" class="flex justify-center mt-24 flex-col">
-    <app-piano (buttonPressed)="enableButton()"></app-piano>
+    <app-piano (enableButton)="onEnableButton($event)"></app-piano>
 
     <div *ngIf="action === 'lies'" class="flex justify-center">
       <button
@@ -124,10 +124,14 @@
 
     <div class="flex justify-center" *ngIf="action === 'markiere'">
       <button [disabled]="buttonDisabled"
-              class="p-2 border border-black rounded w-32 hover:bg-costumLightGray">
-          Antworten
+              [ngClass]="{
+                'text-black border-gray-400': buttonDisabled,
+                'text-white bg-costumBlue hover:bg-blue-600': !buttonDisabled
+              }"
+              class="p-2 px-4 rounded-3xl text-lg w-32 border">
+        Antworten
       </button>
-    </div>
+     </div>
   </div>
 
   <div *ngIf="progress === totalSegments" class="flex flex-col justify-center items-center p-6">

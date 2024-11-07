@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-piano',
@@ -10,6 +11,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './piano.component.css'
 })
 export class PianoComponent {
+  @Output() enableButton = new EventEmitter<boolean>();
   selectedKey: string | null = null;
 
   whiteKeys = [
@@ -35,8 +37,12 @@ export class PianoComponent {
   onKeyClick(keyId: string) {
     if (this.selectedKey === keyId) {
       this.selectedKey = null;
+      console.log('Key deselected: ', this.enableButton);
+      this.enableButton.emit(false);
     } else {
       this.selectedKey = keyId;
+      console.log('Key selected: ', this.enableButton);
+      this.enableButton.emit(true);
     }
   }
 }

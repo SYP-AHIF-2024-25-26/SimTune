@@ -128,8 +128,8 @@ export class TaskComponent {
     this.showHelpMessage = !this.showHelpMessage;
   }
 
-  enableButton() {
-    this.buttonDisabled = false;
+  onEnableButton(enabled: boolean) {
+    this.buttonDisabled = !enabled;
   }
 
   playTone(frequency: number) {
