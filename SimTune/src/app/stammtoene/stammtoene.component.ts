@@ -23,6 +23,7 @@ export class StammtoeneComponent {
     { text: "Lies alle Stammtöne", value: "c,d,e,f,g,a,h" },
     { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
   ];
+  currentIndex: number = 0;
 
   constructor(private router: Router) {}
 
@@ -30,6 +31,8 @@ export class StammtoeneComponent {
     const action = text.startsWith('Markiere') ? 'markiere' : 'lies';
     const foundItem = this.texts.find(item => item.text === text);
     const letters = foundItem ? foundItem.value : '';
-    this.router.navigate(['/task'], { queryParams: { action, letters } });
+    const index = foundItem ? this.texts.indexOf(foundItem) : 0;
+
+    this.router.navigate(['/task'], { queryParams: { action, letters, index } });
   }
 }

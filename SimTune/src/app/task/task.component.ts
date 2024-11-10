@@ -32,10 +32,32 @@ export class TaskComponent {
   Math: any;
   buttonDisabled = true;
 
-  constructor(private route: ActivatedRoute, private location: Location) {}
+  texts: { text: string; value: string }[] = [
+    { text: "Lies c, d und e", value: "c,d,e" },
+    { text: "Markiere c, d und e", value: "c,d,e" },
+    { text: "Lies e, f und g", value: "e,f,g" },
+    { text: "Markiere e, f und g", value: "e,f,g" },
+    { text: "Lies c bis g", value: "c,d,e,f,g" },
+    { text: "Markiere c bis g", value: "c,d,e,f,g" },
+    { text: "Lies g, a, h und c", value: "g,a,h,c" },
+    { text: "Markiere g, a, h und c", value: "g,a,h,c" },
+    { text: "Lies Orientierungstöne", value: "Orientierungstöne,c,d,e,f,g,a,h" },
+    { text: "Lies alle Stammtöne", value: "c,d,e,f,g,a,h" },
+    { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
+  ];
+  currentIndex: number = 0;
+
+  constructor(private route: ActivatedRoute, private location: Location, private router: Router) {}
 
   ngOnInit(): void {
+    this.progress = 0;
+    this.questionIndex = 0;
+    this.correctAnswers = 0;
+    this.evaluation = '';
+
     this.route.queryParams.subscribe(params => {
+      this.currentIndex = +params['index'] || 0;
+      console.log(this.currentIndex);
       this.action = params['action'];
       this.letters = params['letters'];
       if (this.letters) {
@@ -146,7 +168,6 @@ export class TaskComponent {
   checkCompletion(): void {
     if (this.progress === this.totalSegments) {
       this.evaluation = `${((this.correctAnswers / this.totalQuestions) * 100).toFixed(2)}%`;
-      console.log('Fertig! Alle Segmente sind blau.');
     }
   }
 
@@ -160,7 +181,7 @@ export class TaskComponent {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/stammtoene']);
   }
 
   extendQuestion(): void {
@@ -169,5 +190,14 @@ export class TaskComponent {
 
   onSelectedKeyChanged(selectedKey: boolean) {
     this.buttonDisabled = !selectedKey;
+  }
+
+  nextTask(): void {
+    const nextIndex = (this.currentIndex + 1) % this.texts.length;
+    const nextAction = this.texts[nextIndex].text.startsWith('Markiere') ? 'markiere' : 'lies';
+    const nextLetters = this.texts[nextIndex].value;
+
+    this.router.navigate(['/task'], { queryParams: { action: nextAction, letters: nextLetters, index: nextIndex} });
+    this.ngOnInit();
   }
 }
