@@ -114,7 +114,7 @@ export class TaskComponent {
 
     setTimeout(() => {
       this.pianoComponent.selectedKey = null;
-    }, 1000);
+    }, 500);
   }
 
   checkIfRight(letter: string, button: HTMLButtonElement): void {
