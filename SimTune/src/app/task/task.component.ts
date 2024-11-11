@@ -57,13 +57,19 @@ export class TaskComponent {
 
     this.route.queryParams.subscribe(params => {
       this.currentIndex = +params['index'] || 0;
-      console.log(this.currentIndex);
       this.action = params['action'];
       this.letters = params['letters'];
+
       if (this.letters) {
         this.setupQuestions();
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.pianoComponent) {
+      this.pianoComponent.isClickable = this.action !== 'lies';
+    }
   }
 
   setupQuestions(): void {
@@ -86,19 +92,6 @@ export class TaskComponent {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
-  }
-
-  checkIfRightMarkieren() {
-    if (this.isCorrect('a')) {
-      this.updateProgress();
-
-      if(this.firstAttemptCorrect) {
-        this.correctAnswers++;
-      }
-
-      this.nextQuestion();
-    } else {
-    }
   }
 
   checkIfRightMark(){

@@ -59,6 +59,6 @@ export class PianoComponent {
     setTimeout(() => {
       this.currentColor.set('gray');
       this.isClickable = true;
-    }, 1000);
+    }, 500);
   }
 }
