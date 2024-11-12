@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, signal, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { EventEmitter, Output } from '@angular/core';
 
@@ -13,6 +13,8 @@ import { EventEmitter, Output } from '@angular/core';
 export class PianoComponent {
   @Output() enableButton = new EventEmitter<boolean>();
   @ViewChild('myDiv') myDiv!: ElementRef;
+  @Input() action: string | null = null;
+  @Input() currentQuestion: string = '';
   public isClickable: boolean = true;
   currentColor = signal('gray');
   selectedKey: string | null = null;
@@ -60,5 +62,10 @@ export class PianoComponent {
       this.currentColor.set('gray');
       this.isClickable = true;
     }, 500);
+  }
+
+  isMarked(keyId: string) {
+    if(this.action === 'markiere') { return this.selectedKey === keyId; }
+    return this.action === 'lies' && this.currentQuestion === keyId;
   }
 }

@@ -16,7 +16,6 @@ export class TaskComponent {
 
   action: string | null = null;
   letters: string | null = null;
-  availableLetters: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   currentQuestion: string = '';
   randomizedQuestions: string[] = [];
   questionIndex: number = 0;
@@ -26,6 +25,7 @@ export class TaskComponent {
   correctAnswers: number = 0;
   totalSegments: number = 0;
   totalQuestions: number = 0;
+  usedLetters: Set<string> = new Set();
   showHelpMessage = false;
   private firstAttemptCorrect: boolean = true;
   evaluation: string = '';
@@ -75,13 +75,21 @@ export class TaskComponent {
   setupQuestions(): void {
     const uniqueLetters = this.letters ? this.letters.split(',') : [];
     const filteredLetters = uniqueLetters.filter(letter => letter.trim() !== 'Orientierungstöne');
-    this.totalQuestions = filteredLetters.length * 3;
+    this.totalQuestions = filteredLetters.length * 2;
     this.totalSegments = this.totalQuestions;
 
     const allQuestions = [];
-    for (let i = 0; i < 3; i++) {
-      allQuestions.push(...filteredLetters);
+
+    if (this.action === 'lies') {
+      filteredLetters.forEach(letter => {
+          allQuestions.push(`${letter}-1`, `${letter}-2`);
+      });
+    } else {
+      for (let i = 0; i < 2; i++) {
+          allQuestions.push(...filteredLetters);
+      }
     }
+
     this.randomizedQuestions = this.shuffleArray(allQuestions);
     this.currentQuestion = this.randomizedQuestions[this.questionIndex];
   }
@@ -140,7 +148,14 @@ export class TaskComponent {
     setTimeout(() => {
       this.lastPressedLetter = null;
     }, 1000);
-    return letter === this.currentQuestion;
+
+    const correct =  letter === this.currentQuestion.split('-')[0];
+
+    if(correct) {
+      this.usedLetters.add(letter);
+    }
+
+    return correct;
   }
 
   updateProgress(): void {
@@ -154,6 +169,11 @@ export class TaskComponent {
     if (this.questionIndex < this.randomizedQuestions.length - 1) {
       this.questionIndex++;
       this.currentQuestion = this.randomizedQuestions[this.questionIndex];
+
+      if(this.action === 'lies') {
+        console.log(this.currentQuestion);
+        this.pianoComponent.currentQuestion = this.currentQuestion;
+      }
     }
     this.checkCompletion();
   }
@@ -186,6 +206,8 @@ export class TaskComponent {
   }
 
   nextTask(): void {
+    this.usedLetters.clear();
+
     const nextIndex = (this.currentIndex + 1) % this.texts.length;
     const nextAction = this.texts[nextIndex].text.startsWith('Markiere') ? 'markiere' : 'lies';
     const nextLetters = this.texts[nextIndex].value;

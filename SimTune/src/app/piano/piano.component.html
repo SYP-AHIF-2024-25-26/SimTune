@@ -1,8 +1,8 @@
 <div class="flex items-center justify-center my-10">
   <div class="flex relative">
     @for (whiteKey of whiteKeys; track $index) {
-      <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl" [id]="whiteKey.id" (click)="onKeyClick(whiteKey.id)" >
-        @if (selectedKey === whiteKey.id) {
+      <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl" [id]="whiteKey.id" (click)="onKeyClick(whiteKey.id)">
+        @if (isMarked(whiteKey.id)) {
           <div #mark class="relative mt-36 left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full" [style.background-color]="currentColor()"></div>
         }
       </button>
