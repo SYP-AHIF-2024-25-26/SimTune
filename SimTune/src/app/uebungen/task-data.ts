@@ -116,3 +116,24 @@ export const toeneData: TaskData = {
     }
   ]
 }
+
+export const intervalleData: TaskData = {
+  "header": "Intervalle",
+  "groups": [
+    {
+      "group-header": "Einführung",
+      "cards": [
+        {
+          "card-header": "Noten",
+          "card-image-url": "",
+          "card-url": "/stammtoene"
+        },
+        {
+          "card-header": "Gehörbildung",
+          "card-image-url": "",
+          "card-url": "/rhythmus"
+        }
+      ]
+    }
+  ]
+}
