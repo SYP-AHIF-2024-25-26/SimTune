@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-stammtoene',
@@ -24,8 +24,10 @@ export class StammtoeneComponent {
     { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
   ];
   currentIndex: number = 0;
+  breadcrumb_elements = signal<{ label: string; url: string}[] | undefined>(undefined);
 
-  constructor(private router: Router) {}
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   goToTask(text: string): void {
     const action = text.startsWith('Markiere') ? 'markiere' : 'lies';
@@ -34,5 +36,11 @@ export class StammtoeneComponent {
     const index = foundItem ? this.texts.indexOf(foundItem) : 0;
 
     this.router.navigate(['/task'], { queryParams: { action, letters, index } });
+  }
+
+  ngOnInit(): void {
+    this.route.data.subscribe(data => {
+      this.breadcrumb_elements.set(data['breadcrumbElements']);
+    })
   }
 }

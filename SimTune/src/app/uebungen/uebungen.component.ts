@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class UebungenComponent implements OnInit {
   content = signal<TaskData | undefined>(undefined);
+  breadcrumb_elements = signal<{ label: string; url: string}[] | undefined>(undefined);
 
   constructor(private route: ActivatedRoute) {}
 
@@ -19,6 +20,9 @@ export class UebungenComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.content.set(data['content']);
     });
+    this.route.data.subscribe(data => {
+      this.breadcrumb_elements.set(data['breadcrumbElements']);
+    })
   }
 
 }
