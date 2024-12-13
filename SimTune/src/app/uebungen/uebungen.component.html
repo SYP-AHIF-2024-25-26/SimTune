@@ -1,4 +1,21 @@
-<h1 class="text-3xl font-bold mt-5 ml-8 underline">{{ content()?.header }}</h1>
+<div class="flex text-2xl ml-32 mt-12">
+  <p class="text-gray-400">
+    <ng-container *ngFor="let breadcrumb of breadcrumb_elements(); let last = last">
+      <ng-container *ngIf="!last">
+        <a [routerLink]="breadcrumb.url">
+          {{ breadcrumb.label }}
+        </a>
+        <span> → </span>
+      </ng-container>
+      <ng-container *ngIf="last">
+        <a [routerLink]="breadcrumb.url" class="font-semibold text-black">
+          {{ breadcrumb.label }}
+        </a>
+      </ng-container>
+    </ng-container>
+  </p>
+</div>
+
 
 @for (group of content()?.groups; track group['group-header']) {
   <h2 class="text-3xl font-bold mt-5 text-center">{{ group['group-header'] }}</h2>
