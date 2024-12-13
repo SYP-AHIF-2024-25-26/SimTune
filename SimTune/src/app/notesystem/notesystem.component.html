@@ -1,14 +1,14 @@
 <div class="space-y-6 flex flex-col items-center w-2/3 justify-center mt-40 mx-auto relative">
   <img src="assets/images/violinschlüssel.png" class="w-18 h-44 -top-2 absolute left-4 z-10">
 
-  <div class="space-y-6 w-full relative">
-    <div class="group relative">
+  <div class="space-y-6 w-full relative -top-6">
+    <div class="group relative -top-2">
       <div class="h-0.5 bg-black w-14 ml-24"
            [ngClass]="{
               'opacity-0': !selectedExtraLine[1] && !hoveredExtraLine[1],
               'opacity-50': !selectedExtraLine[1] && hoveredExtraLine[1],
-              'opacity-100': selectedExtraLine[1]}"
-           id="1"></div>
+              'opacity-100': selectedExtraLine[1] && hoveredExtraLine[1]}"
+           [id]="1"></div>
       <div class="absolute inset-x-0 -top-2.5 -bottom-2.5 cursor-pointer"
            (mouseover)="setHoveredExtraLine(1, true)"
            (mouseout)="setHoveredExtraLine(1, false)"
@@ -20,9 +20,13 @@
       </div>
     </div>
 
-    <div class="group relative">
-      <div class="absolute inset-x-0 h-3 cursor-pointer" id="2"
-           (click)="showCircle(2)">
+    <div class="group relative -top-7">
+      <div
+          class="inset-x-0 h-3 cursor-pointer"
+          (click)="showCircle(2)"
+          (mouseover)="setHoveredExtraLine(2, true)"
+          (mouseout)="setHoveredExtraLine(2, false)">
+
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedCircle[2]"
              [class.opacity-50]="!selectedCircle[2]"
@@ -31,7 +35,7 @@
     </div>
 
     <div *ngFor="let i of [3, 5, 7, 9, 11]; let last = last">
-      <div class="group relative">
+      <div class="group relative -top-10">
         <div class="h-0.5 bg-black w-full" [id]="i"></div>
         <div class="absolute inset-x-0 -top-2.5 -bottom-2.5 cursor-pointer"
              (click)="showCircle(i)">
@@ -42,7 +46,7 @@
         </div>
       </div>
 
-      <div *ngIf="!last" class="group relative">
+      <div *ngIf="!last" class="group relative -top-10">
         <div class="absolute inset-x-0 h-3 cursor-pointer" [id]="i+1"
           (click)="showCircle(i+1)">
 
@@ -54,9 +58,13 @@
       </div>
     </div>
 
-    <div class="group relative">
-      <div class="absolute inset-x-0 h-3 cursor-pointer" id="12"
-           (click)="showCircle(12)">
+    <div class="group relative -top-16">
+      <div
+          class="inset-x-0 h-3 cursor-pointer"
+          (click)="showCircle(12)"
+          (mouseover)="setHoveredExtraLine(12, true)"
+          (mouseout)="setHoveredExtraLine(12, false)">
+
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedCircle[12]"
              [class.opacity-50]="!selectedCircle[12]"
@@ -64,7 +72,7 @@
       </div>
     </div>
 
-    <div class="group relative">
+    <div class="group relative -top-19">
       <div class="h-0.5 bg-black w-14 ml-24"
         [ngClass]="{
             'opacity-0': !selectedExtraLine[13] && !hoveredExtraLine[13],
@@ -85,7 +93,7 @@
   </div>
 </div>
 
-<div class="ml-96 mr-96 mt-14 flex justify-center items-center">
+<div class="ml-96 mr-96 flex justify-center items-center">
   <div class="p-2 rounded-xl border-2 w-12 h-12 flex justify-center items-center"
       [ngStyle]="{'border-color': isErasing ? '#6496FF' : 'black'}"
       (click)="eraser()">

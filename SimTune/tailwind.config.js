@@ -15,6 +15,9 @@ module.exports = {
       boxShadow: {
         'even': '0 0 10px 1px rgba(0, 0, 0, 0.5)',
       },
+      spacing: {
+        '19': '4.75rem',
+      },
     },
   },
   plugins: [],

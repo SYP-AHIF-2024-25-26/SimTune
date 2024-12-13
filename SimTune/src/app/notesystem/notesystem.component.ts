@@ -21,8 +21,11 @@ export class NotesystemComponent {
   }
 
   toggleExtraLine(id: number): void {
-    this.selectedExtraLine[id] = !this.selectedExtraLine[id];
-    this.isErasing === true ? delete this.selectedCircle[id] : this.selectedCircle[id] = true;
+    if(this.isErasing === false && !this.selectedExtraLine[id]) {
+      this.selectedExtraLine[id] = true;
+    } else if(this.isErasing === true && this.selectedExtraLine[id]) {
+      delete this.selectedExtraLine[id];
+    }
   }
 
   setHoveredExtraLine(id: number, isHovered: boolean): void {
