@@ -1,0 +1,46 @@
+<div class="flex justify-center items-start min-h-screen pt-24">
+  <div class="flex flex-col justify-between items-center p-6 bg-costumGray drop-shadow-md w-full max-w-md rounded-lg">
+    <div class="text-2xl font-semibold mb-4">Registrierung</div>
+
+    <div class="flex flex-col w-full space-y-4">
+      <input
+      type="email"
+      placeholder="Email"
+      class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+      <input
+        type="text"
+        placeholder="Benutzername"
+        class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+      <input
+        type="password"
+        placeholder="Passwort"
+        class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+      <input
+      type="password"
+      placeholder="Passwort bestätigen"
+      class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+
+      <div class="flex items-center justify-center space-x-6 mt-4">
+        <label class="input-wrapper flex items-center space-x-4 cursor-pointer border-2 border-black p-3 rounded-lg checked:border-blue-600">
+          <input type="radio" name="role" value="student" class="form-radio text-blue-600 h-6 w-6 border-2 border-black">
+          <span class="text-lg text-gray-800">Schüler</span>
+        </label>
+        <label class="input-wrapper flex items-center space-x-4 cursor-pointer border-2 border-black p-3 rounded-lg peer-checked:border-blue-600">
+          <input type="radio" name="role" value="teacher" class="form-radio text-blue-600 h-6 w-6 border-2 border-black">
+          <span class="text-lg text-gray-800">Lehrer</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="bg-costumBlue text-white py-2 px-6 rounded-3xl text-lg hover:bg-blue-600 flex justify-center items-center mt-4 cursor-pointer"
+         (click)="signUp()">
+      Sign up
+    </div>
+  </div>
+</div>
+

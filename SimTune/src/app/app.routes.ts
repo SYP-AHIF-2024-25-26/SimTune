@@ -7,6 +7,8 @@ import { intervalleData, stammtoeneData, toeneData, uebungenData } from './uebun
 import { TaskComponent } from './task/task.component';
 import { PianoComponent } from './piano/piano.component';
 import { NotesystemComponent } from './notesystem/notesystem.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
   {
@@ -109,5 +111,7 @@ export const routes: Routes = [
   { path: 'task', component: TaskComponent },
   { path: 'piano', component: PianoComponent },
   { path: 'notesystem', component: NotesystemComponent },
-  { path: '', redirectTo: '/notesystem', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 ];
