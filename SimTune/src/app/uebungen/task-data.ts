@@ -84,7 +84,7 @@ export const toeneData: TaskData = {
         {
           "card-header": "Stammtöne",
           "card-image-url": "",
-          "card-url": "/intervalle"
+          "card-url": "/notensystem"
         },
         {
           "card-header": "Versetzungzeichen",
@@ -138,6 +138,24 @@ export const stammtoeneData: TaskData = {
     }
   ],
   "task-type": "stammtoene",
+  "task-url": ""
+}
+
+export const notenSystemData: TaskData = {
+  "header": "",
+  "groups": [
+    {
+      "group-header": "",
+      "cards": [
+        {
+          "card-header": "",
+          "card-image-url": "",
+          "card-url": ""
+        }
+      ]
+    }
+  ],
+  "task-type": "notensystem",
   "task-url": ""
 }
 

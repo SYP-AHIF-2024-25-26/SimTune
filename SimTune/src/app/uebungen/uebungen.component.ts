@@ -46,9 +46,6 @@ export class UebungenComponent implements OnInit {
           { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
         ];
         break;
-      case 'piano':
-        this.router.navigate(['/piano']);
-        break;
       default:
         break;
     }

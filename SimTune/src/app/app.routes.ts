@@ -3,7 +3,7 @@ import { UebungenComponent } from './uebungen/uebungen.component';
 import { PruefungenComponent } from './pruefungen/pruefungen.component';
 import { UnterlagenComponent } from './unterlagen/unterlagen.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { intervalleData, stammtoeneData, toeneData, uebungenData } from './uebungen/task-data';
+import { intervalleData, notenSystemData, stammtoeneData, toeneData, uebungenData } from './uebungen/task-data';
 import { TaskComponent } from './task/task.component';
 import { PianoComponent } from './piano/piano.component';
 import { NotesystemComponent } from './notesystem/notesystem.component';
@@ -44,6 +44,20 @@ export const routes: Routes = [
         { label: 'Stammtöne', url: '/stammtoene' },
       ],
     },
+  },
+  {
+    path: 'notensystem',
+    component: UebungenComponent,
+    data: {
+      content: notenSystemData,
+      breadcrumbElements: [
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Töne', url: '/toene' },
+        { label: 'Violinschlüssel', url: '/toene' },
+        { label: 'Stammtöne', url: '/stammtoene' },
+      ],
+    }
   },
   {
     path: 'rhythmus',
@@ -110,7 +124,6 @@ export const routes: Routes = [
   { path: 'homepage', component: HomepageComponent },
   { path: 'task', component: TaskComponent },
   { path: 'piano', component: PianoComponent },
-  { path: 'notesystem', component: NotesystemComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
