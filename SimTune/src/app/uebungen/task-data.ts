@@ -7,7 +7,9 @@ export type TaskData = {
         "card-image-url": string,
         "card-url": string,
       }[]
-  }[]
+  }[],
+  "task-type": string,
+  "task-url": string
 }
 
 export const uebungenData: TaskData = {
@@ -53,7 +55,9 @@ export const uebungenData: TaskData = {
         }
       ]
     }
-  ]
+  ],
+  "task-type": "",
+  "task-url": ""
 }
 
 export const toeneData: TaskData = {
@@ -70,7 +74,7 @@ export const toeneData: TaskData = {
         {
           "card-header": "Versetzungszeichen",
           "card-image-url": "",
-          "card-url": "/rhythmus"
+          "card-url": "/versetzungszeichen"
         }
       ]
     },
@@ -114,7 +118,27 @@ export const toeneData: TaskData = {
         }
       ]
     }
-  ]
+  ],
+  "task-type": "",
+  "task-url": ""
+}
+
+export const stammtoeneData: TaskData = {
+  "header": "",
+  "groups": [
+    {
+      "group-header": "",
+      "cards": [
+        {
+          "card-header": "",
+          "card-image-url": "",
+          "card-url": ""
+        }
+      ]
+    }
+  ],
+  "task-type": "stammtoene",
+  "task-url": ""
 }
 
 export const intervalleData: TaskData = {
@@ -135,5 +159,7 @@ export const intervalleData: TaskData = {
         }
       ]
     }
-  ]
+  ],
+  "task-type": "",
+  "task-url": ""
 }

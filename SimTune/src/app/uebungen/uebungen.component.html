@@ -16,20 +16,33 @@
   </p>
 </div>
 
-
-@for (group of content()?.groups; track group['group-header']) {
-  <h2 class="text-3xl font-bold mt-5 text-center">{{ group['group-header'] }}</h2>
-
-  <div class="mt-14 text-center grid grid-cols-2 gap-y-16 gap-x-0 place-items-center w-2/3 mx-auto">
-
-    @for (card of group['cards']; track card['card-header'];) {
-      <a routerLink="{{ card['card-url']}}">
-        <div class="bg-costumGray w-96 rounded-2xl h-56 hover:shadow-even transition-shadow duration-0 shadow-lg">
-          <p class="font-semibold text-3xl pt-3">{{ card['card-header']}}</p>
-
-          <img src="{{ card['card-image-url']}}" class="object-contain px-3 rounded-b-2xl my-4">
-        </div>
-      </a>
-    }
+@if (taskType() != '') {
+<div id="container" class="flex flex-wrap gap-20 p-20 items-center justify-center">
+  <div *ngFor="let item of texts"
+    class="bg-costumLightBlue w-80 rounded-lg border-solid border border-black text-center p-4 text-xl hover:shadow-even transition-shadow duration-200 shadow-lg">
+    <p class="font-semibold text-2xl">{{ item.text }}</p>
+    <p class="mt-1">Stammtöne</p>
+    <p class="bg-blue-300 rounded-xl mt-4 p-1 drop-shadow-2xl hover:bg-blue-400 duration-100"
+      (click)="goToTask(item.text)">
+      Anfangen
+    </p>
   </div>
+</div>
 }
+  @else {
+    @for (group of content()?.groups; track group['group-header']) {
+      <h2 class="text-3xl font-bold mt-5 text-center">{{ group["group-header"] }}</h2>
+
+      <div class="mt-14 text-center grid grid-cols-2 gap-y-16 gap-x-0 place-items-center w-2/3 mx-auto">
+        @for (card of group['cards']; track card['card-header'];) {
+          <a routerLink="{{ card['card-url'] }}">
+            <div class="bg-costumGray w-96 rounded-2xl h-56 hover:shadow-even transition-shadow duration-0 shadow-lg">
+              <p class="font-semibold text-3xl pt-3">{{ card["card-header"] }}</p>
+
+              <img src="{{ card['card-image-url'] }}" class="object-contain px-3 rounded-b-2xl my-4" />
+            </div>
+          </a>
+        }
+      </div>
+    }
+  }

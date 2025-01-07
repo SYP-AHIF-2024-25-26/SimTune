@@ -3,12 +3,10 @@ import { UebungenComponent } from './uebungen/uebungen.component';
 import { PruefungenComponent } from './pruefungen/pruefungen.component';
 import { UnterlagenComponent } from './unterlagen/unterlagen.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { StammtoeneComponent } from './stammtoene/stammtoene.component';
-import { intervalleData, toeneData, uebungenData } from './uebungen/task-data';
+import { intervalleData, stammtoeneData, toeneData, uebungenData } from './uebungen/task-data';
 import { TaskComponent } from './task/task.component';
 import { PianoComponent } from './piano/piano.component';
 import { NotesystemComponent } from './notesystem/notesystem.component';
-import { url } from 'node:inspector';
 
 export const routes: Routes = [
   {
@@ -33,8 +31,9 @@ export const routes: Routes = [
   },
   {
     path: 'stammtoene',
-    component: StammtoeneComponent,
+    component: UebungenComponent,
     data: {
+      content: stammtoeneData,
       breadcrumbElements: [
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
@@ -100,7 +99,7 @@ export const routes: Routes = [
       breadcrumbElements: [
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Struktur', url: '/uebungen' },
-        { label: 'Tonarten', url: '/tonarten' },
+        {label: 'Tonarten', url: '/tonarten' },
       ],
     },
   },
