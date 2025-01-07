@@ -46,6 +46,16 @@ export class UebungenComponent implements OnInit {
           { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
         ];
         break;
+      case 'notesystem':
+        this.texts = [
+          { text: "Lies c, d und e", value: "c,d,e" },
+          { text: "Schreibe c, d und e", value: "c,d,e" },
+          { text: "Lies e, f und g", value: "e,f,g" },
+          { text: "Schreibe e, f und g", value: "e,f,g" },
+          { text: "Lies c bis g", value: "c,d,e,f,g" },
+          { text: "Schreibe c bis g", value: "c,d,e,f,g" }
+        ];
+      break;
       default:
         break;
     }
