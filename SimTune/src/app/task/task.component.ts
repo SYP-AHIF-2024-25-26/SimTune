@@ -32,19 +32,8 @@ export class TaskComponent {
   Math: any;
   buttonDisabled = true;
 
-  texts: { text: string; value: string }[] = [
-    { text: "Lies c, d und e", value: "c,d,e" },
-    { text: "Markiere c, d und e", value: "c,d,e" },
-    { text: "Lies e, f und g", value: "e,f,g" },
-    { text: "Markiere e, f und g", value: "e,f,g" },
-    { text: "Lies c bis g", value: "c,d,e,f,g" },
-    { text: "Markiere c bis g", value: "c,d,e,f,g" },
-    { text: "Lies g, a, h und c", value: "g,a,h,c" },
-    { text: "Markiere g, a, h und c", value: "g,a,h,c" },
-    { text: "Lies Orientierungstöne", value: "Orientierungstöne,c,d,e,f,g,a,h" },
-    { text: "Lies alle Stammtöne", value: "c,d,e,f,g,a,h" },
-    { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
-  ];
+  texts: {text: string, value: string}[] = [];
+
   currentIndex: number = 0;
 
   constructor(private route: ActivatedRoute, private location: Location, private router: Router) {}
@@ -59,9 +48,14 @@ export class TaskComponent {
       this.currentIndex = +params['index'] || 0;
       this.action = params['action'];
       this.letters = params['letters'];
+      const storedTexts = localStorage.getItem('texts');
 
-      if (this.letters) {
-        this.setupQuestions();
+      if (storedTexts) {
+        this.texts = JSON.parse(storedTexts);
+
+        if (this.letters) {
+          this.setupQuestions();
+        }
       }
     });
   }

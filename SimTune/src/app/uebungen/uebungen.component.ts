@@ -46,7 +46,7 @@ export class UebungenComponent implements OnInit {
           { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
         ];
         break;
-      case 'notesystem':
+      case 'notensystem':
         this.texts = [
           { text: "Lies c, d und e", value: "c,d,e" },
           { text: "Schreibe c, d und e", value: "c,d,e" },
@@ -59,7 +59,6 @@ export class UebungenComponent implements OnInit {
       default:
         break;
     }
-
   }
 
   goToTask(text: string): void {
@@ -67,8 +66,8 @@ export class UebungenComponent implements OnInit {
     const foundItem = this.texts.find(item => item.text === text);
     const letters = foundItem ? foundItem.value : '';
     const index = foundItem ? this.texts.indexOf(foundItem) : 0;
+    localStorage.setItem('texts', JSON.stringify(this.texts));
 
     this.router.navigate(['/task'], { queryParams: { action, letters, index } });
   }
-
 }
