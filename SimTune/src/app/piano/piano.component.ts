@@ -45,12 +45,12 @@ export class PianoComponent {
     if (this.selectedKey === keyId) {
       this.selectedKey = null;
       this.enableButton.emit(false);
-      localStorage.removeItem('selectedKey');
+      sessionStorage.removeItem('selectedKey');
     } else {
       this.currentColor.set('gray');
       this.selectedKey = keyId;
       this.enableButton.emit(true);
-      localStorage.setItem('selectedKey', keyId);
+      sessionStorage.setItem('selectedKey', keyId);
     }
   }
 

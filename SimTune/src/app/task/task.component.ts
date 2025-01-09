@@ -16,6 +16,7 @@ export class TaskComponent {
   @ViewChild(PianoComponent) pianoComponent!: PianoComponent;
   @ViewChild(NotesystemComponent) notesystemComponent!: NotesystemComponent;
 
+  allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
   action: string | null = null;
   letters: string | null = null;
   currentQuestion: string = '';
@@ -29,6 +30,7 @@ export class TaskComponent {
   totalQuestions: number = 0;
   usedLetters: Set<string> = new Set();
   showHelpMessage = false;
+  isErasing: boolean = false;
   private firstAttemptCorrect: boolean = true;
   evaluation: string = '';
   Math: any;
@@ -51,8 +53,8 @@ export class TaskComponent {
       this.currentIndex = +params['index'] || 0;
       this.action = params['action'];
       this.letters = params['letters'];
-      const storedTexts = localStorage.getItem('texts');
-      this.toneType = localStorage.getItem('toneType') || '';
+      const storedTexts = sessionStorage.getItem('texts');
+      this.toneType = sessionStorage.getItem('toneType') || '';
 
       if (storedTexts) {
         this.texts = JSON.parse(storedTexts);
@@ -90,8 +92,6 @@ export class TaskComponent {
 
     this.randomizedQuestions = this.shuffleArray(allQuestions);
     this.currentQuestion = this.randomizedQuestions[this.questionIndex];
-
-    console.log(this.currentQuestion);
   }
 
   shuffleArray(array: string[]): string[] {
@@ -103,7 +103,7 @@ export class TaskComponent {
   }
 
   checkIfRightMark(){
-    const selectedKey = localStorage.getItem('selectedKey');
+    const selectedKey = sessionStorage.getItem('selectedKey');
     const letter = selectedKey?.split('-')[0];
 
     if (letter && this.isCorrect(letter)) {
@@ -123,6 +123,41 @@ export class TaskComponent {
     setTimeout(() => {
       this.pianoComponent.selectedKey = null;
     }, 500);
+  }
+
+  checkIfRightNotensystem() {
+    const selectedCircle = sessionStorage.getItem('selectedCircle');
+    let notes: string[] = [];
+
+    if (selectedCircle) {
+      const parsedSelectedCircle = JSON.parse(selectedCircle);
+
+      for (const key in parsedSelectedCircle) {
+        if (parsedSelectedCircle[key]) {
+          const note = this.allNotesNotensystem[+key];
+          notes.push(note);
+        }
+      }
+    }
+
+    if(notes.length === 1) {
+      if(notes[0] === this.currentQuestion) {
+        this.updateProgress();
+
+        this.notesystemComponent.changeMarkColor('green');
+
+        if(this.firstAttemptCorrect) {
+          this.correctAnswers++;
+        }
+
+        this.nextQuestion();
+      } else {
+        this.firstAttemptCorrect = false;
+        this.notesystemComponent.changeMarkColor('red');
+      }
+    }
+
+    console.log(notes[0]);
   }
 
   checkIfRight(letter: string, button: HTMLButtonElement): void {
@@ -171,7 +206,6 @@ export class TaskComponent {
       this.currentQuestion = this.randomizedQuestions[this.questionIndex];
 
       if(this.action === 'lies') {
-        console.log(this.currentQuestion);
         this.pianoComponent.currentQuestion = this.currentQuestion;
       }
     }
@@ -214,5 +248,9 @@ export class TaskComponent {
 
     this.router.navigate(['/task'], { queryParams: { action: nextAction, letters: nextLetters, index: nextIndex} });
     this.ngOnInit();
+  }
+
+  eraser(): void {
+    this.isErasing === true ? this.isErasing = false : this.isErasing = true;
   }
 }

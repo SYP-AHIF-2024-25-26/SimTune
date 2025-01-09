@@ -15,6 +15,7 @@
            (click)="toggleExtraLine(1)">
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedExtraLine[1]"
+             [style.filter]="selectedCircleColor[1] ? 'hue-rotate(' + selectedCircleColor[1] + ')' : ''"
              [class.opacity-50]="!selectedExtraLine[1]"
              class="group-hover:block w-6 h-6 ml-28" />
       </div>
@@ -29,6 +30,7 @@
 
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedCircle[2]"
+             [style.filter]="selectedCircleColor[2] ? 'hue-rotate(' + selectedCircleColor[2] + ')' : ''"
              [class.opacity-50]="!selectedCircle[2]"
              class="group-hover:block w-6 h-6 ml-28" />
       </div>
@@ -40,9 +42,15 @@
         <div class="absolute inset-x-0 -top-2.5 -bottom-2.5 cursor-pointer"
              (click)="showCircle(i)">
           <img src="assets/images/kreis.png"
-               [class.hidden]="!selectedCircle[i]"
-               [class.opacity-50]="!selectedCircle[i]"
-               class="group-hover:block w-6 h-6 ml-28" />
+             [class.hidden]="!selectedCircle[i]"
+             [ngStyle]="{
+               'filter': selectedCircleColor[i]
+                 ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[i]) + 'deg) brightness(104%) contrast(104%)'
+                 : 'none'
+             }"
+             [class.opacity-50]="!selectedCircle[i]"
+             class="group-hover:block w-6 h-6 ml-28" />
+
         </div>
       </div>
 
@@ -52,6 +60,11 @@
 
           <img src="assets/images/kreis.png"
                [class.hidden]="!selectedCircle[i+1]"
+               [ngStyle]="{
+                'filter': selectedCircleColor[i+1]
+                  ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[i+1]) + 'deg) brightness(104%) contrast(104%)'
+                  : 'none'
+              }"
                [class.opacity-50]="!selectedCircle[i+1]"
                class="group-hover:block w-6 h-6 ml-28" />
         </div>
@@ -67,6 +80,7 @@
 
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedCircle[12]"
+             [style.filter]="selectedCircleColor[12] ? 'hue-rotate(' + selectedCircleColor[12] + ')' : ''"
              [class.opacity-50]="!selectedCircle[12]"
              class="group-hover:block w-6 h-6 ml-28" />
       </div>
@@ -86,6 +100,7 @@
            (click)="toggleExtraLine(13)">
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedExtraLine[13]"
+             [style.filter]="selectedCircleColor[13] ? 'hue-rotate(' + selectedCircleColor[13] + ')' : ''"
              [class.opacity-50]="!selectedExtraLine[13]"
              class="group-hover:block w-6 h-6 ml-28" />
       </div>
@@ -93,15 +108,11 @@
   </div>
 </div>
 
-<div class="ml-96 mr-96 flex justify-center items-center">
+<div class="mr-96 flex justify-center items-center">
   <div class="p-2 rounded-xl border-2 w-12 h-12 flex justify-center items-center"
-      [ngStyle]="{'border-color': isErasing ? '#6496FF' : 'black'}"
-      (click)="eraser()">
-    <img src="assets/images/eraser.png" class="cursor-pointer"
-      [ngStyle]="{'filter': isErasing ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(185deg) brightness(104%) contrast(104%)' : 'none'}">
-  </div>
-
-  <div class="flex-1 flex justify-center">
-    <button (click)="answer()" class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-700">Antworten</button>
+  [ngStyle]="{'border-color': isErasing ? '#6496FF' : 'black'}"
+  (click)="eraser()">
+  <img src="assets/images/eraser.png" class="cursor-pointer"
+    [ngStyle]="{'filter': isErasing ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(185deg) brightness(104%) contrast(104%)' : 'none'}">
   </div>
 </div>

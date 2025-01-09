@@ -75,8 +75,8 @@ export class UebungenComponent implements OnInit {
     const letters = foundItem ? foundItem.value : '';
     const index = foundItem ? this.texts.indexOf(foundItem) : 0;
 
-    localStorage.setItem('texts', JSON.stringify(this.texts));
-    localStorage.setItem('toneType', this.toneType);
+    sessionStorage.setItem('texts', JSON.stringify(this.texts));
+    sessionStorage.setItem('toneType', this.toneType);
 
     this.router.navigate(['/task'], { queryParams: { action, letters, index } });
   }

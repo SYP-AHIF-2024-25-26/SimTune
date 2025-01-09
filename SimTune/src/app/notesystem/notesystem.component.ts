@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-notesystem',
@@ -13,15 +13,37 @@ export class NotesystemComponent {
   @Input() currentQuestion: string | null = null;
   @Output() enableButton = new EventEmitter<boolean>();
 
-  allNotes = ['', 'a-2', 'g-2', 'f-2', 'e-2', 'd-2', 'c-2', 'h-1', 'a-1', 'g-1', 'f-1', 'e-1', 'd-1', 'c-1'];
+  //allNotes = ['', 'a-2', 'g-2', 'f-2', 'e-2', 'd-2', 'c-2', 'h-1', 'a-1', 'g-1', 'f-1', 'e-1', 'd-1', 'c-1'];
+  allNotes = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
 
   selectedCircle: { [key: number]: boolean } = {};
+  selectedCircleColor: { [key: number]: string } = {};
   selectedExtraLine: { [key: number]: boolean } = {};
   hoveredExtraLine: { [key: number]: boolean } = {};
   isErasing: boolean = false;
+  public isClickable: boolean = true;
+  defaultCircleColor: string = 'white';
 
   showCircle(i: number): void {
     this.isErasing === true ? delete this.selectedCircle[i] : this.selectedCircle[i] = true;
+    sessionStorage.setItem('selectedCircle', JSON.stringify(this.selectedCircle));
+  }
+
+  public changeMarkColor(color: string) {
+    for (const key in this.selectedCircle) {
+      if (this.selectedCircle[key]) {
+        this.selectedCircleColor[key] = color;
+
+        setTimeout(() => {
+          this.selectedCircleColor[key] = this.defaultCircleColor;
+        }, 1000);
+
+        setTimeout(() => {
+          delete this.selectedCircle[key];
+          sessionStorage.setItem('selectedCircle', JSON.stringify(this.selectedCircle));
+        }, 1000);
+      }
+    }
   }
 
   toggleExtraLine(id: number): void {
@@ -29,6 +51,14 @@ export class NotesystemComponent {
       this.selectedExtraLine[id] = true;
     } else if(this.isErasing === true && this.selectedExtraLine[id]) {
       delete this.selectedExtraLine[id];
+    }
+
+    for (let extraLine in this.selectedExtraLine) {
+      if (this.selectedExtraLine[extraLine] === true) {
+        this.selectedCircle[extraLine] = true;
+      } else {
+        delete this.selectedExtraLine[extraLine];
+      }
     }
   }
 
@@ -42,8 +72,35 @@ export class NotesystemComponent {
     this.isErasing === true ? this.isErasing = false : this.isErasing = true;
   }
 
+  getHueRotation(color: string): number {
+    const hueMap: { [key: string]: number } = {
+      red: 1,
+      orange: 30,
+      yellow: 60,
+      green: 120,
+      blue: 240,
+      purple: 270,
+      black: 0,
+    };
+
+    return hueMap[color.toLowerCase()] || 0;
+  }
+
+  /*
   answer(): void {
     let allSelctedNotes: string = "";
+
+    for (let extraLine in this.hoveredExtraLine) {
+      if (this.hoveredExtraLine[extraLine] === false) {
+        delete this.hoveredExtraLine[extraLine];
+      }
+    }
+
+    for (let extraLine in this.hoveredExtraLine) {
+      if (this.hoveredExtraLine[extraLine] === true) {
+        this.selectedCircle[extraLine] = true;
+      }
+    }
 
     for (let eachNote in this.selectedCircle) {
       allSelctedNotes += this.allNotes[eachNote] + " ";
@@ -53,4 +110,5 @@ export class NotesystemComponent {
 
     localStorage.setItem('selectedKey', allSelctedNotes);
   }
+  */
 }
