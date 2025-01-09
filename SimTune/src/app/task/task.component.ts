@@ -58,7 +58,6 @@ export class TaskComponent {
         this.texts = JSON.parse(storedTexts);
 
         if (this.letters) {
-          console.log(this.toneType);
           this.setupQuestions();
         }
       }
@@ -91,6 +90,8 @@ export class TaskComponent {
 
     this.randomizedQuestions = this.shuffleArray(allQuestions);
     this.currentQuestion = this.randomizedQuestions[this.questionIndex];
+
+    console.log(this.currentQuestion);
   }
 
   shuffleArray(array: string[]): string[] {
