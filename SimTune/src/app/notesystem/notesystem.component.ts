@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-notesystem',
@@ -9,6 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './notesystem.component.css'
 })
 export class NotesystemComponent {
+  @Input() action: string | null = null;
+  @Input() currentQuestion: string | null = null;
+  @Output() enableButton = new EventEmitter<boolean>();
+
   allNotes = ['', 'a-2', 'g-2', 'f-2', 'e-2', 'd-2', 'c-2', 'h-1', 'a-1', 'g-1', 'f-1', 'e-1', 'd-1', 'c-1'];
 
   selectedCircle: { [key: number]: boolean } = {};

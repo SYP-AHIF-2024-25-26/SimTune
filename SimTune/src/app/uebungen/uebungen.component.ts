@@ -16,6 +16,7 @@ export class UebungenComponent implements OnInit {
   taskType = signal<string | undefined>(undefined);
 
   texts: { text: string; value: string }[] = [];
+  toneType: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -45,6 +46,7 @@ export class UebungenComponent implements OnInit {
           { text: "Lies alle Stammtöne", value: "c,d,e,f,g,a,h" },
           { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
         ];
+        this.toneType = 'Stammtoene';
         break;
       case 'notensystem':
         this.texts = [
@@ -55,6 +57,7 @@ export class UebungenComponent implements OnInit {
           { text: "Lies c bis g", value: "c,d,e,f,g" },
           { text: "Schreibe c bis g", value: "c,d,e,f,g" }
         ];
+        this.toneType = 'Notensystem';
       break;
       default:
         break;
@@ -62,11 +65,18 @@ export class UebungenComponent implements OnInit {
   }
 
   goToTask(text: string): void {
-    const action = text.startsWith('Markiere') ? 'markiere' : 'lies';
+    let action = '';
+    if(text.startsWith('Schreibe')) {
+      action = 'schreibe';
+    } else {
+      action = text.startsWith('Markiere') ? 'markiere' : 'lies';
+    }
     const foundItem = this.texts.find(item => item.text === text);
     const letters = foundItem ? foundItem.value : '';
     const index = foundItem ? this.texts.indexOf(foundItem) : 0;
+
     localStorage.setItem('texts', JSON.stringify(this.texts));
+    localStorage.setItem('toneType', this.toneType);
 
     this.router.navigate(['/task'], { queryParams: { action, letters, index } });
   }

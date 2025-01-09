@@ -3,16 +3,18 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { PianoComponent } from "../piano/piano.component";
+import { NotesystemComponent } from '../notesystem/notesystem.component';
 
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [CommonModule, RouterModule, PianoComponent],
+  imports: [CommonModule, RouterModule, PianoComponent, NotesystemComponent],
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent {
   @ViewChild(PianoComponent) pianoComponent!: PianoComponent;
+  @ViewChild(NotesystemComponent) notesystemComponent!: NotesystemComponent;
 
   action: string | null = null;
   letters: string | null = null;
@@ -31,6 +33,7 @@ export class TaskComponent {
   evaluation: string = '';
   Math: any;
   buttonDisabled = true;
+  toneType: string = '';
 
   texts: {text: string, value: string}[] = [];
 
@@ -49,11 +52,13 @@ export class TaskComponent {
       this.action = params['action'];
       this.letters = params['letters'];
       const storedTexts = localStorage.getItem('texts');
+      this.toneType = localStorage.getItem('toneType') || '';
 
       if (storedTexts) {
         this.texts = JSON.parse(storedTexts);
 
         if (this.letters) {
+          console.log(this.toneType);
           this.setupQuestions();
         }
       }
