@@ -34,7 +34,7 @@
       <app-notesystem [action]="action" [currentQuestion]="currentQuestion" (enableButton)="onSelectedKeyChanged($event)"></app-notesystem>
     </ng-template>
 
-    <div *ngIf="action === 'lies' && toneType === 'Stammtoene'" class="flex justify-center">
+    <div *ngIf="action === 'lies'" class="flex justify-center">
       <button
         #buttonC
         [disabled]="!letters?.includes('c')"

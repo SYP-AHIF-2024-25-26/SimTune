@@ -5,18 +5,22 @@
     <div class="group relative -top-2">
       <div class="h-0.5 bg-black w-14 ml-24"
            [ngClass]="{
-              'opacity-0': !selectedExtraLine[1] && !hoveredExtraLine[1],
-              'opacity-50': !selectedExtraLine[1] && hoveredExtraLine[1],
-              'opacity-100': selectedExtraLine[1] && hoveredExtraLine[1]}"
+              'opacity-0': !selectedCircle[1] && !hoveredExtraLine[1],
+              'opacity-50': !selectedCircle[1] && hoveredExtraLine[1],
+              'opacity-100': selectedCircle[1] && hoveredExtraLine[1]}"
            [id]="1"></div>
       <div class="absolute inset-x-0 -top-2.5 -bottom-2.5 cursor-pointer"
            (mouseover)="setHoveredExtraLine(1, true)"
            (mouseout)="setHoveredExtraLine(1, false)"
            (click)="toggleExtraLine(1)">
         <img src="assets/images/kreis.png"
-             [class.hidden]="!selectedExtraLine[1]"
-             [style.filter]="selectedCircleColor[1] ? 'hue-rotate(' + selectedCircleColor[1] + ')' : ''"
-             [class.opacity-50]="!selectedExtraLine[1]"
+             [class.hidden]="!selectedCircle[1]"
+             [ngStyle]="{
+              'filter': selectedCircleColor[1]
+                ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[1]) + 'deg) brightness(104%) contrast(104%)'
+                : 'none'
+            }"
+            [class.opacity-50]="!selectedCircle[1]"
              class="group-hover:block w-6 h-6 ml-28" />
       </div>
     </div>
@@ -30,9 +34,13 @@
 
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedCircle[2]"
-             [style.filter]="selectedCircleColor[2] ? 'hue-rotate(' + selectedCircleColor[2] + ')' : ''"
-             [class.opacity-50]="!selectedCircle[2]"
-             class="group-hover:block w-6 h-6 ml-28" />
+             [ngStyle]="{
+              'filter': selectedCircleColor[2]
+                ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[2]) + 'deg) brightness(104%) contrast(104%)'
+                : 'none'
+              }"
+              [class.opacity-50]="!selectedCircle[2]"
+              class="group-hover:block w-6 h-6 ml-28" />
       </div>
     </div>
 
@@ -80,8 +88,12 @@
 
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedCircle[12]"
-             [style.filter]="selectedCircleColor[12] ? 'hue-rotate(' + selectedCircleColor[12] + ')' : ''"
-             [class.opacity-50]="!selectedCircle[12]"
+             [ngStyle]="{
+              'filter': selectedCircleColor[12]
+                ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[12]) + 'deg) brightness(104%) contrast(104%)'
+                : 'none'
+              }"
+            [class.opacity-50]="!selectedCircle[12]"
              class="group-hover:block w-6 h-6 ml-28" />
       </div>
     </div>
@@ -89,9 +101,9 @@
     <div class="group relative -top-19">
       <div class="h-0.5 bg-black w-14 ml-24"
         [ngClass]="{
-            'opacity-0': !selectedExtraLine[13] && !hoveredExtraLine[13],
-            'opacity-50': !selectedExtraLine[13] && hoveredExtraLine[13],
-            'opacity-100': selectedExtraLine[13]
+            'opacity-0': !selectedCircle[13] && !hoveredExtraLine[13],
+            'opacity-50': !selectedCircle[13] && hoveredExtraLine[13],
+            'opacity-100': selectedCircle[13]
           }"
            id="13"></div>
       <div class="absolute inset-x-0 -top-2.5 -bottom-2.5 cursor-pointer"
@@ -99,16 +111,20 @@
            (mouseout)="setHoveredExtraLine(13, false)"
            (click)="toggleExtraLine(13)">
         <img src="assets/images/kreis.png"
-             [class.hidden]="!selectedExtraLine[13]"
-             [style.filter]="selectedCircleColor[13] ? 'hue-rotate(' + selectedCircleColor[13] + ')' : ''"
-             [class.opacity-50]="!selectedExtraLine[13]"
+             [class.hidden]="!selectedCircle[13]"
+             [ngStyle]="{
+              'filter': selectedCircleColor[13]
+                ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[13]) + 'deg) brightness(104%) contrast(104%)'
+                : 'none'
+              }"
+            [class.opacity-50]="!selectedCircle[13]"
              class="group-hover:block w-6 h-6 ml-28" />
       </div>
     </div>
   </div>
 </div>
 
-<div class="mr-96 flex justify-center items-center">
+<div *ngIf="action !== 'lies'" class="mr-96 flex justify-center items-center">
   <div class="p-2 rounded-xl border-2 w-12 h-12 flex justify-center items-center"
   [ngStyle]="{'border-color': isErasing ? '#6496FF' : 'black'}"
   (click)="eraser()">

@@ -66,6 +66,7 @@ export class TaskComponent {
     });
   }
 
+
   ngAfterViewInit(): void {
     if (this.pianoComponent) {
       this.pianoComponent.isClickable = this.action !== 'lies';
@@ -156,8 +157,6 @@ export class TaskComponent {
         this.notesystemComponent.changeMarkColor('red');
       }
     }
-
-    console.log(notes[0]);
   }
 
   checkIfRight(letter: string, button: HTMLButtonElement): void {
@@ -206,7 +205,11 @@ export class TaskComponent {
       this.currentQuestion = this.randomizedQuestions[this.questionIndex];
 
       if(this.action === 'lies') {
-        this.pianoComponent.currentQuestion = this.currentQuestion;
+        if(this.toneType === 'Notensystem') {
+          this.notesystemComponent.currentQuestion = this.currentQuestion;
+        } else {
+          this.pianoComponent.currentQuestion = this.currentQuestion;
+        }
       }
     }
     this.checkCompletion();
