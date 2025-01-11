@@ -22,7 +22,7 @@ export class NotesystemComponent {
   hoveredExtraLine: { [key: number]: boolean } = {};
   isErasing: boolean = false;
   public isClickable: boolean = true;
-  defaultCircleColor: string = '#000000';
+  defaultCircleColor: string = 'black';
 
   ngOnChanges(): void {
     this.showCircle();
@@ -43,6 +43,7 @@ export class NotesystemComponent {
       return
     }
     if(i !== undefined) {
+      //this.selectedCircle = {};
       this.isErasing === true ? delete this.selectedCircle[i] : this.selectedCircle[i] = true;
       sessionStorage.setItem('selectedCircle', JSON.stringify(this.selectedCircle));
     }
@@ -54,7 +55,7 @@ export class NotesystemComponent {
         this.selectedCircleColor[key] = color;
 
         setTimeout(() => {
-          this.selectedCircleColor[key] = this.defaultCircleColor;
+          delete this.selectedCircleColor[key];
         }, 1000);
 
         setTimeout(() => {
@@ -66,21 +67,6 @@ export class NotesystemComponent {
   }
 
   toggleExtraLine(id: number): void {
-    /*
-    if(this.isErasing === false && !this.selectedExtraLine[id]) {
-      this.selectedExtraLine[id] = true;
-    } else if(this.isErasing === true && this.selectedExtraLine[id]) {
-      delete this.selectedExtraLine[id];
-    }
-
-    for (let extraLine in this.selectedExtraLine) {
-      if (this.selectedExtraLine[extraLine] === true) {
-        this.selectedCircle[extraLine] = true;
-      } else {
-        delete this.selectedExtraLine[extraLine];
-      }
-    }
-    */
     if(this.isErasing === false && !this.selectedCircle[id]) {
       this.selectedCircle[id] = true;
     } else if(this.isErasing === true && this.selectedCircle[id]) {
@@ -99,10 +85,7 @@ export class NotesystemComponent {
   }
 
   setHoveredExtraLine(id: number, isHovered: boolean): void {
-    //if (!this.selectedExtraLine[id]) {
-    //if(this.selectedCircle[id]) {
     this.hoveredExtraLine[id] = isHovered;
-    //}
   }
 
   eraser(): void {
@@ -111,40 +94,12 @@ export class NotesystemComponent {
 
   getHueRotation(color: string): number {
     const hueMap: { [key: string]: number } = {
-      red: 0,
-      orange: 30,
-      yellow: 60,
-      green: 120,
-      blue: 240,
-      purple: 270,
+      red: 295,
+      green: 84,
     };
+
+    console.log(hueMap[color.toLowerCase()]);
 
     return hueMap[color.toLowerCase()] || 0;
   }
-
-  /*
-  answer(): void {
-    let allSelctedNotes: string = "";
-
-    for (let extraLine in this.hoveredExtraLine) {
-      if (this.hoveredExtraLine[extraLine] === false) {
-        delete this.hoveredExtraLine[extraLine];
-      }
-    }
-
-    for (let extraLine in this.hoveredExtraLine) {
-      if (this.hoveredExtraLine[extraLine] === true) {
-        this.selectedCircle[extraLine] = true;
-      }
-    }
-
-    for (let eachNote in this.selectedCircle) {
-      allSelctedNotes += this.allNotes[eachNote] + " ";
-    }
-
-    console.log(allSelctedNotes, this.selectedCircle)
-
-    localStorage.setItem('selectedKey', allSelctedNotes);
-  }
-  */
 }

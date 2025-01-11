@@ -53,7 +53,7 @@
              [class.hidden]="!selectedCircle[i]"
              [ngStyle]="{
                'filter': selectedCircleColor[i]
-                 ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[i]) + 'deg) brightness(104%) contrast(104%)'
+                 ? 'invert(15%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[i]) + 'deg)'
                  : 'none'
              }"
              [class.opacity-50]="!selectedCircle[i]"
@@ -70,7 +70,7 @@
                [class.hidden]="!selectedCircle[i+1]"
                [ngStyle]="{
                 'filter': selectedCircleColor[i+1]
-                  ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[i+1]) + 'deg) brightness(104%) contrast(104%)'
+                  ? 'invert(20%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[i+1]) + 'deg)'
                   : 'none'
               }"
                [class.opacity-50]="!selectedCircle[i+1]"
@@ -90,7 +90,7 @@
              [class.hidden]="!selectedCircle[12]"
              [ngStyle]="{
               'filter': selectedCircleColor[12]
-                ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[12]) + 'deg) brightness(104%) contrast(104%)'
+                ? 'invert(20%) sepia(90%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[12]) + 'deg)'
                 : 'none'
               }"
             [class.opacity-50]="!selectedCircle[12]"
@@ -113,8 +113,8 @@
         <img src="assets/images/kreis.png"
              [class.hidden]="!selectedCircle[13]"
              [ngStyle]="{
-              'filter': selectedCircleColor[13]
-                ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[13]) + 'deg) brightness(104%) contrast(104%)'
+             'filter': selectedCircleColor[13]
+             ? 'invert(55%) sepia(6%) saturate(4760%) hue-rotate(' + getHueRotation(selectedCircleColor[13]) + 'deg) brightness(104%) contrast(104%)'
                 : 'none'
               }"
             [class.opacity-50]="!selectedCircle[13]"
