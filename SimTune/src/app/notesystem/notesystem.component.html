@@ -124,8 +124,8 @@
   </div>
 </div>
 
-<div *ngIf="action !== 'lies'" class="mr-96 flex justify-center items-center">
-  <div class="p-2 rounded-xl border-2 w-12 h-12 flex justify-center items-center"
+<div *ngIf="action !== 'lies'" class="mr-96 flex justify-center items-center z-10">
+  <div class="p-2 rounded-xl border-2 w-12 h-12 flex justify-center items-center z-10"
   [ngStyle]="{'border-color': isErasing ? '#6496FF' : 'black'}"
   (click)="eraser()">
   <img src="assets/images/eraser.png" class="cursor-pointer"
