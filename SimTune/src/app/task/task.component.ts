@@ -256,8 +256,6 @@ export class TaskComponent {
 
     const nextLetters = this.texts[nextIndex].value;
 
-    console.log(nextAction, nextLetters, nextIndex);
-
     this.router.navigate(['/task'], { queryParams: { action: nextAction, letters: nextLetters, index: nextIndex} });
     this.ngOnInit();
   }

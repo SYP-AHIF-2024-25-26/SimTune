@@ -98,8 +98,6 @@ export class NotesystemComponent {
       green: 84,
     };
 
-    console.log(hueMap[color.toLowerCase()]);
-
     return hueMap[color.toLowerCase()] || 0;
   }
 }
