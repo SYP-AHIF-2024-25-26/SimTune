@@ -36,12 +36,13 @@ export class TaskComponent {
   Math: any;
   buttonDisabled = true;
   toneType: string = '';
+  previousUrl: string | null = null;
 
-  texts: {text: string, value: string}[] = [];
+  texts: { text: string, value: string }[] = [];
 
   currentIndex: number = 0;
 
-  constructor(private route: ActivatedRoute, private location: Location, private router: Router) {}
+  constructor(private route: ActivatedRoute, private location: Location, private router: Router) { }
 
   ngOnInit(): void {
     this.progress = 0;
@@ -64,6 +65,12 @@ export class TaskComponent {
         }
       }
     });
+
+    const currentUrl = this.router.url;
+
+    if (!this.previousUrl) {
+      this.previousUrl = sessionStorage.getItem('previousUrl') || null;
+    }
   }
 
 
@@ -83,11 +90,11 @@ export class TaskComponent {
 
     if (this.action === 'lies') {
       filteredLetters.forEach(letter => {
-          allQuestions.push(`${letter}-1`, `${letter}-2`);
+        allQuestions.push(`${letter}-1`, `${letter}-2`);
       });
     } else {
       for (let i = 0; i < 2; i++) {
-          allQuestions.push(...filteredLetters);
+        allQuestions.push(...filteredLetters);
       }
     }
 
@@ -103,7 +110,7 @@ export class TaskComponent {
     return array;
   }
 
-  checkIfRightMark(){
+  checkIfRightMark() {
     const selectedKey = sessionStorage.getItem('selectedKey');
     const letter = selectedKey?.split('-')[0];
 
@@ -111,7 +118,7 @@ export class TaskComponent {
       this.updateProgress();
       this.pianoComponent.changeMarkColor('green');
 
-      if(this.firstAttemptCorrect) {
+      if (this.firstAttemptCorrect) {
         this.correctAnswers++;
       }
 
@@ -141,13 +148,13 @@ export class TaskComponent {
       }
     }
 
-    if(notes.length === 1) {
-      if(notes[0] === this.currentQuestion) {
+    if (notes.length === 1) {
+      if (notes[0] === this.currentQuestion) {
         this.updateProgress();
 
         this.notesystemComponent.changeMarkColor('green');
 
-        if(this.firstAttemptCorrect) {
+        if (this.firstAttemptCorrect) {
           this.correctAnswers++;
         }
 
@@ -163,7 +170,7 @@ export class TaskComponent {
     if (this.isCorrect(letter)) {
       this.updateProgress();
 
-      if(this.firstAttemptCorrect) {
+      if (this.firstAttemptCorrect) {
         this.correctAnswers++;
       }
 
@@ -183,9 +190,9 @@ export class TaskComponent {
       this.lastPressedLetter = null;
     }, 1000);
 
-    const correct =  letter === this.currentQuestion.split('-')[0];
+    const correct = letter === this.currentQuestion.split('-')[0];
 
-    if(correct) {
+    if (correct) {
       this.usedLetters.add(letter);
     }
 
@@ -204,8 +211,8 @@ export class TaskComponent {
       this.questionIndex++;
       this.currentQuestion = this.randomizedQuestions[this.questionIndex];
 
-      if(this.action === 'lies') {
-        if(this.toneType === 'Notensystem') {
+      if (this.action === 'lies') {
+        if (this.toneType === 'Notensystem') {
           this.notesystemComponent.currentQuestion = this.currentQuestion;
         } else {
           this.pianoComponent.currentQuestion = this.currentQuestion;
@@ -231,7 +238,11 @@ export class TaskComponent {
   }
 
   goBack(): void {
-    this.router.navigate(['/stammtoene']);
+    if (this.previousUrl) {
+      this.router.navigateByUrl(this.previousUrl);
+    } else {
+      console.log('No previous URL found!');
+    }
   }
 
   extendQuestion(): void {
@@ -248,7 +259,7 @@ export class TaskComponent {
     const nextIndex = (this.currentIndex + 1) % this.texts.length;
     let nextAction = '';
 
-    if(this.texts[nextIndex].text.startsWith('Schreibe')) {
+    if (this.texts[nextIndex].text.startsWith('Schreibe')) {
       nextAction = 'schreibe';
     } else {
       nextAction = this.texts[nextIndex].text.startsWith('Markiere') ? 'markiere' : 'lies';
@@ -256,7 +267,7 @@ export class TaskComponent {
 
     const nextLetters = this.texts[nextIndex].value;
 
-    this.router.navigate(['/task'], { queryParams: { action: nextAction, letters: nextLetters, index: nextIndex} });
+    this.router.navigate(['/task'], { queryParams: { action: nextAction, letters: nextLetters, index: nextIndex } });
     this.ngOnInit();
   }
 
