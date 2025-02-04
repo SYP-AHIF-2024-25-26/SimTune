@@ -1,0 +1,2 @@
+### Get Stammtoene exercises
+GET http://localhost:5069/exercises/Stammtoene

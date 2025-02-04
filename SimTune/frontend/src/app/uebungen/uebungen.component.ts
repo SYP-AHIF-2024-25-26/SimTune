@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TaskData } from './task-data';
 import { CommonModule } from '@angular/common';
+import { API_URL, fetchRestEndpoint } from '../api-calls/fetch-rest-endpoint';
 
 @Component({
   selector: 'app-uebungen',
@@ -15,12 +16,12 @@ export class UebungenComponent implements OnInit {
   breadcrumb_elements = signal<{ label: string; url: string}[] | undefined>(undefined);
   taskType = signal<string | undefined>(undefined);
 
-  texts: { text: string; value: string }[] = [];
+  texts: { description: string; values: string }[] = [];
   toneType: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.route.data.subscribe(data => {
       this.content.set(data['content']);
     });
@@ -32,35 +33,23 @@ export class UebungenComponent implements OnInit {
 
     switch (this.taskType()) {
       case 'stammtoene':
-        // call the database (select * from Tasks where task-type = 'stammtoene')
-        this.texts = [
-          { text: "Lies c, d und e", value: "c,d,e" },
-          { text: "Markiere c, d und e", value: "c,d,e" },
-          { text: "Lies e, f und g", value: "e,f,g" },
-          { text: "Markiere e, f und g", value: "e,f,g" },
-          { text: "Lies c bis g", value: "c,d,e,f,g" },
-          { text: "Markiere c bis g", value: "c,d,e,f,g" },
-          { text: "Lies g, a, h und c", value: "g,a,h,c" },
-          { text: "Markiere g, a, h und c", value: "g,a,h,c" },
-          { text: "Lies Orientierungstöne", value: "Orientierungstöne,c,d,e,f,g,a,h" },
-          { text: "Lies alle Stammtöne", value: "c,d,e,f,g,a,h" },
-          { text: "Markiere alle Stammtöne", value: "c,d,e,f,g,a,h" },
-        ];
+        this.texts = await fetchRestEndpoint(API_URL + 'exercises/Stammtoene', 'GET');
+
         this.toneType = 'Stammtoene';
         break;
       case 'notensystem':
         this.texts = [
-          { text: "Lies c, d und e", value: "c,d,e" },
-          { text: "Schreibe c, d und e", value: "c,d,e" },
-          { text: "Lies e, f und g", value: "e,f,g" },
-          { text: "Schreibe e, f und g", value: "e,f,g" },
-          { text: "Lies c bis g", value: "c,d,e,f,g" },
-          { text: "Schreibe c bis g", value: "c,d,e,f,g" },
-          { text: "Lies g, a, h und c", value: "g,a,h,c" },
-          { text: "Schreibe g, a, h und c", value: "g,a,h,c" },
-          { text: "Lies Orientierungstöne", value: "Orientierungstöne,c,d,e,f,g,a,h" },
-          { text: "Lies alle Stammtöne", value: "c,d,e,f,g,a,h" },
-          { text: "Schreibe alle Stammtöne", value: "c,d,e,f,g,a,h" },
+          { description: "Lies c, d und e", values: "c,d,e" },
+          { description: "Schreibe c, d und e", values: "c,d,e" },
+          { description: "Lies e, f und g", values: "e,f,g" },
+          { description: "Schreibe e, f und g", values: "e,f,g" },
+          { description: "Lies c bis g", values: "c,d,e,f,g" },
+          { description: "Schreibe c bis g", values: "c,d,e,f,g" },
+          { description: "Lies g, a, h und c", values: "g,a,h,c" },
+          { description: "Schreibe g, a, h und c", values: "g,a,h,c" },
+          { description: "Lies Orientierungstöne", values: "Orientierungstöne,c,d,e,f,g,a,h" },
+          { description: "Lies alle Stammtöne", values: "c,d,e,f,g,a,h" },
+          { description: "Schreibe alle Stammtöne", values: "c,d,e,f,g,a,h" },
         ];
         this.toneType = 'Notensystem';
       break;
@@ -76,8 +65,8 @@ export class UebungenComponent implements OnInit {
     } else {
       action = text.startsWith('Markiere') ? 'markiere' : 'lies';
     }
-    const foundItem = this.texts.find(item => item.text === text);
-    const letters = foundItem ? foundItem.value : '';
+    const foundItem = this.texts.find(item => item.description === text);
+    const letters = foundItem ? foundItem.values : '';
     const index = foundItem ? this.texts.indexOf(foundItem) : 0;
 
     sessionStorage.setItem('texts', JSON.stringify(this.texts));
