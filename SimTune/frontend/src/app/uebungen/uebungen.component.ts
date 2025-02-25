@@ -38,19 +38,8 @@ export class UebungenComponent implements OnInit {
         this.toneType = 'Stammtoene';
         break;
       case 'notensystem':
-        this.texts = [
-          { description: "Lies c, d und e", values: "c,d,e" },
-          { description: "Schreibe c, d und e", values: "c,d,e" },
-          { description: "Lies e, f und g", values: "e,f,g" },
-          { description: "Schreibe e, f und g", values: "e,f,g" },
-          { description: "Lies c bis g", values: "c,d,e,f,g" },
-          { description: "Schreibe c bis g", values: "c,d,e,f,g" },
-          { description: "Lies g, a, h und c", values: "g,a,h,c" },
-          { description: "Schreibe g, a, h und c", values: "g,a,h,c" },
-          { description: "Lies Orientierungstöne", values: "Orientierungstöne,c,d,e,f,g,a,h" },
-          { description: "Lies alle Stammtöne", values: "c,d,e,f,g,a,h" },
-          { description: "Schreibe alle Stammtöne", values: "c,d,e,f,g,a,h" },
-        ];
+        this.texts = await fetchRestEndpoint(API_URL + 'exercises/Notensystem', 'GET');
+        
         this.toneType = 'Notensystem';
       break;
       case 'intervalle':

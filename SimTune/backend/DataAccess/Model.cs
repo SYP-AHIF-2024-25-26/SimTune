@@ -45,6 +45,7 @@ public class ExerciseContent
 public enum ExerciseType
 {
     Stammtoene,
+    Notensystem,
     Versetzungszeichen,
     Hilfslinien
 }

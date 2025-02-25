@@ -33,8 +33,21 @@ public class SimTuneDbContext : DbContext
             new Exercise { ExerciseId = 8, Description = "Markiere g, a, h und c", Values = "g,a,h,c", ExerciseType = ExerciseType.Stammtoene },
             new Exercise { ExerciseId = 9, Description = "Lies Orientierungstöne", Values = "Orientierungstöne,c,d,e,f,g,a,h", ExerciseType = ExerciseType.Stammtoene },
             new Exercise { ExerciseId = 10, Description = "Lies alle Stammtöne", Values = "c,d,e,f,g,a,h", ExerciseType = ExerciseType.Stammtoene },
-            new Exercise { ExerciseId = 11, Description = "Markiere alle Stammtöne", Values = "c,d,e,f,g,a,h", ExerciseType = ExerciseType.Stammtoene }
+            new Exercise { ExerciseId = 11, Description = "Markiere alle Stammtöne", Values = "c,d,e,f,g,a,h", ExerciseType = ExerciseType.Stammtoene },
+            
+        new Exercise { ExerciseId = 12, Description = "Lies c, d und e", Values = "c,d,e", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 13, Description = "Schreibe c, d und e", Values = "c,d,e", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 14, Description = "Lies e, f und g", Values = "e,f,g", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 15, Description = "Schreibe e, f und g", Values = "e,f,g", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 16, Description = "Lies c bis g", Values = "c,d,e,f,g", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 17, Description = "Schreibe c bis g", Values = "c,d,e,f,g", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 18, Description = "Lies g, a, h und c", Values = "g,a,h,c", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 19, Description = "Schreibe g, a, h und c", Values = "g,a,h,c", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 20, Description = "Lies Orientierungstöne", Values = "Orientierungstöne,c,d,e,f,g,a,h", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 21, Description = "Lies alle Stammtöne", Values = "c,d,e,f,g,a,h", ExerciseType = ExerciseType.Notensystem },
+        new Exercise { ExerciseId = 22, Description = "Schreibe alle Stammtöne", Values = "c,d,e,f,g,a,h", ExerciseType = ExerciseType.Notensystem }
         );
+
     }
     
 }
