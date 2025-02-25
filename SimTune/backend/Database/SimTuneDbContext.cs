@@ -45,7 +45,14 @@ public class SimTuneDbContext : DbContext
         new Exercise { ExerciseId = 19, Description = "Schreibe g, a, h und c", Values = "g,a,h,c", ExerciseType = ExerciseType.Notensystem },
         new Exercise { ExerciseId = 20, Description = "Lies Orientierungstöne", Values = "Orientierungstöne,c,d,e,f,g,a,h", ExerciseType = ExerciseType.Notensystem },
         new Exercise { ExerciseId = 21, Description = "Lies alle Stammtöne", Values = "c,d,e,f,g,a,h", ExerciseType = ExerciseType.Notensystem },
-        new Exercise { ExerciseId = 22, Description = "Schreibe alle Stammtöne", Values = "c,d,e,f,g,a,h", ExerciseType = ExerciseType.Notensystem }
+        new Exercise { ExerciseId = 22, Description = "Schreibe alle Stammtöne", Values = "c,d,e,f,g,a,h", ExerciseType = ExerciseType.Notensystem },
+            
+        new Exercise { ExerciseId = 23, Description = "Lies Prime bis Quinte", Values = "Prime,Sekunde,Terz,Quarte,Quinte", ExerciseType = ExerciseType.Intervalle },
+        new Exercise { ExerciseId = 24, Description = "Schreibe Prime bis Quinte", Values = "Prime,Sekunde,Terz,Quarte,Quinte", ExerciseType = ExerciseType.Intervalle },
+        new Exercise { ExerciseId = 25, Description = "Lies Sexte bis Oktave", Values = "Sexte,Septime,Oktave", ExerciseType = ExerciseType.Intervalle },
+        new Exercise { ExerciseId = 26, Description = "Schreibe Sexte bis Oktave", Values = "Sexte,Septime,Oktave", ExerciseType = ExerciseType.Intervalle },
+        new Exercise { ExerciseId = 27, Description = "Lies alle Intervalle", Values = "Prime,Sekunde,Terz,Quarte,Quinte,Sexte,Septime,Oktave", ExerciseType = ExerciseType.Intervalle },
+        new Exercise { ExerciseId = 28, Description = "Schreibe alle Intervalle", Values = "Prime,Sekunde,Terz,Quarte,Quinte,Sexte,Septime,Oktave", ExerciseType = ExerciseType.Intervalle }
         );
 
     }

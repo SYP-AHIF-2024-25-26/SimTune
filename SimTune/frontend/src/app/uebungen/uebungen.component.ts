@@ -39,18 +39,11 @@ export class UebungenComponent implements OnInit {
         break;
       case 'notensystem':
         this.texts = await fetchRestEndpoint(API_URL + 'exercises/Notensystem', 'GET');
-        
+
         this.toneType = 'Notensystem';
       break;
       case 'intervalle':
-        this.texts = [
-          { description: "Lies Prime bis Quinte", values: "Prime,Sekunde,Terz,Quarte,Quinte" },
-          { description: "Schreibe Prime bis Quinte", values: "Prime,Sekunde,Terz,Quarte,Quinte" },
-          { description: "Lies Sexte bis Oktave", values: "Sexte,Septime,Oktave" },
-          { description: "Schreibe Sexte bis Oktave", values: "Sexte,Septime,Oktave" },
-          { description: "Lies alle Intervalle", values: "Prime,Sekunde,Terz,Quarte,Quinte,Sexte,Septime,Oktave" },
-          { description: "Schreibe alle Intervalle", values: "Prime,Sekunde,Terz,Quarte,Quinte,Sexte,Septime,Oktave" },
-        ];
+        this.texts = await fetchRestEndpoint(API_URL + 'exercises/Intervalle', 'GET');
 
         this.toneType = 'Intervalle';
         break;

@@ -46,6 +46,7 @@ public enum ExerciseType
 {
     Stammtoene,
     Notensystem,
+    Intervalle,
     Versetzungszeichen,
     Hilfslinien
 }
