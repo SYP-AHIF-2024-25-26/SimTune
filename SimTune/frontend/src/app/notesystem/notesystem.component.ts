@@ -29,6 +29,7 @@ export class NotesystemComponent {
   }
 
 
+
   showCircle(i?: number): void {
     if(this.action === 'lies') {
       this.selectedCircle = {};

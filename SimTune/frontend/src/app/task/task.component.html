@@ -1,4 +1,5 @@
 <div class="p-4">
+  <!--  Header  -->
   <div class="flex justify-center items-center ml-52 mr-52 mt-12 mb-8">
     <button (click)="goBack()" class="">
       <img src="assets/images/X.png" class="h-6 w-auto">
@@ -17,12 +18,28 @@
     Wir sind nicht die wo antworten haben
   </div>
 
+
+
   <div *ngIf="progress < totalSegments" class="mt-4 justify-center items-center flex font-semibold text-4xl">
     <ng-container *ngIf="action === 'lies'; else otherAction">
-      Bezeichne die Note
+
+      <ng-container *ngIf="toneType === 'Intervalle'; else otherAction">
+        Wie ist der Name dieses Intervalls?
+      </ng-container>
+      <ng-template #otherAction>
+        Bezeichne die Note
+      </ng-template>
+
     </ng-container>
     <ng-template #otherAction>
-      Markiere die Note: {{ currentQuestion }}
+
+      <ng-container *ngIf="toneType === 'Intervalle'; else otherAction">
+        Schreibe das Intervall {{ currentQuestion }}
+      </ng-container>
+      <ng-template #otherAction>
+        Markiere die Note: {{ currentQuestion }}
+      </ng-template>
+
     </ng-template>
   </div>
 
@@ -128,10 +145,15 @@
     </div>
 
     <div class="flex justify-center z-1" *ngIf="action === 'schreibe'">
-      <div class="flex-1 flex justify-center z-1"  style="margin-top: -45px;">
-        <button (click)="checkIfRightNotensystem()" class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-700">Antworten</button>
+      <div class="flex-1 flex justify-center z-1" style="margin-top: -45px;">
+        <button
+          (click)="toneType === 'Notensystem' ? checkIfRightNotensystem() : checkIfRightNotensystemIntervalle()"
+          class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-700">
+          Antworten
+        </button>
       </div>
     </div>
+
 
     <div class="flex justify-center" *ngIf="action === 'markiere'">
       <button [disabled]="buttonDisabled"
@@ -146,6 +168,9 @@
 
      </div>
   </div>
+
+
+  <!-- Progressbar -->
 
   <div *ngIf="progress === totalSegments" class="flex flex-col justify-center items-center p-6">
     <p class="text-4xl font-semibold">Du hast die Übung erfolgreich abgeschlossen!</p>

@@ -17,6 +17,7 @@ export class TaskComponent {
   @ViewChild(NotesystemComponent) notesystemComponent!: NotesystemComponent;
 
   allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
+  intervalle = ["Prime: 1", "Sekunde: 2", "Terz: 3", "Quarte: 4", "Quinte: 5", "Sexte: 6", "Septime: 7", "Oktave: 8"];
   action: string | null = null;
   letters: string | null = null;
   currentQuestion: string = '';
@@ -94,7 +95,7 @@ export class TaskComponent {
       });
     } else {
       for (let i = 0; i < 2; i++) {
-        allQuestions.push(...filteredLetters);
+        allQuestions.push(...filteredLetters.filter(letter => letter !== "Prime"));
       }
     }
 
@@ -131,6 +132,43 @@ export class TaskComponent {
     setTimeout(() => {
       this.pianoComponent.selectedKey = null;
     }, 500);
+  }
+
+  checkIfRightNotensystemIntervalle() {
+    const selectedCircle = sessionStorage.getItem('selectedCircle');
+    let notes: string[] = [];
+    let indices: number[] = [];
+
+    if (selectedCircle) {
+      const parsedSelectedCircle = JSON.parse(selectedCircle);
+
+      for (const key in parsedSelectedCircle) {
+        if (parsedSelectedCircle[key]) {
+          const noteIndex = +key;
+          notes.push(this.allNotesNotensystem[noteIndex]);
+          indices.push(noteIndex);
+        }
+      }
+    }
+
+    if (notes.length === 2) {
+      const interval = Math.abs(indices[1] - indices[0]);
+
+      if(this.intervalle[interval].split(':')[0] === this.currentQuestion) {
+        this.updateProgress();
+
+        this.notesystemComponent.changeMarkColor('green');
+
+        if (this.firstAttemptCorrect) {
+          this.correctAnswers++;
+        }
+
+        this.nextQuestion();
+      } else {
+        this.firstAttemptCorrect = false;
+        this.notesystemComponent.changeMarkColor('red');
+      }
+    }
   }
 
   checkIfRightNotensystem() {
