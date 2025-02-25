@@ -178,6 +178,6 @@ export const intervalleData: TaskData = {
       ]
     }
   ],
-  "task-type": "",
+  "task-type": "intervalle",
   "task-url": ""
 }
