@@ -53,6 +53,18 @@ export class UebungenComponent implements OnInit {
         ];
         this.toneType = 'Notensystem';
       break;
+      case 'intervalle':
+        this.texts = [
+          { description: "Lies Prime bis Quinte", values: "Prime,Sekunde,Terz,Quarte,Quinte" },
+          { description: "Schreibe Prime bis Quinte", values: "Prime,Sekunde,Terz,Quarte,Quinte" },
+          { description: "Lies Sexte bis Oktave", values: "Sexte,Septime,Oktave" },
+          { description: "Schreibe Sexte bis Oktave", values: "Sexte,Septime,Oktave" },
+          { description: "Lies alle Intervalle", values: "Prime,Sekunde,Terz,Quarte,Quinte,Sexte,Septime,Oktave" },
+          { description: "Schreibe alle Intervalle", values: "Prime,Sekunde,Terz,Quarte,Quinte,Sexte,Septime,Oktave" },
+        ];
+
+        this.toneType = 'Intervalle';
+        break;
       default:
         break;
     }
