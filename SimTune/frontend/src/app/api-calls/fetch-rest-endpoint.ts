@@ -1,6 +1,6 @@
 export { fetchRestEndpoint, API_URL };
 
-  const API_URL = "http://localhost:5069/";
+  const API_URL = "http://localhost:8081/";
 
   async function fetchRestEndpoint
       (route: string, method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", data?: object):

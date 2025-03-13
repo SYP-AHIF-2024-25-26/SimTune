@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend
+    container_name: simtune-backend
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: simtune-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

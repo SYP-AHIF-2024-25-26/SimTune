@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SimTuneDbContext>(
-    options => options.UseSqlite("FileName=Database/SimTune.db")
+    //options => options.UseSqlite("FileName=Database/SimTune.db")
+    options => options.UseSqlite("FileName=\\app\\Database\\SimTune.db")
 );
 
 builder.Services.AddCors(options =>
@@ -13,7 +14,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "default",
         policyBuilder =>
         {
-            policyBuilder.WithOrigins("http://localhost:4200", "http://localhost:4300", "http://localhost:51566");
+            policyBuilder.WithOrigins("http://localhost:4200", "http://localhost:4300", "http://localhost:8080", "http://simtune-frontend:80");
             policyBuilder.AllowAnyHeader();
             policyBuilder.AllowAnyMethod();
             policyBuilder.AllowCredentials();
