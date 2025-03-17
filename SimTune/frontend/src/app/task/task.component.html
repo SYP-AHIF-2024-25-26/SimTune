@@ -48,100 +48,42 @@
       <app-piano [action]="action" [currentQuestion]="currentQuestion" (enableButton)="onSelectedKeyChanged($event)"></app-piano>
     </ng-container>
     <ng-template #notensystemTemplate>
-      <app-notesystem [action]="action" [currentQuestion]="currentQuestion" (enableButton)="onSelectedKeyChanged($event)"></app-notesystem>
+      <app-notesystem [action]="action" [currentQuestion]="currentQuestion" [isIntervall]="isIntervall" (enableButton)="onSelectedKeyChanged($event)"></app-notesystem>
     </ng-template>
 
     <div *ngIf="action === 'lies'" class="flex justify-center">
-      <button
-        #buttonC
-        [disabled]="!letters?.includes('c')"
-        [ngClass]="{
-          'bg-green-500 text-white': lastPressedLetter === 'c',
-          'enabled-button': letters?.includes('c'),
-          'disabled-button': !letters?.includes('c')
-        }"
-        class="mr-4 p-2 rounded"
-        (click)="checkIfRight('c', buttonC)">
-        c
-      </button>
 
-      <button
-        #buttonD
-        [disabled]="!letters?.includes('d')"
-        [ngClass]="{
-          'bg-green-500 text-white': lastPressedLetter === 'd',
-          'enabled-button': letters?.includes('d'),
-          'disabled-button': !letters?.includes('d')
-        }"
-        class="mr-4 p-2 rounded"
-        (click)="checkIfRight('d', buttonD)">
-        d
-      </button>
+      <div *ngIf="toneType === 'Intervalle'">
+        <button
+          *ngFor="let interval of ['Prime', 'Sekunde', 'Terz', 'Quarte', 'Quinte', 'Sexte', 'Septime', 'Oktave']"
+          #button
+          [disabled]="!letters?.includes(interval)"
+          [ngClass]="{
+            'bg-green-500 text-white': lastPressedLetter === interval,
+            'enabled-button-intervall': letters?.includes(interval),
+            'disabled-button-intervall': !letters?.includes(interval)
+          }"
+          class="mr-4 p-2 rounded"
+          (click)="checkIfRight(interval, button)">
+          {{ interval }}
+        </button>
+      </div>
 
-      <button
-        #buttonE
-        [disabled]="!letters?.includes('e')"
-        [ngClass]="{
-          'bg-green-500 text-white': lastPressedLetter === 'e',
-          'enabled-button': letters?.includes('e'),
-          'disabled-button': !letters?.includes('e')
-        }"
-        class="mr-4 p-2 rounded"
-        (click)="checkIfRight('e', buttonE)">
-        e
-      </button>
-
-      <button
-        #buttonF
-        [disabled]="!letters?.includes('f')"
-        [ngClass]="{
-          'bg-green-500 text-white': lastPressedLetter === 'f',
-          'enabled-button': letters?.includes('f'),
-          'disabled-button': !letters?.includes('f')
-        }"
-        class="mr-4 p-2 rounded"
-        (click)="checkIfRight('f', buttonF)">
-        f
-      </button>
-
-      <button
-        #buttonG
-        [disabled]="!letters?.includes('g')"
-        [ngClass]="{
-          'bg-green-500 text-white': lastPressedLetter === 'g',
-          'enabled-button': letters?.includes('g'),
-          'disabled-button': !letters?.includes('g')
-        }"
-        class="mr-4 p-2 rounded"
-        (click)="checkIfRight('g', buttonG)">
-        g
-      </button>
-
-      <button
-        #buttonA
-        [disabled]="!letters?.includes('a')"
-        [ngClass]="{
-          'bg-green-500 text-white': lastPressedLetter === 'a',
-          'enabled-button': letters?.includes('a'),
-          'disabled-button': !letters?.includes('a')
-        }"
-        class="mr-4 p-2 rounded"
-        (click)="checkIfRight('a', buttonA)">
-        a
-      </button>
-
-      <button
-        #buttonH
-        [disabled]="!letters?.includes('h')"
-        [ngClass]="{
-          'bg-green-500 text-white': lastPressedLetter === 'h',
-          'enabled-button': letters?.includes('h'),
-          'disabled-button': !letters?.includes('h')
-        }"
-        class="mr-4 p-2 rounded"
-        (click)="checkIfRight('h', buttonH)">
-        h
-      </button>
+      <div *ngIf="toneType !== 'Intervalle'">
+        <button
+          *ngFor="let letter of ['c', 'd', 'e', 'f', 'g', 'a', 'h']"
+          #button
+          [disabled]="!letters?.includes(letter)"
+          [ngClass]="{
+            'bg-green-500 text-white': lastPressedLetter === letter,
+            'enabled-button': letters?.includes(letter),
+            'disabled-button': !letters?.includes(letter)
+          }"
+          class="mr-4 p-2 rounded"
+          (click)="checkIfRight(letter, button)">
+          {{ letter }}
+        </button>
+      </div>
     </div>
 
     <div class="flex justify-center z-1" *ngIf="action === 'schreibe'">

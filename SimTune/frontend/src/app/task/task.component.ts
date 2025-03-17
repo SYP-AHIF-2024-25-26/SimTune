@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { PianoComponent } from "../piano/piano.component";
 import { NotesystemComponent } from '../notesystem/notesystem.component';
+import { Console } from 'node:console';
 
 @Component({
   selector: 'app-task',
@@ -17,11 +18,14 @@ export class TaskComponent {
   @ViewChild(NotesystemComponent) notesystemComponent!: NotesystemComponent;
 
   allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
+  allNotesNotensystemSounds = ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2', 'a-2'];
   intervalle = ["Prime: 1", "Sekunde: 2", "Terz: 3", "Quarte: 4", "Quinte: 5", "Sexte: 6", "Septime: 7", "Oktave: 8"];
   action: string | null = null;
   letters: string | null = null;
+  isIntervall: boolean = false;
   currentQuestion: string = '';
   randomizedQuestions: string[] = [];
+  allQuestions: string[] = [];
   questionIndex: number = 0;
   selectedKey: string | null = null;
   lastPressedLetter: string | null = null;
@@ -33,13 +37,14 @@ export class TaskComponent {
   showHelpMessage = false;
   isErasing: boolean = false;
   private firstAttemptCorrect: boolean = true;
+  audio: HTMLAudioElement | null = null;
   evaluation: string = '';
   Math: any;
   buttonDisabled = true;
   toneType: string = '';
   previousUrl: string | null = null;
 
-  texts: { text: string, value: string }[] = [];
+  texts: { description: string, values: string, exerciseId: number, exerciseType: number, title: string | null }[] = []
 
   currentIndex: number = 0;
 
@@ -78,6 +83,8 @@ export class TaskComponent {
   ngAfterViewInit(): void {
     if (this.pianoComponent) {
       this.pianoComponent.isClickable = this.action !== 'lies';
+    } else if(this.notesystemComponent) {
+      this.notesystemComponent.isClickable = this.action !== 'lies';
     }
   }
 
@@ -87,20 +94,21 @@ export class TaskComponent {
     this.totalQuestions = filteredLetters.length * 2;
     this.totalSegments = this.totalQuestions;
 
-    const allQuestions = [];
+
 
     if (this.action === 'lies') {
       filteredLetters.forEach(letter => {
-        allQuestions.push(`${letter}-1`, `${letter}-2`);
+        this.allQuestions.push(`${letter}-1`, `${letter}-2`);
       });
     } else {
       for (let i = 0; i < 2; i++) {
-        allQuestions.push(...filteredLetters.filter(letter => letter !== "Prime"));
+        this.allQuestions.push(...filteredLetters);
       }
     }
 
-    this.randomizedQuestions = this.shuffleArray(allQuestions);
+    this.randomizedQuestions = this.shuffleArray(this.allQuestions);
     this.currentQuestion = this.randomizedQuestions[this.questionIndex];
+    this.isIntervall = this.toneType === 'Intervalle';
   }
 
   shuffleArray(array: string[]): string[] {
@@ -134,14 +142,18 @@ export class TaskComponent {
     }, 500);
   }
 
+
+
   checkIfRightNotensystemIntervalle() {
     const selectedCircle = sessionStorage.getItem('selectedCircle');
+    const selectedExtraCircle = sessionStorage.getItem('selectedExtraCircle');
     let notes: string[] = [];
     let indices: number[] = [];
 
-    if (selectedCircle) {
-      const parsedSelectedCircle = JSON.parse(selectedCircle);
+    const processSelectedCircle = (selectedCircle: string | null) => {
+      if (!selectedCircle) return;
 
+      const parsedSelectedCircle = JSON.parse(selectedCircle);
       for (const key in parsedSelectedCircle) {
         if (parsedSelectedCircle[key]) {
           const noteIndex = +key;
@@ -149,7 +161,10 @@ export class TaskComponent {
           indices.push(noteIndex);
         }
       }
-    }
+    };
+
+    processSelectedCircle(selectedCircle);
+    processSelectedCircle(selectedExtraCircle);
 
     if (notes.length === 2) {
       const interval = Math.abs(indices[1] - indices[0]);
@@ -250,8 +265,9 @@ export class TaskComponent {
       this.currentQuestion = this.randomizedQuestions[this.questionIndex];
 
       if (this.action === 'lies') {
-        if (this.toneType === 'Notensystem') {
+        if (this.toneType === 'Notensystem' || this.toneType === 'Intervalle') {
           this.notesystemComponent.currentQuestion = this.currentQuestion;
+          this.notesystemComponent.isIntervall = this.toneType === 'Intervalle';
         } else {
           this.pianoComponent.currentQuestion = this.currentQuestion;
         }
@@ -260,9 +276,47 @@ export class TaskComponent {
     this.checkCompletion();
   }
 
+  extractData(element: string) {
+    const [note, height] = element.split('-');
+    return {
+      note,
+      height: +height,
+    };
+  }
+
+  getNoteIndex(note: string) {
+    return this.allNotesNotensystem.indexOf(note);
+  }
+
   checkCompletion(): void {
     if (this.progress === this.totalSegments) {
       this.evaluation = `${((this.correctAnswers / this.totalQuestions) * 100).toFixed(2)}%`;
+
+      /*
+      if(this.toneType === 'Notensystem') {
+        this.randomizedQuestions.sort((a, b) => {
+          const { note: noteA, height: heightA } = this.extractData(a);
+          const { note: noteB, height: heightB } = this.extractData(b);
+
+          if (heightA !== heightB) {
+            return Number(heightA) - Number(heightB);
+          }
+
+          return this.getNoteIndex(String(noteB)) - this.getNoteIndex(String(noteA));
+        });
+
+        this.allNotesNotensystemSounds.forEach((element, index) => {
+          const audio = new Audio("/assets/sounds/Notensystem-" + element + ".mp4");
+
+          setTimeout(() => {
+            audio.play();
+
+          }, index * 400);
+        });
+      } else {*/
+        this.audio = new Audio("/assets/sounds/Uebung-fertig.mp3");
+        this.audio.play();
+      //}
     }
   }
 
@@ -277,6 +331,12 @@ export class TaskComponent {
 
   goBack(): void {
     if (this.previousUrl) {
+
+      if(this.audio !== null) {
+        this.audio!.pause();
+        this.audio!.currentTime = 0;
+      }
+
       this.router.navigateByUrl(this.previousUrl);
     } else {
       console.log('No previous URL found!');
@@ -293,17 +353,19 @@ export class TaskComponent {
 
   nextTask(): void {
     this.usedLetters.clear();
+    this.audio!.pause();
+    this.audio!.currentTime = 0;
 
     const nextIndex = (this.currentIndex + 1) % this.texts.length;
     let nextAction = '';
 
-    if (this.texts[nextIndex].text.startsWith('Schreibe')) {
+    if (this.texts[nextIndex].description.startsWith('Schreibe')) {
       nextAction = 'schreibe';
     } else {
-      nextAction = this.texts[nextIndex].text.startsWith('Markiere') ? 'markiere' : 'lies';
+      nextAction = this.texts[nextIndex].description.startsWith('Markiere') ? 'markiere' : 'lies';
     }
 
-    const nextLetters = this.texts[nextIndex].value;
+    const nextLetters = this.texts[nextIndex].values;
 
     this.router.navigate(['/task'], { queryParams: { action: nextAction, letters: nextLetters, index: nextIndex } });
     this.ngOnInit();

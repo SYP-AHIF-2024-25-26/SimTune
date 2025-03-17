@@ -25,3 +25,28 @@
   color: rgb(200, 200, 200);
   cursor: pointer;
 }
+
+
+.enabled-button-intervall {
+  border: 1px solid rgb(100, 100, 100);
+  font-size: 1.2rem;
+  border-radius: 15px;
+  height: 3rem;
+  width: 5.5rem;
+  color: black;
+  cursor: pointer;
+}
+.enabled-button-intervall:hover {
+  border: 1.5px solid rgb(150, 150, 150);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.disabled-button-intervall {
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 15px;
+  height: 3rem;
+  width: 5.5rem;
+  color: rgb(200, 200, 200);
+  cursor: pointer;
+}

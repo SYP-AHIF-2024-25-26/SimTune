@@ -41,6 +41,19 @@
               }"
               [class.opacity-50]="!selectedCircle[2]"
               class="group-hover:block w-6 h-6 ml-28" />
+
+            @if (selectedCircle[2]) {
+              <img src="assets/images/kreis.png"
+                  [class.hidden]="!selectedExtraCircle[2]"
+                  [ngStyle]="{
+                    'filter': selectedCircleColor[2]
+                      ? 'invert(20%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[2]) + 'deg)'
+                      : 'none'
+                  }"
+                  [class.opacity-50]="!selectedExtraCircle[2]"
+                  (click)="showExtraCircle(1)"
+                  class="group-hover:block w-6 h-6 ml-36 -mt-6" />
+            }
       </div>
     </div>
 
@@ -59,6 +72,18 @@
              [class.opacity-50]="!selectedCircle[i]"
              class="group-hover:block w-6 h-6 ml-28" />
 
+            @if (selectedCircle[i]) {
+              <img src="assets/images/kreis.png"
+                [class.hidden]="!selectedExtraCircle[i]"
+                [ngStyle]="{
+                  'filter': selectedCircleColor[i]
+                    ? 'invert(20%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[i]) + 'deg)'
+                    : 'none'
+                }"
+                [class.opacity-50]="!selectedExtraCircle[i]"
+                (click)="showExtraCircle(i)"
+                class="group-hover:block w-6 h-6 ml-36 -mt-6" />
+            }
         </div>
       </div>
 
@@ -75,27 +100,52 @@
               }"
                [class.opacity-50]="!selectedCircle[i+1]"
                class="group-hover:block w-6 h-6 ml-28" />
+            @if (selectedCircle[i+1]) {
+              <img src="assets/images/kreis.png"
+                [class.hidden]="!selectedExtraCircle[i+1]"
+                [ngStyle]="{
+                  'filter': selectedCircleColor[i+1]
+                    ? 'invert(20%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[i+1]) + 'deg)'
+                    : 'none'
+                }"
+                [class.opacity-50]="!selectedExtraCircle[i+1]"
+                (click)="showExtraCircle(i+1)"
+                class="group-hover:block w-6 h-6 ml-36 -mt-6" />
+            }
         </div>
       </div>
     </div>
 
     <div class="group relative -top-16">
-      <div
-          class="inset-x-0 h-3 cursor-pointer"
-          (click)="showCircle(12)"
-          (mouseover)="setHoveredExtraLine(12, true)"
-          (mouseout)="setHoveredExtraLine(12, false)">
+        <div
+            class="inset-x-0 h-3 cursor-pointer"
+            (click)="showCircle(12)"
+            (mouseover)="setHoveredExtraLine(12, true)"
+            (mouseout)="setHoveredExtraLine(12, false)">
 
-        <img src="assets/images/kreis.png"
-             [class.hidden]="!selectedCircle[12]"
-             [ngStyle]="{
-              'filter': selectedCircleColor[12]
-                ? 'invert(20%) sepia(90%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[12]) + 'deg)'
-                : 'none'
-              }"
-            [class.opacity-50]="!selectedCircle[12]"
-             class="group-hover:block w-6 h-6 ml-28" />
-      </div>
+          <img src="assets/images/kreis.png"
+              [class.hidden]="!selectedCircle[12]"
+              [ngStyle]="{
+                'filter': selectedCircleColor[12]
+                  ? 'invert(20%) sepia(90%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[12]) + 'deg)'
+                  : 'none'
+                }"
+              [class.opacity-50]="!selectedCircle[12]"
+              class="group-hover:block w-6 h-6 ml-28" />
+
+            @if (selectedCircle[12]) {
+              <img src="assets/images/kreis.png"
+                [class.hidden]="!selectedExtraCircle[12]"
+                [ngStyle]="{
+                  'filter': selectedCircleColor[12]
+                    ? 'invert(20%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[12]) + 'deg)'
+                    : 'none'
+                }"
+                [class.opacity-50]="!selectedExtraCircle[12]"
+                (click)="showExtraCircle(12)"
+                class="group-hover:block w-6 h-6 ml-36 -mt-6" />
+            }
+        </div>
     </div>
 
     <div class="group relative -top-19">
