@@ -68,6 +68,8 @@ export class UebungenComponent implements OnInit {
 
     if (text.startsWith('Bestimme')) {
       action = 'bestimme';
+      const foundItem = this.texts.find(item => item.description === text);
+      sessionStorage.setItem('descriptions', JSON.stringify(foundItem?.description));
     }
 
     const foundItem = this.texts.find(item => item.description === text);
