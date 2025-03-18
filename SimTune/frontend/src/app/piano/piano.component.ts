@@ -47,26 +47,17 @@ export class PianoComponent {
     'D_Dur': ['d-1', 'e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'cis-2'],
     'h_Moll': ['h-1', 'cis-2', 'd-2', 'e-2', 'fis-2', 'g-2', 'a-2'],
     'A_Dur': ['a-1', 'h-1', 'cis-2', 'd-2', 'e-2', 'fis-2', 'gis-2'],
-    'fis_Moll': ['fis-1', 'gis-1', 'a-1', 'h-1', 'cis-2', 'd-2', 'e-2']
+    'fis_Moll': ['fis-1', 'gis-1', 'a-1', 'h-1', 'cis-2', 'd-2', 'e-2'],
+    'F_Dur': ['f-1', 'g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'e-2'],
+    'd_Moll': ['d-1', 'e-1', 'f-1', 'g-1', 'a-1', 'b-1', 'c-2'],
+    'B_Dur': ['b-1', 'c-2', 'd-2', 'dis-2', 'f-2', 'g-2', 'a-2'],
+    'g_Moll': ['g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'dis-2', 'f-2'],
+    'Es_Dur': ['dis-1', 'f-1', 'g-1', 'gis-1', 'b-1', 'c-2', 'd-2'],
+    'c_Moll': ['c-1', 'd-1', 'dis-1', 'f-1', 'g-1', 'gis-1', 'b-1'],
+    'C_Dur': ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1'],
+    'a_Moll': ['a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2']
   };
 
-  dur_und_moll = {
-    'F-Dur': ['f-1', 'g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'e-2'],
-    'd-Moll': ['d-1', 'e-1', 'f-1', 'g-1', 'a-1', 'b-1', 'c-2'],
-
-    'B-Dur': ['b-1', 'c-2', 'd-2', 'es-2', 'f-2', 'g-2', 'a-2'],
-    'g-Moll': ['g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'es-2', 'f-2'],
-
-    'Es-Dur': ['es-1', 'f-1', 'g-1', 'as-1', 'b-1', 'c-2', 'd-2'],
-    'c-Moll': ['c-1', 'd-1', 'es-1', 'f-1', 'g-1', 'as-1', 'b-1']
-  };
-
-  dur_moll_und_natürliches_moll = {
-    ...this.dur_und_moll,
-
-    'C-Dur': ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1'],
-    'a-Moll': ['a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2']
-  };
 
   onKeyClick(keyId: string) {
     if (!this.isClickable) { return; }
@@ -101,9 +92,8 @@ export class PianoComponent {
     if(this.action === 'markiere') { return this.selectedKey === keyId; }
 
     if(this.toneType === 'Tonleitern'){
-      let tonleiter = this.currentQuestion.replace('-', '_');
-
-      let selectedArray = this.arrays[tonleiter];
+      let selectedArray = this.arrays[this.currentQuestion];
+      console.log(selectedArray);
 
       for (let note of selectedArray) {
         if(this.action === 'bestimme' && note === keyId) { return true; }

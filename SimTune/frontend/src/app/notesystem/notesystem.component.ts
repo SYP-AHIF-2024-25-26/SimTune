@@ -91,7 +91,7 @@ export class NotesystemComponent {
     }
 
     const selectedExtraCircle = sessionStorage.getItem('selectedExtraCircle');
-    if(/*selectedExtraCircle === '{}' &&*/ i !== undefined && this.isClickable === true) {
+    if(i !== undefined && this.isClickable === true) {
       const note = this.allNotesRead[i-1];
 
       if(this.isErasing === false)
