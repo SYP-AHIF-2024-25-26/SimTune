@@ -15,6 +15,7 @@ export class PianoComponent {
   @ViewChild('myDiv') myDiv!: ElementRef;
   @Input() action: string | null = null;
   @Input() currentQuestion: string = '';
+  @Input() toneType: string = '';
   public isClickable: boolean = true;
   currentColor = signal('gray');
   selectedKey: string | null = null;
@@ -40,6 +41,33 @@ export class PianoComponent {
     { id: 'ais-2' }
   ];
 
+  arrays: Record<string, string[]> = {
+    'G_Dur': ['g-1', 'a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'fis-2'],
+    'e_Moll': ['e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'c-2', 'd-2'],
+    'D_Dur': ['d-1', 'e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'cis-2'],
+    'h_Moll': ['h-1', 'cis-2', 'd-2', 'e-2', 'fis-2', 'g-2', 'a-2'],
+    'A_Dur': ['a-1', 'h-1', 'cis-2', 'd-2', 'e-2', 'fis-2', 'gis-2'],
+    'fis_Moll': ['fis-1', 'gis-1', 'a-1', 'h-1', 'cis-2', 'd-2', 'e-2']
+  };
+
+  dur_und_moll = {
+    'F-Dur': ['f-1', 'g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'e-2'],
+    'd-Moll': ['d-1', 'e-1', 'f-1', 'g-1', 'a-1', 'b-1', 'c-2'],
+
+    'B-Dur': ['b-1', 'c-2', 'd-2', 'es-2', 'f-2', 'g-2', 'a-2'],
+    'g-Moll': ['g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'es-2', 'f-2'],
+
+    'Es-Dur': ['es-1', 'f-1', 'g-1', 'as-1', 'b-1', 'c-2', 'd-2'],
+    'c-Moll': ['c-1', 'd-1', 'es-1', 'f-1', 'g-1', 'as-1', 'b-1']
+  };
+
+  dur_moll_und_natürliches_moll = {
+    ...this.dur_und_moll,
+
+    'C-Dur': ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1'],
+    'a-Moll': ['a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2']
+  };
+
   onKeyClick(keyId: string) {
     if (!this.isClickable) { return; }
 
@@ -51,6 +79,7 @@ export class PianoComponent {
       this.currentColor.set('gray');
       this.selectedKey = keyId;
       this.enableButton.emit(true);
+
       sessionStorage.setItem('selectedKey', keyId);
 
       const audio = new Audio("/assets/sounds/Notensystem-" + keyId + ".mp4");
@@ -70,6 +99,18 @@ export class PianoComponent {
 
   isMarked(keyId: string) {
     if(this.action === 'markiere') { return this.selectedKey === keyId; }
+
+    if(this.toneType === 'Tonleitern'){
+      let tonleiter = this.currentQuestion.replace('-', '_');
+
+      let selectedArray = this.arrays[tonleiter];
+
+      for (let note of selectedArray) {
+        if(this.action === 'bestimme' && note === keyId) { return true; }
+      }
+      return false;
+    }
+
     return this.action === 'lies' && this.currentQuestion === keyId;
   }
 }

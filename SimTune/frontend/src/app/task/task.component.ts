@@ -20,6 +20,35 @@ export class TaskComponent {
   allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
   allNotesNotensystemSounds = ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2', 'a-2'];
   intervalle = ["Prime: 1", "Sekunde: 2", "Terz: 3", "Quarte: 4", "Quinte: 5", "Sexte: 6", "Septime: 7", "Oktave: 8"];
+
+  dur_und_natürliches_moll = {
+    'G_Dur': ['g-1', 'a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'fis-2'],
+    'e_Moll': ['e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'c-2', 'd-2'],
+    'D_Dur': ['d-1', 'e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'cis-2'],
+    'h_Moll': ['h-1', 'cis-2', 'd-2', 'e-2', 'fis-2', 'g-2', 'a-2'],
+    'A_Dur': ['a-1', 'h-1', 'cis-2', 'd-2', 'e-2', 'fis-2', 'gis-2'],
+    'fis_Moll': ['fis-1', 'gis-1', 'a-1', 'h-1', 'cis-2', 'd-2', 'e-2']
+  };
+
+  dur_und_moll = {
+    'F_Dur': ['f-1', 'g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'e-2'],
+    'd_Moll': ['d-1', 'e-1', 'f-1', 'g-1', 'a-1', 'b-1', 'c-2'],
+
+    'B_Dur': ['b-1', 'c-2', 'd-2', 'es-2', 'f-2', 'g-2', 'a-2'],
+    'g_Moll': ['g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'es-2', 'f-2'],
+
+    'Es_Dur': ['es-1', 'f-1', 'g-1', 'as-1', 'b-1', 'c-2', 'd-2'],
+    'c_Moll': ['c-1', 'd-1', 'es-1', 'f-1', 'g-1', 'as-1', 'b-1']
+  };
+
+  dur_moll_und_natürliches_moll = {
+    ...this.dur_und_natürliches_moll,
+    ...this.dur_und_moll,
+
+    'C_Dur': ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1'],
+    'a_Moll': ['a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2']
+  };
+
   action: string | null = null;
   letters: string | null = null;
   isIntervall: boolean = false;
@@ -94,9 +123,30 @@ export class TaskComponent {
     this.totalQuestions = filteredLetters.length * 2;
     this.totalSegments = this.totalQuestions;
 
+    if(this.toneType === 'Tonleitern') {
+      let description = sessionStorage.getItem('descriptions');
+      const values = description?.replace(/"/g, '').split(',')[1].split(' ');
 
+      if (values) {
+        const arrayName = values
+          .map(v => v.replace('&', 'und'))
+          .join('_');
 
-    if (this.action === 'lies') {
+          let selectedArray = {};
+          if (arrayName === 'dur_und_natürliches_moll') {
+            selectedArray = this.dur_und_natürliches_moll;
+          } else if (arrayName === 'dur_und_moll') {
+            selectedArray = this.dur_und_moll;
+          } else if (arrayName === 'dur_und_moll_und_natürliches_moll') {
+            selectedArray = this.dur_moll_und_natürliches_moll;
+          }
+
+          const keys = Object.keys(selectedArray);
+
+          this.allQuestions = [...keys];
+      }
+    }
+    else if (this.action === 'lies') {
       filteredLetters.forEach(letter => {
         this.allQuestions.push(`${letter}-1`, `${letter}-2`);
       });
@@ -243,7 +293,20 @@ export class TaskComponent {
       this.lastPressedLetter = null;
     }, 1000);
 
-    const correct = letter === this.currentQuestion.split('-')[0];
+    let correct = false;
+    if(this.toneType === 'Tonleitern') {
+      let letterSplit = '';
+
+      if (!letter.includes(' ')) {
+        letterSplit = letter;
+      } else {
+        letterSplit = letter.split(' ')[1];
+      }
+
+      correct = letterSplit === this.currentQuestion.split('_')[1];
+    } else {
+      correct = letter === this.currentQuestion.split('-')[0];
+    }
 
     if (correct) {
       this.usedLetters.add(letter);
@@ -268,7 +331,13 @@ export class TaskComponent {
         if (this.toneType === 'Notensystem' || this.toneType === 'Intervalle') {
           this.notesystemComponent.currentQuestion = this.currentQuestion;
           this.notesystemComponent.isIntervall = this.toneType === 'Intervalle';
-        } else {
+        } else if (this.toneType === 'Tonleitern') {
+          //description muss die question sein
+
+
+          this.pianoComponent.currentQuestion = this.currentQuestion;
+        }
+        else {
           this.pianoComponent.currentQuestion = this.currentQuestion;
         }
       }

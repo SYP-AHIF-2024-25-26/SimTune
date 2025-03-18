@@ -37,21 +37,26 @@
         Schreibe das Intervall {{ currentQuestion }}
       </ng-container>
       <ng-template #otherAction>
-        Markiere die Note: {{ currentQuestion }}
+        <ng-container *ngIf="toneType === 'Tonleitern'; else otherAction">
+          Bestimme die Tonleiter
+        </ng-container>
+        <ng-template #otherAction>
+          Markiere die Note: {{ currentQuestion }}
+        </ng-template>
       </ng-template>
 
     </ng-template>
   </div>
 
   <div *ngIf="progress < totalSegments" class="flex justify-center mt-24 flex-col">
-    <ng-container *ngIf="toneType === 'Stammtoene'; else notensystemTemplate">
-      <app-piano [action]="action" [currentQuestion]="currentQuestion" (enableButton)="onSelectedKeyChanged($event)"></app-piano>
+    <ng-container *ngIf="toneType === 'Stammtoene' || toneType === 'Tonleitern'; else notensystemTemplate">
+      <app-piano [action]="action" [currentQuestion]="currentQuestion" [toneType]="toneType" (enableButton)="onSelectedKeyChanged($event)"></app-piano>
     </ng-container>
     <ng-template #notensystemTemplate>
       <app-notesystem [action]="action" [currentQuestion]="currentQuestion" [isIntervall]="isIntervall" (enableButton)="onSelectedKeyChanged($event)"></app-notesystem>
     </ng-template>
 
-    <div *ngIf="action === 'lies'" class="flex justify-center">
+    <div *ngIf="action === 'lies' || action === 'bestimme'" class="flex justify-center">
 
       <div *ngIf="toneType === 'Intervalle'">
         <button
@@ -69,7 +74,7 @@
         </button>
       </div>
 
-      <div *ngIf="toneType !== 'Intervalle'">
+      <div *ngIf="toneType === 'Stammtoene' || toneType === 'Notensystem'">
         <button
           *ngFor="let letter of ['c', 'd', 'e', 'f', 'g', 'a', 'h']"
           #button
@@ -78,6 +83,22 @@
             'bg-green-500 text-white': lastPressedLetter === letter,
             'enabled-button': letters?.includes(letter),
             'disabled-button': !letters?.includes(letter)
+          }"
+          class="mr-4 p-2 rounded"
+          (click)="checkIfRight(letter, button)">
+          {{ letter }}
+        </button>
+      </div>
+
+      <div *ngIf="toneType === 'Tonleitern'">
+        <button
+          *ngFor="let letter of ['Dur', 'Natürliches Moll', 'Harmonisches Moll', 'Melodisches Moll']"
+          #button
+          [disabled]="!letters?.includes(letter)"
+          [ngClass]="{
+            'bg-green-500 text-white': lastPressedLetter === letter,
+            'enabled-button-tonleiter': letters?.includes(letter),
+            'disabled-button-tonleiter': !letters?.includes(letter)
           }"
           class="mr-4 p-2 rounded"
           (click)="checkIfRight(letter, button)">
