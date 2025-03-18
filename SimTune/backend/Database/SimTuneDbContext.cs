@@ -54,10 +54,9 @@ public class SimTuneDbContext : DbContext
             new Exercise { ExerciseId = 27, Description = "Lies alle Intervalle", Values = "Prime,Sekunde,Terz,Quarte,Quinte,Sexte,Septime,Oktave", ExerciseType = ExerciseType.Intervalle },
             new Exercise { ExerciseId = 28, Description = "Schreibe alle Intervalle", Values = "Prime,Sekunde,Terz,Quarte,Quinte,Sexte,Septime,Oktave", ExerciseType = ExerciseType.Intervalle },
             
-            new Exercise {ExerciseId = 29, Description = "Bestimme die Tonleiter", Values = "Dur,natürlichesMoll", ExerciseType = ExerciseType.Tonleitern},
-            new Exercise {ExerciseId = 30, Description = "Bestimme die Tonleiter", Values = "Dur,natürlichesMoll,harmonischesMoll,melodischesMoll", ExerciseType = ExerciseType.Tonleitern},
-            new Exercise {ExerciseId = 31, Description = "Bestimme die Tonleiter", Values = "Dur,natürlichesMoll,harmonischesMoll,melodischesMoll", ExerciseType = ExerciseType.Tonleitern},
-            new Exercise {ExerciseId = 32, Description = "Bestimme die Tonleiter", Values = "Dur,natürlichesMoll,harmonischesMoll,melodischesMoll", ExerciseType = ExerciseType.Tonleitern}
+            new Exercise {ExerciseId = 29, Description = "Bestimme die Tonleiter,dur und natürliches moll", Values = "Dur,natürlichesMoll", ExerciseType = ExerciseType.Tonleitern},
+            new Exercise {ExerciseId = 30, Description = "Bestimme die Tonleiter,dur und moll", Values = "Dur,natürlichesMoll", ExerciseType = ExerciseType.Tonleitern},
+            new Exercise {ExerciseId = 31, Description = "Bestimme die Tonleiter,dur & moll und natürliches moll", Values = "Dur,natürlichesMoll", ExerciseType = ExerciseType.Tonleitern}
         );
 
     }
