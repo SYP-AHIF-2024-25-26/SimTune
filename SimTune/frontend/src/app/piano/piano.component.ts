@@ -93,7 +93,6 @@ export class PianoComponent {
 
     if(this.toneType === 'Tonleitern'){
       let selectedArray = this.arrays[this.currentQuestion];
-      console.log(selectedArray);
 
       for (let note of selectedArray) {
         if(this.action === 'bestimme' && note === keyId) { return true; }
