@@ -3,7 +3,7 @@ import { UebungenComponent } from './uebungen/uebungen.component';
 import { PruefungenComponent } from './pruefungen/pruefungen.component';
 import { UnterlagenComponent } from './unterlagen/unterlagen.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { intervalleData, notenSystemData, stammtoeneData, toeneData, uebungenData } from './uebungen/task-data';
+import { intervalleData, notenSystemData, stammtoeneData, toeneData, tonleiternData, uebungenData } from './uebungen/task-data';
 import { TaskComponent } from './task/task.component';
 import { PianoComponent } from './piano/piano.component';
 import { NotesystemComponent } from './notesystem/notesystem.component';
@@ -99,7 +99,7 @@ export const routes: Routes = [
     path: 'tonleitern',
     component: UebungenComponent,
     data: {
-      content: intervalleData,
+      content: tonleiternData,
       breadcrumbElements: [
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Struktur', url: '/uebungen' },

@@ -41,11 +41,16 @@ export class UebungenComponent implements OnInit {
         this.texts = await fetchRestEndpoint(API_URL + 'exercises/Notensystem', 'GET');
 
         this.toneType = 'Notensystem';
-      break;
+        break;
       case 'intervalle':
         this.texts = await fetchRestEndpoint(API_URL + 'exercises/Intervalle', 'GET');
 
         this.toneType = 'Intervalle';
+        break;
+      case 'tonleitern':
+        this.texts = await fetchRestEndpoint(API_URL + 'exercises/Tonleitern', 'GET');
+
+        this.toneType = 'Tonleitern';
         break;
       default:
         break;
@@ -54,11 +59,17 @@ export class UebungenComponent implements OnInit {
 
   goToTask(text: string): void {
     let action = '';
+
     if(text.startsWith('Schreibe')) {
       action = 'schreibe';
     } else {
       action = text.startsWith('Markiere') ? 'markiere' : 'lies';
     }
+
+    if (text.startsWith('Bestimme')) {
+      action = 'bestimme';
+    }
+
     const foundItem = this.texts.find(item => item.description === text);
     const letters = foundItem ? foundItem.values : '';
     const index = foundItem ? this.texts.indexOf(foundItem) : 0;

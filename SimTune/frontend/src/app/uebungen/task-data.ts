@@ -159,6 +159,24 @@ export const notenSystemData: TaskData = {
   "task-url": ""
 }
 
+export const tonleiternData: TaskData = {
+  "header": "",
+  "groups": [
+    {
+      "group-header": "",
+      "cards": [
+        {
+          "card-header": "",
+          "card-image-url": "",
+          "card-url": ""
+        }
+      ]
+    }
+  ],
+  "task-type": "tonleitern",
+  "task-url": ""
+}
+
 export const intervalleData: TaskData = {
   "header": "Intervalle",
   "groups": [
