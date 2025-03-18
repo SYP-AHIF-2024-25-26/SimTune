@@ -145,6 +145,8 @@ export class TaskComponent {
           const keys = Object.keys(selectedArray);
 
           this.allQuestions = [...keys];
+          this.totalSegments = this.allQuestions.length;
+          this.totalQuestions = this.allQuestions.length;
       }
     }
     else if (this.action === 'lies') {
@@ -362,31 +364,8 @@ export class TaskComponent {
     if (this.progress === this.totalSegments) {
       this.evaluation = `${((this.correctAnswers / this.totalQuestions) * 100).toFixed(2)}%`;
 
-      /*
-      if(this.toneType === 'Notensystem') {
-        this.randomizedQuestions.sort((a, b) => {
-          const { note: noteA, height: heightA } = this.extractData(a);
-          const { note: noteB, height: heightB } = this.extractData(b);
-
-          if (heightA !== heightB) {
-            return Number(heightA) - Number(heightB);
-          }
-
-          return this.getNoteIndex(String(noteB)) - this.getNoteIndex(String(noteA));
-        });
-
-        this.allNotesNotensystemSounds.forEach((element, index) => {
-          const audio = new Audio("/assets/sounds/Notensystem-" + element + ".mp4");
-
-          setTimeout(() => {
-            audio.play();
-
-          }, index * 400);
-        });
-      } else {*/
-        this.audio = new Audio("/assets/sounds/Uebung-fertig.mp3");
-        this.audio.play();
-      //}
+      this.audio = new Audio("/assets/sounds/Uebung-fertig.mp3");
+      this.audio.play();
     }
   }
 
