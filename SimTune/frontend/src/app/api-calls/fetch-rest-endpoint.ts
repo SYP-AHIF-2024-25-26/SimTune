@@ -1,9 +1,9 @@
 export { fetchRestEndpoint, API_URL };
   // für lokale Entwicklung
-  //const API_URL = "http://localhost:5069/";
+  const API_URL = "http://localhost:5069/";
 
   // für docker
-  const API_URL = "http://localhost:8081/";
+  //const API_URL = "http://localhost:8081/";
 
   async function fetchRestEndpoint
       (route: string, method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", data?: object):

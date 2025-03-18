@@ -18,6 +18,7 @@ export class PianoComponent {
   public isClickable: boolean = true;
   currentColor = signal('gray');
   selectedKey: string | null = null;
+  allNotesRead = ['a-2', 'g-2', 'f-2', 'e-2', 'd-2', 'c-2', 'h-1', 'a-1', 'g-1', 'f-1', 'e-1', 'd-1', 'c-1'];
 
   whiteKeys = [
     { id: 'c-1' }, { id: 'd-1' }, { id: 'e-1' }, { id: 'f-1' },
@@ -51,6 +52,9 @@ export class PianoComponent {
       this.selectedKey = keyId;
       this.enableButton.emit(true);
       sessionStorage.setItem('selectedKey', keyId);
+
+      const audio = new Audio("/assets/sounds/Notensystem-" + keyId + ".mp4");
+      audio.play();
     }
   }
 

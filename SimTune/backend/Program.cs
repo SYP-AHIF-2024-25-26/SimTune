@@ -6,10 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SimTuneDbContext>(
     // für lokale Entwicklung
-    //options => options.UseSqlite("FileName=Database/SimTune.db")
+    options => options.UseSqlite("FileName=Database/SimTune.db")
     
     // für docker
-    options => options.UseSqlite("FileName=\\app\\Database\\SimTune.db")
+    //options => options.UseSqlite("FileName=\\app\\Database\\SimTune.db")
 );
 
 builder.Services.AddCors(options =>

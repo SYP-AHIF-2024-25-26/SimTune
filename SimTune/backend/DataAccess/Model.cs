@@ -48,5 +48,6 @@ public enum ExerciseType
     Notensystem,
     Intervalle,
     Versetzungszeichen,
-    Hilfslinien
+    Hilfslinien,
+    Tonleitern
 }
