@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, Input, signal, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { EventEmitter, Output } from '@angular/core';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-piano',
@@ -16,6 +17,7 @@ export class PianoComponent {
   @Input() action: string | null = null;
   @Input() currentQuestion: string = '';
   @Input() toneType: string = '';
+  @Input() volume!: number;
   public isClickable: boolean = true;
   currentColor = signal('gray');
   selectedKey: string | null = null;
@@ -41,7 +43,7 @@ export class PianoComponent {
     { id: 'ais-2' }
   ];
 
-  arrays: Record<string, string[]> = {
+  public arrays: Record<string, string[]> = {
     'G_Dur': ['g-1', 'a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'fis-2'],
     'e_Moll': ['e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'c-2', 'd-2'],
     'D_Dur': ['d-1', 'e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'cis-2'],
@@ -74,6 +76,8 @@ export class PianoComponent {
       sessionStorage.setItem('selectedKey', keyId);
 
       const audio = new Audio("/assets/sounds/Notensystem-" + keyId + ".mp4");
+      const volume = sessionStorage.getItem('volume');
+      audio.volume = parseInt(volume || '100') / 100;
       audio.play();
     }
   }

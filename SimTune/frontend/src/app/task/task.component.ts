@@ -17,38 +17,17 @@ export class TaskComponent {
   @ViewChild(PianoComponent) pianoComponent!: PianoComponent;
   @ViewChild(NotesystemComponent) notesystemComponent!: NotesystemComponent;
 
+  // Notensystem
   allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
   allNotesNotensystemSounds = ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2', 'a-2'];
+
+  //Intervalle
   intervalle = ["Prime: 1", "Sekunde: 2", "Terz: 3", "Quarte: 4", "Quinte: 5", "Sexte: 6", "Septime: 7", "Oktave: 8"];
 
-  //brauche nur den key also 'G-Dur', ...
-  dur_und_natürliches_moll = {
-    'G_Dur': ['g-1', 'a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'fis-2'],
-    'e_Moll': ['e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'c-2', 'd-2'],
-    'D_Dur': ['d-1', 'e-1', 'fis-1', 'g-1', 'a-1', 'h-1', 'cis-2'],
-    'h_Moll': ['h-1', 'cis-2', 'd-2', 'e-2', 'fis-2', 'g-2', 'a-2'],
-    'A_Dur': ['a-1', 'h-1', 'cis-2', 'd-2', 'e-2', 'fis-2', 'gis-2'],
-    'fis_Moll': ['fis-1', 'gis-1', 'a-1', 'h-1', 'cis-2', 'd-2', 'e-2']
-  };
-
-  dur_und_moll = {
-    'F_Dur': ['f-1', 'g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'e-2'],
-    'd_Moll': ['d-1', 'e-1', 'f-1', 'g-1', 'a-1', 'b-1', 'c-2'],
-
-    'B_Dur': ['b-1', 'c-2', 'd-2', 'es-2', 'f-2', 'g-2', 'a-2'],
-    'g_Moll': ['g-1', 'a-1', 'b-1', 'c-2', 'd-2', 'es-2', 'f-2'],
-
-    'Es_Dur': ['es-1', 'f-1', 'g-1', 'as-1', 'b-1', 'c-2', 'd-2'],
-    'c_Moll': ['c-1', 'd-1', 'es-1', 'f-1', 'g-1', 'as-1', 'b-1']
-  };
-
-  dur_moll_und_natürliches_moll = {
-    ...this.dur_und_natürliches_moll,
-    ...this.dur_und_moll,
-
-    'C_Dur': ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1'],
-    'a_Moll': ['a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2']
-  };
+  // Tonleitern
+  dur_und_natürliches_moll = ['G_Dur', 'e_Moll', 'D_Dur', 'h_Moll', 'A_Dur', 'fis_Moll'];
+  dur_und_moll = ['F_Dur', 'd_Moll', 'B_Dur', 'g_Moll', 'Es_Dur', 'c_Moll'];
+  dur_moll_und_natürliches_moll = [...this.dur_und_natürliches_moll, ...this.dur_und_moll, 'C_Dur', 'a_Moll'];
 
   action: string | null = null;
   letters: string | null = null;
@@ -78,7 +57,7 @@ export class TaskComponent {
 
   currentIndex: number = 0;
 
-  constructor(private route: ActivatedRoute, private location: Location, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.progress = 0;
@@ -109,7 +88,6 @@ export class TaskComponent {
     }
   }
 
-
   ngAfterViewInit(): void {
     if (this.pianoComponent) {
       this.pianoComponent.isClickable = this.action !== 'lies';
@@ -133,7 +111,7 @@ export class TaskComponent {
           .map(v => v.replace('&', 'und'))
           .join('_');
 
-          let selectedArray = {};
+          let selectedArray: string[] = [];
           if (arrayName === 'dur_und_natürliches_moll') {
             selectedArray = this.dur_und_natürliches_moll;
           } else if (arrayName === 'dur_und_moll') {
@@ -142,9 +120,7 @@ export class TaskComponent {
             selectedArray = this.dur_moll_und_natürliches_moll;
           }
 
-          const keys = Object.keys(selectedArray);
-
-          this.allQuestions = [...keys];
+          this.allQuestions = selectedArray;
           this.totalSegments = this.allQuestions.length;
           this.totalQuestions = this.allQuestions.length;
       }
@@ -194,8 +170,6 @@ export class TaskComponent {
       this.pianoComponent.selectedKey = null;
     }, 500);
   }
-
-
 
   checkIfRightNotensystemIntervalle() {
     const selectedCircle = sessionStorage.getItem('selectedCircle');
@@ -272,8 +246,26 @@ export class TaskComponent {
     }
   }
 
-  checkIfRight(letter: string, button: HTMLButtonElement): void {
+  async checkIfRight(letter: string, button: HTMLButtonElement): Promise<void> {
     if (this.isCorrect(letter)) {
+      if(this.toneType === 'Tonleitern') {
+        const allNotes = this.pianoComponent.arrays[this.currentQuestion];
+
+        for (const eachNote of allNotes) {
+          try {
+            const audio = new Audio(`/assets/sounds/Notensystem-${eachNote}.mp4`);
+            audio.play();
+
+          } catch {
+            console.warn(`Fehler beim Abspielen von: ${eachNote}`);
+          }
+
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+
       this.updateProgress();
 
       if (this.firstAttemptCorrect) {
@@ -334,13 +326,7 @@ export class TaskComponent {
         if (this.toneType === 'Notensystem' || this.toneType === 'Intervalle') {
           this.notesystemComponent.currentQuestion = this.currentQuestion;
           this.notesystemComponent.isIntervall = this.toneType === 'Intervalle';
-        } else if (this.toneType === 'Tonleitern') {
-          //description muss die question sein
-
-
-          this.pianoComponent.currentQuestion = this.currentQuestion;
-        }
-        else {
+        } else {
           this.pianoComponent.currentQuestion = this.currentQuestion;
         }
       }
@@ -348,17 +334,20 @@ export class TaskComponent {
     this.checkCompletion();
   }
 
+  /*
   extractData(element: string) {
     const [note, height] = element.split('-');
     return {
       note,
       height: +height,
     };
-  }
+  }*/
 
+  /*
   getNoteIndex(note: string) {
     return this.allNotesNotensystem.indexOf(note);
   }
+  */
 
   checkCompletion(): void {
     if (this.progress === this.totalSegments) {
@@ -367,15 +356,6 @@ export class TaskComponent {
       this.audio = new Audio("/assets/sounds/Uebung-fertig.mp3");
       this.audio.play();
     }
-  }
-
-  get dashArray() {
-    const incorrectAnswers = this.totalQuestions - this.correctAnswers;
-    return incorrectAnswers * (2 * Math.PI * 45 / this.totalQuestions);
-  }
-
-  get dashOffset() {
-    return 0;
   }
 
   goBack(): void {
@@ -422,5 +402,14 @@ export class TaskComponent {
 
   eraser(): void {
     this.isErasing === true ? this.isErasing = false : this.isErasing = true;
+  }
+
+  get dashArray() {
+    const incorrectAnswers = this.totalQuestions - this.correctAnswers;
+    return incorrectAnswers * (2 * Math.PI * 45 / this.totalQuestions);
+  }
+
+  get dashOffset() {
+    return 0;
   }
 }

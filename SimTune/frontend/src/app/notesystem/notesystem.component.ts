@@ -17,7 +17,7 @@ export class NotesystemComponent {
   @Input() currentQuestion: string | null = null;
   @Output() enableButton = new EventEmitter<boolean>();
 
-  allNotesRead = ['', 'a-2', 'g-2', 'f-2', 'e-2', 'd-2', 'c-2', 'h-1', 'a-1', 'g-1', 'f-1', 'e-1', 'd-1', 'c-1'];
+  allNotesRead = ['a-2', 'g-2', 'f-2', 'e-2', 'd-2', 'c-2', 'h-1', 'a-1', 'g-1', 'f-1', 'e-1', 'd-1', 'c-1'];
   allNotes = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
   allIntervalle = ['Prime', 'Sekunde', 'Terz', 'Quarte', 'Quinte', 'Sexte', 'Septime', 'Oktave']
 
@@ -50,12 +50,15 @@ export class NotesystemComponent {
 
         if (intervalIndex !== -1) {
           let startIndex = Math.floor(Math.random() * (this.allNotesRead.length - intervalIndex));
+          startIndex++;
 
+          console.log(this.allNotesRead[startIndex], startIndex);
           if(this.allNotesRead[startIndex] === 'c-1') {
             startIndex--;
           } else if(this.allNotesRead[startIndex] === 'a-2') {
             startIndex++;
           }
+          console.log(this.allNotesRead[startIndex], startIndex);
           const endIndex = startIndex + intervalIndex;
 
           this.selectedCircle[startIndex] = true;
@@ -63,7 +66,6 @@ export class NotesystemComponent {
 
           this.selectedExtraLine[startIndex] = true;
           this.selectedExtraLine[endIndex] = true;
-          console.log(this.selectedCircle)
 
           if(startIndex === endIndex) {
             this.selectedExtraCircle[endIndex] = true;
