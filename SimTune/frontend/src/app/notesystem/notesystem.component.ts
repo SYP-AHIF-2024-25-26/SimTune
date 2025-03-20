@@ -85,6 +85,8 @@ export class NotesystemComponent {
 
           setTimeout(() => {
             const audio = new Audio("/assets/sounds/Notensystem-" + this.currentQuestion + ".mp4");
+            const volume = sessionStorage.getItem('volume');
+            audio.volume = parseInt(volume || '100') / 100;
             audio.play();
           }, 100);
         }
@@ -101,6 +103,8 @@ export class NotesystemComponent {
       if(this.isErasing === false)
       {
         const audio = new Audio("/assets/sounds/Notensystem-" + note + ".mp4");
+        const volume = sessionStorage.getItem('volume');
+        audio.volume = parseInt(volume || '100') / 100;
         audio.play();
       }
 
@@ -135,6 +139,8 @@ export class NotesystemComponent {
       const note = this.allNotesRead[id-1];
 
       const audio = new Audio("/assets/sounds/Notensystem-" + note + ".mp4");
+      const volume = sessionStorage.getItem('volume');
+      audio.volume = parseInt(volume || '100') / 100;
       audio.play();
 
       this.selectedCircle[id] = true;
