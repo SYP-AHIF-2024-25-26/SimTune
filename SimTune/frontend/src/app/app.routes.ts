@@ -9,6 +9,7 @@ import { PianoComponent } from './piano/piano.component';
 import { NotesystemComponent } from './notesystem/notesystem.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 export const routes: Routes = [
   {
@@ -126,5 +127,6 @@ export const routes: Routes = [
   { path: 'piano', component: PianoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'profile-page', component: ProfilePageComponent },
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 ];

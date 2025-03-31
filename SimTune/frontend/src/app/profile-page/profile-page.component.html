@@ -1,0 +1,99 @@
+<div class="flex justify-center items-start min-h-screen pt-24 overflow-y-hidden">
+  <div class="flex flex-col justify-between items-start p-6 bg-costumGray drop-shadow-md w-full max-w-md rounded-lg ml-20">
+    <div class="text-2xl font-semibold mb-4 text-center w-full">Profil Übersicht</div>
+
+    <div class="text-lg font-medium mb-4">
+      E-mail: <span class="text-base italic font-normal underline text-blue-400">{{ email() }}</span>
+    </div>
+    <div class="text-lg font-medium mb-4">
+      Benutzername: <span class="text-base italic font-normal">{{ benutzername() }}</span>
+    </div>
+    <div class="text-lg font-medium mb-8">
+      Rolle: <span class="text-base italic font-normal">{{ rolle() }}</span>
+    </div>
+
+    <div class="text-lg font-normal text-center p-2 drop-shadow-md rounded-lg bg-red-500 cursor-pointer text-center w-full transition-all duration-300 ease-in-out hover:bg-red-400"
+     (click)="confirmDelete()"
+     [ngClass]="{'bg-red-600': isClicked, 'bg-red-500': !isClicked}">
+      Konto löschen
+    </div>
+  </div>
+
+  <div *ngIf="showDialog" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-md w-96 text-center">
+      <p class="text-lg">Wollen Sie wirklich Ihr Konto löschen?</p>
+      <button class="bg-red-500 text-white p-2 rounded-md mt-4 w-14 transition-all duration-300 ease-in-out hover:bg-red-400" (click)="deleteAccount()">Ja</button>
+      <button class="bg-white border-2 border-gray-300 text-gray-700 p-2 rounded-md mt-4 ml-4 w-14 transition-all duration-300 ease-in-out hover:bg-gray-100" (click)="cancelDelete()">Nein</button>
+    </div>
+  </div>
+
+  <div class="flex flex-col justify-center w-full relative items-center">
+    <div class="mb-24">
+      <div class="flex flex-col items-center justify-center">
+        <div class="cursor-pointer -mt-10" (click)="toggleFilterVisibility()">
+          <img src="assets/images/Filter.png" class="w-10 h-10 p-2 transition-transform hover:scale-105"/>
+        </div>
+
+        <div *ngIf="showSortOptions" class="flex gap-4 absolute top-0 z-20 bg-white">
+          <button (click)="toggleSort('Score')" class="right-1/2 p-2 rounded bg-costumGray text-black hover:bg-customBlue focus:outline-none">
+            Score
+          </button>
+          <button (click)="toggleSort('Attempts')" class="right-1/2 p-2 rounded bg-costumGray text-black hover:bg-customBlue focus:outline-none">
+            Attempts
+          </button>
+          <button (click)="toggleSort('ExerciseTyp')" class="right-1/2 p-2 rounded bg-costumGray text-black hover:bg-customBlue focus:outline-none">
+            Exercise Typ
+          </button>
+        </div>
+
+        <div *ngIf="showSortOptions" class="flex flex-row gap-6 mt-32 absolute z-10">
+          <div *ngIf="activeSort() === 'Score'" class="flex gap-4">
+            <button (click)="sortExercises('Score', 'asc')" class="p-2 rounded bg-costumLightGray text-black hover:bg-customBlue focus:outline-none">Score Aufsteigend</button>
+            <button (click)="sortExercises('Score', 'desc')" class="p-2 rounded bg-costumLightGray text-black hover:bg-customBlue focus:outline-none">Score Absteigend</button>
+          </div>
+
+          <div *ngIf="activeSort() === 'Attempts'" class="flex gap-4">
+            <button (click)="sortExercises('Attempts', 'asc')" class="p-2 rounded bg-costumLightGray text-black hover:bg-customBlue focus:outline-none">Attempts Aufsteigend</button>
+            <button (click)="sortExercises('Attempts', 'desc')" class="p-2 rounded bg-costumLightGray text-black hover:bg-customBlue focus:outline-none">Attempts Absteigend</button>
+          </div>
+
+          <div *ngIf="activeSort() === 'ExerciseTyp'" class="flex gap-4">
+            <label class="flex items-center">
+              <input type="checkbox" (change)="filterExerciseType($event, 'Stammtöne')" [checked]="isChecked('Stammtöne')"  class="mr-2" />
+              Stammtöne
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" (change)="filterExerciseType($event, 'Notensystem')" [checked]="isChecked('Notensystem')" class="mr-2" />
+              Notensystem
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" (change)="filterExerciseType($event, 'Intervalle')" [checked]="isChecked('Intervalle')"  class="mr-2" />
+              Intervalle
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" (change)="filterExerciseType($event, 'Tonleitern')" [checked]="isChecked('Tonleitern')" class="mr-2" />
+              Tonleitern
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-6 justify-center w-full">
+      <div *ngFor="let ex of filteredExercise" class="exercise-item p-4 bg-gray-100 rounded-lg shadow-md w-1/3 mb-5">
+        <p class="w-full text-center mb-2 text-xl"><strong>{{ ex['Description'] }} </strong></p>
+        <p><strong>Score:</strong>
+          <span [ngClass]="{
+            'text-green-700': parseFloat(ex['Score']) >= 80,
+            'text-yellow-500': parseFloat(ex['Score']) >= 50 && parseFloat(ex['Score']) < 80,
+            'text-red-500': parseFloat(ex['Score']) < 50
+          }">
+            {{ ex['Score'] }}
+          </span>
+        </p>
+        <p><strong>Attempts:</strong> {{ ex['Attempts'] }}</p>
+        <p><strong>Exercise Typ:</strong> {{ ex['ExerciseTyp'] }}</p>
+      </div>
+    </div>
+  </div>
+</div>
