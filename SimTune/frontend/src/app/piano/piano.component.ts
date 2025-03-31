@@ -60,6 +60,8 @@ export class PianoComponent {
     'a_Moll': ['a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2']
   };
 
+  frequency: number = 440;
+
 
   onKeyClick(keyId: string) {
     if (!this.isClickable) { return; }
@@ -75,7 +77,7 @@ export class PianoComponent {
 
       sessionStorage.setItem('selectedKey', keyId);
 
-      const audio = new Audio("/assets/sounds/Notensystem-" + keyId + ".mp4");
+      const audio = new Audio("/assets/sounds/" + keyId + ".ogg");
       const volume = sessionStorage.getItem('volume');
       audio.volume = parseInt(volume || '100') / 100;
       audio.play();

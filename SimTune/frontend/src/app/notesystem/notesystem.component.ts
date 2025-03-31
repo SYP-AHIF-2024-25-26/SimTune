@@ -49,6 +49,7 @@ export class NotesystemComponent {
         const intervalIndex = this.allIntervalle.indexOf(this.currentQuestion?.split('-')[0] || '');
 
         if (intervalIndex !== -1) {
+          console.log(this.allIntervalle[intervalIndex], intervalIndex);
           let startIndex = Math.floor(Math.random() * (this.allNotesRead.length - intervalIndex));
           startIndex++;
 
@@ -84,7 +85,7 @@ export class NotesystemComponent {
           this.selectedExtraLine[index] = true;
 
           setTimeout(() => {
-            const audio = new Audio("/assets/sounds/Notensystem-" + this.currentQuestion + ".mp4");
+            const audio = new Audio("/assets/sounds/" + this.currentQuestion + ".ogg");
             const volume = sessionStorage.getItem('volume');
             audio.volume = parseInt(volume || '100') / 100;
             audio.play();
@@ -102,7 +103,7 @@ export class NotesystemComponent {
 
       if(this.isErasing === false)
       {
-        const audio = new Audio("/assets/sounds/Notensystem-" + note + ".mp4");
+        const audio = new Audio("/assets/sounds/" + note + ".ogg");
         const volume = sessionStorage.getItem('volume');
         audio.volume = parseInt(volume || '100') / 100;
         audio.play();
@@ -138,7 +139,7 @@ export class NotesystemComponent {
     if(this.isErasing === false && !this.selectedCircle[id]) {
       const note = this.allNotesRead[id-1];
 
-      const audio = new Audio("/assets/sounds/Notensystem-" + note + ".mp4");
+      const audio = new Audio("/assets/sounds/" + note + ".ogg");
       const volume = sessionStorage.getItem('volume');
       audio.volume = parseInt(volume || '100') / 100;
       audio.play();
