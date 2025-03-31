@@ -3,7 +3,7 @@ bin/
 obj/
 */bin
 /.idea
-
+Properties/launchSettings.json
 
 
 

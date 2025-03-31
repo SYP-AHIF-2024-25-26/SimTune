@@ -7,7 +7,8 @@
       "launchBrowser": false,
       "applicationUrl": "http://localhost:5069",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_SECRET_KEY": "09675866b689c6047a0805a83ef7181079df20454f5bce85e66b2649a03b94e727fb4cc83b19d142dd6edd200230227d617dd25ec0b267d1262cdd7a2d312c2fa8461908a8000a3b354974323e19017f3c7663edb34621645b2f1206fe50a37faad1054613be8c262582834869b63b56e9f216735d2a39ee9b6d88013887f820448e67724eb166a7c33a49fd20c0ce65f6bf016e8910a5bc79ffa5b55976d591e9229cdf22ab37b2be012dc850a776603dc24dfa66880bd71994708d51aed17c108457a22ba8ed6d94cd1ff1800820acc3ed5b8d41e240391d062163936e59d5028aaaef2d7c8f783dface4ab65de6d08f15f05ce2ad1360018aced133fdcefa"
       }
     },
     "https": {
@@ -16,7 +17,8 @@
       "launchBrowser": false,
       "applicationUrl": "https://localhost:7216;http://localhost:5069",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_SECRET_KEY": "09675866b689c6047a0805a83ef7181079df20454f5bce85e66b2649a03b94e727fb4cc83b19d142dd6edd200230227d617dd25ec0b267d1262cdd7a2d312c2fa8461908a8000a3b354974323e19017f3c7663edb34621645b2f1206fe50a37faad1054613be8c262582834869b63b56e9f216735d2a39ee9b6d88013887f820448e67724eb166a7c33a49fd20c0ce65f6bf016e8910a5bc79ffa5b55976d591e9229cdf22ab37b2be012dc850a776603dc24dfa66880bd71994708d51aed17c108457a22ba8ed6d94cd1ff1800820acc3ed5b8d41e240391d062163936e59d5028aaaef2d7c8f783dface4ab65de6d08f15f05ce2ad1360018aced133fdcefa"
       }
     }
   }
