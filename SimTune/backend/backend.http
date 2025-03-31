@@ -1,6 +1,25 @@
 @backend_HostAddress = http://localhost:5069
 
-GET {{backend_HostAddress}}/weatherforecast/
+GET {{backend_HostAddress}}/exercises/Stammtoene/
 Accept: application/json
 
 ###
+
+POST {{backend_HostAddress}}/usermanagement/register
+Content-Type: application/json
+
+{
+  "Username": "john_doe",
+  "Email": "john.doe@example.com",
+  "Password": "yourSecurePassword123"
+}
+
+###
+
+POST {{backend_HostAddress}}/usermanagement/login
+Content-Type: application/json
+
+{
+  "Email": "john.doe@example.com",
+  "Password": "yourSecurePassword123"
+}
