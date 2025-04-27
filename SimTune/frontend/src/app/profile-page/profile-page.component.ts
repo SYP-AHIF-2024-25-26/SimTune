@@ -1,6 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+
+interface MyJwtPayload {
+  sub: string;
+  jti: string;
+  aud: string;
+  exp: number;
+  iss: string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
+}
 
 @Component({
   selector: 'app-profile-page',
@@ -17,7 +28,8 @@ export class ProfilePageComponent {
   benutzername = signal('');
   rolle = signal('');
 
-  user: { [key: string]: string } = { 'Email': 'tobias.vieghofer@gmail.com', 'Benutzername': 'tobii1899',  'Rolle': 'Admin'};
+  constructor(private router: Router) {}
+
   exercise: { [key: string]: string }[] = [
     { 'ÜbungsID': '1', 'Description': 'Lies c,d und e', 'Score': '79%', 'Attempts': '4', 'ExerciseTyp': 'Stammtöne' },
     { 'ÜbungsID': '12', 'Description': 'Lies c,d und e', 'Score': '93%', 'Attempts': '10', 'ExerciseTyp': 'Notensystem' },
@@ -39,9 +51,15 @@ export class ProfilePageComponent {
   selectedExerciseTypes = signal<string[]>([]);
 
   ngOnInit() {
-    this.email.set(this.user['Email']);
-    this.benutzername.set(this.user['Benutzername']);
-    this.rolle.set(this.user['Rolle']);
+    var jwt = sessionStorage.getItem("jwt")!;
+    console.log(jwt); // <- Nur zum Testen!
+    const decoded = jwtDecode<MyJwtPayload>(jwt);
+
+    console.log(decoded); // <- Nur zum Testen!
+
+    this.email.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]);
+    this.benutzername.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
+    this.rolle.set('not defined');
   }
 
   confirmDelete() {
@@ -52,6 +70,12 @@ export class ProfilePageComponent {
     this.isClicked = true;
     this.showDialog = false;
     alert('Konto gelöscht!');
+  }
+
+  logout() {
+    sessionStorage.clear();
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 
   cancelDelete() {

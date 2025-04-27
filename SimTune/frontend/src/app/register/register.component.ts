@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { API_URL, fetchRestEndpoint } from '../api-calls/fetch-rest-endpoint';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -15,13 +15,51 @@ export class RegisterComponent {
   email = signal<string | "">("");
   username = signal<string | "">("");
   password = signal<string | "">("");
+  confirmPassword = signal<string | "">("");
+  errorMessage = signal<string>("");
+  selectedRole = signal<'student' | 'teacher' | null>(null);
+  errorHighlighted = signal<boolean>(false);
+
+  constructor(private router: Router) { }
 
 
   async signUp(): Promise<void> {
-    await fetchRestEndpoint(API_URL + 'usermanagement/register', 'POST', {
-      email: this.email(),
-      username: this.username(),
-      password: this.password()
-    });
+    const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    const error = [
+      [this.email() == "", "E-Mail darf nicht leer sein."],
+      [!isValidEmail(this.email()), "E-Mail ist ungültig."],
+      [this.username() == "", "Benutzername darf nicht leer sein."],
+      [this.username().length > 20, "Benutzername darf maximal 20 Zeichen lang sein."],
+      [this.password() == "", "Passwort darf nicht leer sein."],
+      [this.confirmPassword() == "", "Passwortbestätigung darf nicht leer sein."],
+      [this.password() !== this.confirmPassword(), "Passwörter stimmen nicht überein."],
+      [this.selectedRole() == null, "Bitte wählen Sie eine Rolle aus."],
+    ].find(([condition]) => condition)?.[1];
+
+
+    if(error == undefined) {
+      this.errorMessage.set("");
+
+      const response = await fetchRestEndpoint(API_URL + 'usermanagement/register', 'POST', {
+        email: this.email(),
+        username: this.username(),
+        password: this.password()
+      });
+      console.log(response);
+
+      sessionStorage.setItem("jwt", response.token);
+
+      console.log(response.error);
+      this.router.navigate(['/']);
+    } else {
+      this.errorHighlighted.set(true);
+
+      setTimeout(() => {
+        this.errorHighlighted.set(false);
+      }, 1000);
+
+      this.errorMessage.set(typeof error === 'string' ? error : '');
+    }
   }
 }

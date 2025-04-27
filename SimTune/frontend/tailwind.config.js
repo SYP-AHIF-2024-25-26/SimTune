@@ -5,6 +5,25 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        flyIn: {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInLeft: {
+          '0%': { transform: 'translateX(-50px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        slideInRight: {
+          '0%': { transform: 'translateX(50px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        }
+      },
+      animation: {
+        flyIn: 'flyIn 0.8s ease-out forwards',
+        slideInLeft: 'slideInLeft 0.8s ease-out forwards',
+        slideInRight: 'slideInRight 0.8s ease-out forwards',
+      },
       colors: {
         costumGray: '#D9D9D9',
         costumBlue: '#6496FF',

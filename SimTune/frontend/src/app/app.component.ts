@@ -1,12 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
-  imports: [RouterOutlet, RouterModule, FormsModule],
+  imports: [RouterOutlet, RouterModule, FormsModule, CommonModule],
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
@@ -21,6 +22,10 @@ export class AppComponent {
   adjustVolume(): void {
     sessionStorage.setItem('volume', this.volume.toString());
     this.lastVolume = this.volume;
+  }
+
+  isLoggedIn(): boolean {
+    return sessionStorage.getItem('jwt') != null ? true : false;
   }
 
   noSound(): void {

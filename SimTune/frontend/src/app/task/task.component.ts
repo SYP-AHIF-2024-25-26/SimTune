@@ -52,8 +52,11 @@ export class TaskComponent {
   buttonDisabled = true;
   toneType: string = '';
   previousUrl: string | null = null;
+  pruefungQuestionIndex: number = 0;
+  pruefungQuestionLength: number = 0;
+  currentQuestionPruefung!: { description: string, values: string, exerciseId: number, exerciseType: string, title: string | null };
 
-  texts: { description: string, values: string, exerciseId: number, exerciseType: number, title: string | null }[] = []
+  texts: { description: string, values: string, exerciseId: number, exerciseType: string, title: string | null }[] = []
 
   currentIndex: number = 0;
 
@@ -72,7 +75,23 @@ export class TaskComponent {
       const storedTexts = sessionStorage.getItem('texts');
       this.toneType = sessionStorage.getItem('toneType') || '';
 
-      if (storedTexts) {
+      const selectedTexts = JSON.parse(sessionStorage.getItem('texts from pruefung') || '[]');
+
+      if(selectedTexts.length > 0) {
+        this.texts = selectedTexts.map((text: any) => {
+          return {
+            description: text.description,
+            values: text.values,
+            exerciseId: text.exerciseId,
+            exerciseType: text.exerciseType,
+            title: text.title || null
+          };
+        });
+
+        console.log(this.texts);
+
+        this.setupQuestionsPruefung();
+      } else if (storedTexts) {
         this.texts = JSON.parse(storedTexts);
 
         if (this.letters) {
@@ -96,11 +115,66 @@ export class TaskComponent {
     }
   }
 
+  setupQuestionsPruefung(): void {
+    this.currentQuestionPruefung = this.texts[this.pruefungQuestionIndex];
+    this.toneType = this.currentQuestionPruefung.exerciseType;
+    this.letters = this.currentQuestionPruefung.values;
+    this.questionIndex = 0;
+    sessionStorage.setItem('descriptions', this.currentQuestionPruefung.description);
+    this.pruefungQuestionIndex++;
+
+    if(this.toneType === 'Tonleitern') {
+      let description = sessionStorage.getItem('descriptions');
+      const values = description?.replace(/"/g, '').split(',')[1].split(' ');
+
+      if (values) {
+        const arrayName = values
+          .map(v => v.replace('&', 'und'))
+          .join('_');
+
+          let selectedArray: string[] = [];
+          if (arrayName === 'dur_und_natürliches_moll') {
+            selectedArray = this.dur_und_natürliches_moll;
+          } else if (arrayName === 'dur_und_moll') {
+            selectedArray = this.dur_und_moll;
+          } else if (arrayName === 'dur_und_moll_und_natürliches_moll') {
+            selectedArray = this.dur_moll_und_natürliches_moll;
+          }
+
+          this.allQuestions = selectedArray;
+          this.totalSegments += this.allQuestions.length;
+          this.pruefungQuestionLength += this.allQuestions.length;
+      }
+    } else {
+      this.pruefungQuestionLength += this.currentQuestionPruefung.values.replace(/Orientierungstöne/g, '').split(',').length * 2;
+    }
+
+    switch (true) {
+      case this.currentQuestionPruefung.description.startsWith('Lies'):
+        this.action = 'lies';
+        break;
+      case this.currentQuestionPruefung.description.startsWith('Markiere'):
+        this.action = 'markiere';
+        break;
+      case this.currentQuestionPruefung.description.startsWith('Schreibe'):
+        this.action = 'schreibe';
+        break;
+      case this.currentQuestionPruefung.description.startsWith('Bestimme'):
+        this.action = 'bestimme';
+        break;
+    }
+
+    if(this.action === 'markiere') {
+      this.buttonDisabled = false;
+    }
+
+    this.setupQuestions();
+  }
+
   setupQuestions(): void {
     const uniqueLetters = this.letters ? this.letters.split(',') : [];
     const filteredLetters = uniqueLetters.filter(letter => letter.trim() !== 'Orientierungstöne');
-    this.totalQuestions = filteredLetters.length * 2;
-    this.totalSegments = this.totalQuestions;
+    this.allQuestions = [];
 
     if(this.toneType === 'Tonleitern') {
       let description = sessionStorage.getItem('descriptions');
@@ -129,6 +203,11 @@ export class TaskComponent {
       filteredLetters.forEach(letter => {
         this.allQuestions.push(`${letter}-1`, `${letter}-2`);
       });
+
+      const index = this.allQuestions.indexOf('h-2');
+      if (index != -1) {
+        this.allQuestions.splice(index, 1);
+      }
     } else {
       for (let i = 0; i < 2; i++) {
         this.allQuestions.push(...filteredLetters);
@@ -136,6 +215,27 @@ export class TaskComponent {
     }
 
     this.randomizedQuestions = this.shuffleArray(this.allQuestions);
+
+    if(this.texts[0].exerciseId == undefined && this.letters && this.totalSegments == 0) {
+      for (const item of this.texts) {
+        if(this.toneType === 'Tonleitern') {
+          this.totalSegments += item.values.replace(/\s+/g, '').split(',').length * 2;
+        } else {
+          this.totalSegments += item.values.replace(/Orientierungstöne/g, '').split(',').filter(value => value.trim()).length * 2;
+
+          if(this.action === 'lies' && this.toneType != 'Stammtoene') {
+            if (item.values.replace(/Orientierungstöne/g, '').split(',').length * 2 != this.allQuestions.length) {
+              this.totalSegments--;
+            }
+          }
+        }
+      }
+      this.totalQuestions = this.totalSegments;
+    } else if(this.totalSegments == 0) {
+      this.totalQuestions = this.randomizedQuestions.length;
+      this.totalSegments = this.totalQuestions;
+    }
+
     this.currentQuestion = this.randomizedQuestions[this.questionIndex];
     this.isIntervall = this.toneType === 'Intervalle';
   }
@@ -248,14 +348,15 @@ export class TaskComponent {
 
   async checkIfRight(letter: string, button: HTMLButtonElement): Promise<void> {
     if (this.isCorrect(letter)) {
+      const audios: HTMLAudioElement[] = [];
       if(this.toneType === 'Tonleitern') {
         const allNotes = this.pianoComponent.arrays[this.currentQuestion];
 
         for (const eachNote of allNotes) {
           try {
-            const audio = new Audio(`/assets/sounds/Notensystem-${eachNote}.mp4`);
+            const audio = new Audio(`/assets/sounds/${eachNote}.ogg`);
             audio.play();
-
+            audios.push(audio);
           } catch {
             console.warn(`Fehler beim Abspielen von: ${eachNote}`);
           }
@@ -264,6 +365,13 @@ export class TaskComponent {
         }
 
         await new Promise(resolve => setTimeout(resolve, 500));
+
+        setTimeout(() => {
+          audios.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+          });
+        }, 2000);
       }
 
       this.updateProgress();
@@ -317,10 +425,17 @@ export class TaskComponent {
   }
 
   nextQuestion(): void {
+    if(this.texts[0].exerciseId == undefined && this.letters) {
+      if(this.pruefungQuestionLength == this.progress && this.totalSegments != this.progress) {
+        this.setupQuestionsPruefung();
+      }
+    }
+
     this.firstAttemptCorrect = true;
     if (this.questionIndex < this.randomizedQuestions.length - 1) {
-      this.questionIndex++;
+      /*if(this.texts[0].exerciseId != undefined) {*/ this.questionIndex++; //}
       this.currentQuestion = this.randomizedQuestions[this.questionIndex];
+      //if(this.texts[0].exerciseId == undefined) { this.questionIndex++; }
 
       if (this.action === 'lies') {
         if (this.toneType === 'Notensystem' || this.toneType === 'Intervalle') {
@@ -352,15 +467,17 @@ export class TaskComponent {
   checkCompletion(): void {
     if (this.progress === this.totalSegments) {
       this.evaluation = `${((this.correctAnswers / this.totalQuestions) * 100).toFixed(2)}%`;
+      sessionStorage.removeItem('texts from pruefung');
 
       this.audio = new Audio("/assets/sounds/Uebung-fertig.mp3");
       this.audio.play();
+      
     }
   }
 
   goBack(): void {
     if (this.previousUrl) {
-
+      sessionStorage.removeItem('texts from pruefung');
       if(this.audio !== null) {
         this.audio!.pause();
         this.audio!.currentTime = 0;
@@ -381,23 +498,25 @@ export class TaskComponent {
   }
 
   nextTask(): void {
-    this.usedLetters.clear();
-    this.audio!.pause();
-    this.audio!.currentTime = 0;
+    if(this.texts[0].exerciseId !== undefined) {
+      this.usedLetters.clear();
+      this.audio!.pause();
+      this.audio!.currentTime = 0;
 
-    const nextIndex = (this.currentIndex + 1) % this.texts.length;
-    let nextAction = '';
+      const nextIndex = (this.currentIndex + 1) % this.texts.length;
+      let nextAction = '';
 
-    if (this.texts[nextIndex].description.startsWith('Schreibe')) {
-      nextAction = 'schreibe';
-    } else {
-      nextAction = this.texts[nextIndex].description.startsWith('Markiere') ? 'markiere' : 'lies';
+      if (this.texts[nextIndex].description.startsWith('Schreibe')) {
+        nextAction = 'schreibe';
+      } else {
+        nextAction = this.texts[nextIndex].description.startsWith('Markiere') ? 'markiere' : 'lies';
+      }
+
+      const nextLetters = this.texts[nextIndex].values;
+
+      this.router.navigate(['/task'], { queryParams: { action: nextAction, letters: nextLetters, index: nextIndex } });
+      this.ngOnInit();
     }
-
-    const nextLetters = this.texts[nextIndex].values;
-
-    this.router.navigate(['/task'], { queryParams: { action: nextAction, letters: nextLetters, index: nextIndex } });
-    this.ngOnInit();
   }
 
   eraser(): void {

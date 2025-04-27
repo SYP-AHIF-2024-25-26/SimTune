@@ -11,10 +11,13 @@
   </div>
 
 
-  <div class="flex items-center space-x-2">
-    <a routerLink="/login" class="bg-costumBlue text-white p-1 px-4 rounded-3xl mr-5 text-lg hover:bg-blue-600">Anmelden</a>
-    <a routerLink="/register" class="bg-costumBlue text-white p-1 px-4 rounded-3xl mr-8 text-lg hover:bg-blue-600">Konto erstellen</a>
-    <a routerLink="/profile-page" class="p-1 px-4 rounded-3xl mr-8"> <img src="/assets/images/ProfilePage.png" class="h-9 w-auto"> </a>
+  <div class="flex items-center space-x-2 mr-5">
+      @if (!isLoggedIn()) {
+        <a routerLink="/login" class="bg-costumBlue text-white p-1 px-4 rounded-3xl mr-5 text-lg hover:bg-blue-600">Anmelden</a>
+        <a routerLink="/register" class="bg-costumBlue text-white p-1 px-4 rounded-3xl mr-10 text-lg hover:bg-blue-600">Konto erstellen</a>
+      } @else {
+        <a routerLink="/profile-page" class="p-1 px-4 rounded-3xl"> <img src="/assets/images/ProfilePage.png" class="h-9 w-auto"> </a>
+      }
   </div>
 </div>
 
