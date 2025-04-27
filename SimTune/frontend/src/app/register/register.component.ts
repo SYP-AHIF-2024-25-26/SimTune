@@ -39,19 +39,28 @@ export class RegisterComponent {
 
 
     if(error == undefined) {
-      this.errorMessage.set("");
-
+      try {
       const response = await fetchRestEndpoint(API_URL + 'usermanagement/register', 'POST', {
         email: this.email(),
         username: this.username(),
         password: this.password()
       });
-      console.log(response);
+
+      this.errorMessage.set("");
 
       sessionStorage.setItem("jwt", response.token);
 
-      console.log(response.error);
       this.router.navigate(['/']);
+    } catch (error) {
+      console.error("Fehler beim Registrieren:", error);
+      this.errorHighlighted.set(true);
+
+      setTimeout(() => {
+        this.errorHighlighted.set(false);
+      }, 1000);
+
+      this.errorMessage.set("E-Mail schon in Verwendung.");
+    }
     } else {
       this.errorHighlighted.set(true);
 

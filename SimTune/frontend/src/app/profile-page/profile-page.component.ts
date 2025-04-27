@@ -52,10 +52,7 @@ export class ProfilePageComponent {
 
   ngOnInit() {
     var jwt = sessionStorage.getItem("jwt")!;
-    console.log(jwt); // <- Nur zum Testen!
     const decoded = jwtDecode<MyJwtPayload>(jwt);
-
-    console.log(decoded); // <- Nur zum Testen!
 
     this.email.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]);
     this.benutzername.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
