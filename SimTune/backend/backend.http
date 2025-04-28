@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
   "Username": "john_doe",
-  "Email": "john.doe@example.com12",
+  "Email": "john.doe@example.com3",
   "Password": "yourSecurePassword123"
 }
 
@@ -30,5 +30,5 @@ POST {{backend_HostAddress}}/usermanagement/verify
 Content-Type: application/json
 
 {
-  "Token": "NJlFOwrG7E+1bAwaNReyIw=="
+  "Token": "3a0a51cd1883480388872fcd6d5b6ad4"
 }

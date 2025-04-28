@@ -24,7 +24,7 @@ public class UserRegisterService
             return Results.BadRequest(new { Message = "User with this email already exists." });
         }
 
-        var verificationToken = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        var verificationToken = Guid.NewGuid().ToString("N");
 
         var newUser = new User
         {
