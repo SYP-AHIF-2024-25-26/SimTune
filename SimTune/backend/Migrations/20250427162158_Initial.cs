@@ -14,12 +14,12 @@ namespace backend.Migrations
                 name: "Exercises",
                 columns: table => new
                 {
-                    ExerciseId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Values = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExerciseType = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    ExerciseId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Values = table.Column<string>(type: "TEXT", nullable: true),
+                    ExerciseType = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,12 +30,14 @@ namespace backend.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHashed = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Progress = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    PasswordHashed = table.Column<string>(type: "TEXT", nullable: false),
+                    VerificationToken = table.Column<string>(type: "TEXT", nullable: true),
+                    IsVerified = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Progress = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,14 +48,14 @@ namespace backend.Migrations
                 name: "ExerciseContents",
                 columns: table => new
                 {
-                    ContentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExerciseId = table.Column<int>(type: "int", nullable: false),
-                    Question = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NotePositions = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AnswerOptions = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CorrectAnswer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StaffImage = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ContentId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ExerciseId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Question = table.Column<string>(type: "TEXT", nullable: false),
+                    NotePositions = table.Column<string>(type: "TEXT", nullable: true),
+                    AnswerOptions = table.Column<string>(type: "TEXT", nullable: false),
+                    CorrectAnswer = table.Column<string>(type: "TEXT", nullable: false),
+                    StaffImage = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,13 +72,13 @@ namespace backend.Migrations
                 name: "UserExercises",
                 columns: table => new
                 {
-                    UserExerciseId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ExerciseId = table.Column<int>(type: "int", nullable: false),
-                    Completed = table.Column<int>(type: "int", nullable: false),
-                    Score = table.Column<int>(type: "int", nullable: false),
-                    Attempts = table.Column<int>(type: "int", nullable: false)
+                    UserExerciseId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ExerciseId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Completed = table.Column<int>(type: "INTEGER", nullable: false),
+                    Score = table.Column<int>(type: "INTEGER", nullable: false),
+                    Attempts = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

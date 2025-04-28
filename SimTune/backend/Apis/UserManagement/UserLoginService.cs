@@ -8,9 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Apis.UserManagement;
 
-public class UserLoginer
+public class UserLoginService
 {
-    public static async Task<IResult> LoginUser([FromBody] UserDto userToLoginDto, SimTuneDbContext context)
+    public static async Task<IResult> LoginUser([FromBody] LoginUserDto userToLoginDto, SimTuneDbContext context)
     {
         var user = context.Users.SingleOrDefault(u => u.Email == userToLoginDto.Email); 
 
@@ -24,7 +24,7 @@ public class UserLoginer
         return Results.Ok(new { Token = token });
     }
     
-    public class UserDto
+    public class LoginUserDto
     {
         public string Email { get; set; }
         public string Password { get; set; }

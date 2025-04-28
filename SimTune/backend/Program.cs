@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+/*
+ Azure Db
 var connection = String.Empty;
 if (builder.Environment.IsDevelopment())
 {
@@ -24,6 +26,16 @@ builder.Services.AddDbContext<SimTuneDbContext>(
     // für docker
     //options => options.UseSqlite("FileName=\\app\\Database\\SimTune.db")
 );
+*/
+
+// Sqlite
+builder.Services.AddDbContext<SimTuneDbContext>(
+    // für lokale Entwicklung
+    options => options.UseSqlite("Data Source=SimTune.db")
+
+    // für docker
+    //options => options.UseSqlite("Data Source=/app/data/SimTune.db")
+);
 
 builder.Services.AddCors(options =>
 {
@@ -32,12 +44,16 @@ builder.Services.AddCors(options =>
         {
             policyBuilder.WithOrigins("http://localhost:4200", "http://localhost:4300", "http://localhost:8080",
                 "http://simtune-frontend:80",
-                "https://simtune-frontend.salmonmeadow-e01ebf27.germanywestcentral.azurecontainerapps.io");
+                "https://simtune-frontend.salmonmeadow-e01ebf27.germanywestcentral.azurecontainerapps.io",
+                "https://if210019.cloud.htl-leonding.ac.at");
             policyBuilder.AllowAnyHeader();
             policyBuilder.AllowAnyMethod();
             policyBuilder.AllowCredentials();
         });
 });
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -55,9 +71,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
-
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
+
+app.UsePathBase("/api");
 
 app.UseAuthentication();
 
@@ -66,6 +84,13 @@ app.UseAuthorization();
 app.UseHttpsRedirection();
 
 app.UseCors("default");
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 using (var scope = app.Services.CreateScope())
 {
