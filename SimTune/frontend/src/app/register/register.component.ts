@@ -19,6 +19,7 @@ export class RegisterComponent {
   errorMessage = signal<string>("");
   selectedRole = signal<'student' | 'teacher' | null>(null);
   errorHighlighted = signal<boolean>(false);
+  showModal = signal<boolean>(false);
 
   constructor(private router: Router) { }
 
@@ -48,9 +49,7 @@ export class RegisterComponent {
 
       this.errorMessage.set("");
 
-      sessionStorage.setItem("jwt", response.token);
-
-      this.router.navigate(['/']);
+      this.showModal.set(true);
     } catch (error) {
       console.error("Fehler beim Registrieren:", error);
       this.errorHighlighted.set(true);
@@ -70,5 +69,10 @@ export class RegisterComponent {
 
       this.errorMessage.set(typeof error === 'string' ? error : '');
     }
+  }
+
+  closeModal() {
+    this.showModal.set(false);
+    this.router.navigate(['/']);
   }
 }

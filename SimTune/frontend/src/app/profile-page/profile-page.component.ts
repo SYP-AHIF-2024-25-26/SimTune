@@ -54,6 +54,8 @@ export class ProfilePageComponent {
     var jwt = sessionStorage.getItem("jwt")!;
     const decoded = jwtDecode<MyJwtPayload>(jwt);
 
+    console.log(jwt);
+
     this.email.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]);
     this.benutzername.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
     this.rolle.set('not defined');

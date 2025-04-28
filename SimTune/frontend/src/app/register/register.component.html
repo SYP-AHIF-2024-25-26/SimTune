@@ -53,9 +53,10 @@
   </div>
 </div>
 
-<!--
-<div *ngIf="errorMessage()" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white py-2 px-6 rounded-lg shadow-lg flex items-center justify-between w-96 z-50" [class.error-highlight]="errorHighlighted()">
-  <span>{{ errorMessage() }}</span>
-  <button class="ml-4 text-white text-xl font-bold focus:outline-none" (click)="errorMessage.set('')">✖</button>
+<div *ngIf="showModal()" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-75">
+  <div class="bg-white p-8 rounded-lg shadow-xl w-96 text-center">
+    <h2 class="text-xl font-semibold mb-4">Registrierung Erfolgreich</h2>
+    <p class="text-lg mb-6">Bitte bestätigen Sie Ihre E-Mail. Fahren Sie dann in dem Fenster der E-Mail fort und schließen Sie dieses.</p>
+    <button (click)="closeModal()" class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700">Schließen</button>
+  </div>
 </div>
--->

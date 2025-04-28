@@ -1,0 +1,21 @@
+<div class="flex justify-center items-start min-h-screen pt-40">
+  <div class="flex flex-col justify-between items-center p-6 bg-costumGray drop-shadow-md w-full max-w-md rounded-lg">
+    <div class="text-2xl font-semibold mb-4">Verifizierung</div>
+
+    <div class="flex flex-col w-full space-y-4 text-center">
+      <p *ngIf="verifiziert; else nichtVerifiziert" class="text-green-600 text-lg font-medium">
+        Du wurdest erfolgreich verifiziert!
+      </p>
+
+      <ng-template #nichtVerifiziert>
+        <p class="text-red-600 text-lg font-medium">
+          Du wurdest nicht erfolgreich verifiziert. Versuche es erneut...
+        </p>
+      </ng-template>
+    </div>
+
+    <a *ngIf="verifiziert" routerLink="/login" class="bg-costumBlue text-white py-2 px-6 rounded-3xl text-lg hover:bg-blue-600 flex justify-center items-center mt-6 cursor-pointer">
+      Melde dich jetzt an!
+    </a>
+  </div>
+</div>
