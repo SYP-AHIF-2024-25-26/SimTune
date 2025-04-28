@@ -1,10 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Location } from '@angular/common';
 import { PianoComponent } from "../piano/piano.component";
 import { NotesystemComponent } from '../notesystem/notesystem.component';
-import { Console } from 'node:console';
+import { jwtDecode } from 'jwt-decode';
+import { API_URL, fetchRestEndpoint, fetchRestEndpointWithAuthorization, } from '../api-calls/fetch-rest-endpoint';
+
+interface MyJwtPayload {
+  sub: string;
+  jti: string;
+  aud: string;
+  exp: number;
+  iss: string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": string;
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
+}
 
 @Component({
   selector: 'app-task',
@@ -464,14 +474,29 @@ export class TaskComponent {
   }
   */
 
-  checkCompletion(): void {
+  async checkCompletion(): Promise<void> {
     if (this.progress === this.totalSegments) {
       this.evaluation = `${((this.correctAnswers / this.totalQuestions) * 100).toFixed(2)}%`;
       sessionStorage.removeItem('texts from pruefung');
 
       this.audio = new Audio("/assets/sounds/Uebung-fertig.mp3");
       this.audio.play();
-      
+
+      var jwt = sessionStorage.getItem('jwt');
+
+      if(jwt != undefined) {
+        const decoded = jwtDecode<MyJwtPayload>(jwt);
+
+        const email = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+
+
+        await fetchRestEndpointWithAuthorization(API_URL + 'test', 'POST', {
+          email: email,
+          exerciseId: this.currentIndex + 1,
+          highest_score: this.evaluation,
+        });
+
+      }
     }
   }
 
@@ -532,3 +557,4 @@ export class TaskComponent {
     return 0;
   }
 }
+
