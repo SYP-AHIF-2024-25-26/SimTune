@@ -18,6 +18,11 @@ public class UserLoginService
         {
             return Results.BadRequest(new { Message = "Invalid credentials" });
         }
+        
+        if (!user.IsVerified)
+        {
+            return Results.BadRequest(new { Message = "Please verify your email before logging in." });
+        }
 
         var token = GenerateJwtToken(user);
 

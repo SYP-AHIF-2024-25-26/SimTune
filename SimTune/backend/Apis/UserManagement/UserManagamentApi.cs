@@ -18,7 +18,7 @@ public static partial class UserManagamentApi
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
             .Produces<int>(StatusCodes.Status200OK);
         
-        app.MapGet("/usermanagement/verify", VerificationService.VerifyEmail)
+        app.MapPost("/usermanagement/verify", VerificationService.VerifyEmail)
             .WithName(nameof(VerificationService.VerifyEmail))
             .WithDescription("Verifies a user's email")
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
