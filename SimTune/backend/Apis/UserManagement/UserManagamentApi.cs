@@ -23,6 +23,12 @@ public static partial class UserManagamentApi
             .WithDescription("Verifies a user's email")
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
             .Produces<int>(StatusCodes.Status200OK);
+        
+        app.MapPost("usermanagement/completed-exercise", UserExerciseService.StoreCompletedUserExercise)
+            .WithName(nameof(UserExerciseService.StoreCompletedUserExercise))
+            .WithDescription("Stores a completed user exercise")
+            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
+            .Produces<int>(StatusCodes.Status200OK);
 
         return app;
     }

@@ -487,13 +487,9 @@ export class TaskComponent {
       if(jwt != undefined) {
         const decoded = jwtDecode<MyJwtPayload>(jwt);
 
-        const email = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-
-
-        await fetchRestEndpointWithAuthorization(API_URL + 'test', 'POST', {
-          email: email,
+        await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
           exerciseId: this.currentIndex + 1,
-          highest_score: this.evaluation,
+          score: parseFloat(this.evaluation)
         });
 
       }

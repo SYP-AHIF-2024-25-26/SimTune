@@ -10,7 +10,14 @@ namespace backend.Apis.UserManagement;
 
 public class UserLoginService
 {
-    public static async Task<IResult> LoginUser([FromBody] LoginUserDto userToLoginDto, SimTuneDbContext context)
+    private readonly IConfiguration _configuration;
+
+    public UserLoginService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+    
+    public static async Task<IResult> LoginUser([FromBody] LoginUserDto userToLoginDto, SimTuneDbContext context, IConfiguration configuration)
     {
         var user = context.Users.SingleOrDefault(u => u.Email == userToLoginDto.Email); 
 
@@ -24,7 +31,7 @@ public class UserLoginService
             return Results.BadRequest(new { Message = "Please verify your email before logging in." });
         }
 
-        var token = GenerateJwtToken(user);
+        var token = GenerateJwtToken(user, configuration);
 
         return Results.Ok(new { Token = token });
     }
@@ -35,25 +42,24 @@ public class UserLoginService
         public string Password { get; set; }
     }
     
-    private static string GenerateJwtToken(User user)
+    private static string GenerateJwtToken(User user, IConfiguration configuration)
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+            new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Name, user.Username),
             new Claim(ClaimTypes.Email, user.Email)
         };
         
-        // "EinVielLängererGeheimerSchlüsselDerMehrAls256BitsHat"
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY")));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: "DeinIssuer",
-            audience: "DeinAudience",
+            issuer: configuration["Jwt:Issuer"],
+            audience: configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddHours(1),
+            expires: DateTime.UtcNow.AddHours(1),
             signingCredentials: creds
         );
 

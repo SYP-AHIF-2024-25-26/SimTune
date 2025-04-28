@@ -10,8 +10,8 @@ using backend.Database;
 namespace backend.Migrations
 {
     [DbContext(typeof(SimTuneDbContext))]
-    [Migration("20250427162158_Initial")]
-    partial class Initial
+    [Migration("20250428093751_Inital")]
+    partial class Inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,14 +117,11 @@ namespace backend.Migrations
                     b.Property<int>("Attempts")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Completed")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ExerciseId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Score")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("HighestScore")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");

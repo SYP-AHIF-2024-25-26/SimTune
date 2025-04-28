@@ -114,14 +114,11 @@ namespace backend.Migrations
                     b.Property<int>("Attempts")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Completed")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ExerciseId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Score")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("HighestScore")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");

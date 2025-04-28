@@ -5,7 +5,7 @@
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Inital : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -76,8 +76,7 @@ namespace backend.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
                     ExerciseId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Completed = table.Column<int>(type: "INTEGER", nullable: false),
-                    Score = table.Column<int>(type: "INTEGER", nullable: false),
+                    HighestScore = table.Column<double>(type: "REAL", nullable: false),
                     Attempts = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

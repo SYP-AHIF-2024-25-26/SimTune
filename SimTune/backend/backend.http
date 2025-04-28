@@ -10,17 +10,7 @@ Content-Type: application/json
 
 {
   "Username": "john_doe",
-  "Email": "john.doe@example.com3",
-  "Password": "yourSecurePassword123"
-}
-
-###
-
-POST {{backend_HostAddress}}/usermanagement/login
-Content-Type: application/json
-
-{
-  "Email": "john.doe@example.com",
+  "Email": "john.doe@example.com11111",
   "Password": "yourSecurePassword123"
 }
 
@@ -30,5 +20,26 @@ POST {{backend_HostAddress}}/usermanagement/verify
 Content-Type: application/json
 
 {
-  "Token": "3a0a51cd1883480388872fcd6d5b6ad4"
+  "Token": "12140ef4fd9043a0b4ecba02903a4bf2"
+}
+
+###
+
+POST {{backend_HostAddress}}/usermanagement/login
+Content-Type: application/json
+
+{
+  "Email": "john.doe@example.com11111",
+  "Password": "yourSecurePassword123"
+}
+
+###
+
+POST {{backend_HostAddress}}/usermanagement/completed-exercise
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwianRpIjoiYmIwNmMyYWQtZmQ3ZS00YWNhLWIxYmQtYjViMTQxNGExZWYxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImpvaG5fZG9lIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiam9obi5kb2VAZXhhbXBsZS5jb20xMTExIiwiZXhwIjoxNzQ1ODc4MDQ2LCJpc3MiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdC9hcGkiLCJhdWQiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdCJ9.bzV75T-aHRZKTIsR04fsheM1OPIu6hbFBBl_LPLJ1Hs
+
+{
+  "ExerciseId": "1",
+  "Score": 93.9
 }

@@ -149,9 +149,8 @@ namespace backend.DataAccess
         [ForeignKey("Exercise")]
         public int ExerciseId { get; set; }
         public Exercise Exercise { get; set; }
-
-        public int Completed { get; set; }
-        public int Score { get; set; }
+        
+        public double HighestScore { get; set; }
         public int Attempts { get; set; }
     }
     
