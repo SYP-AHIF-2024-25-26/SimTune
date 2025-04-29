@@ -10,6 +10,36 @@ namespace backend.Apis.UserManagement;
 public class UserExerciseService
 {
     [Authorize]
+    public static async Task<IResult> GetCompletedUserExercises(SimTuneDbContext context, HttpContext httpContext)
+    {
+        // Get user ID from claims
+        var userIdClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+        {
+            return Results.Unauthorized();
+        }
+
+        // Get all completed exercises for the user
+        var userExercises = await context.UserExercises
+            .Where(ue => ue.UserId == userId)
+            .Include(ue => ue.Exercise)
+            .Select(ue => new
+            {
+                ue.ExerciseId,
+                ue.Exercise.Title,
+                ue.Exercise.Description,
+                ExerciseType = ue.Exercise.ExerciseType.ToString(),
+                ue.HighestScore,
+                ue.Attempts
+            })
+            .ToListAsync();
+
+        // Return the raw values
+        return Results.Ok(userExercises);
+    }
+
+    [Authorize]
     public static async Task<IResult> StoreCompletedUserExercise(
         [FromBody] StoreCompletedUserExerciseDto userExerciseDto, SimTuneDbContext context, HttpContext httpContext)
     {

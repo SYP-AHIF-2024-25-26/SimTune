@@ -29,6 +29,12 @@ public static partial class UserManagamentApi
             .WithDescription("Stores a completed user exercise")
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
             .Produces<int>(StatusCodes.Status200OK);
+        
+        app.MapGet("usermanagement/completed-exercises", UserExerciseService.GetCompletedUserExercises)
+            .WithName(nameof(UserExerciseService.GetCompletedUserExercises))
+            .WithDescription("Gets all completed user exercises with statistics")
+            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
+            .Produces<int>(StatusCodes.Status200OK);
 
         return app;
     }
