@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { API_URL, fetchRestEndpointWithAuthorization } from '../api-calls/fetch-rest-endpoint';
 
 interface MyJwtPayload {
   sub: string;
@@ -30,35 +31,41 @@ export class ProfilePageComponent {
 
   constructor(private router: Router) {}
 
-  exercise: { [key: string]: string }[] = [
-    { 'ÜbungsID': '1', 'Description': 'Lies c,d und e', 'Score': '79%', 'Attempts': '4', 'ExerciseTyp': 'Stammtöne' },
-    { 'ÜbungsID': '12', 'Description': 'Lies c,d und e', 'Score': '93%', 'Attempts': '10', 'ExerciseTyp': 'Notensystem' },
-    { 'ÜbungsID': '27', 'Description': 'Lies alle Intervalle', 'Score': '13%', 'Attempts': '1', 'ExerciseTyp': 'Intervalle' },
-    { 'ÜbungsID': '30', 'Description': 'Bestimme die Tonleiter', 'Score': '100%', 'Attempts': '3', 'ExerciseTyp': 'Tonleitern' },
-    { 'ÜbungsID': '1', 'Description': 'Lies c,d und e', 'Score': '79%', 'Attempts': '4', 'ExerciseTyp': 'Stammtöne' },
-    { 'ÜbungsID': '12', 'Description': 'Lies c,d und e', 'Score': '93%', 'Attempts': '10', 'ExerciseTyp': 'Notensystem' },
-    { 'ÜbungsID': '27', 'Description': 'Lies alle Intervalle', 'Score': '13%', 'Attempts': '1', 'ExerciseTyp': 'Intervalle' },
-    { 'ÜbungsID': '30', 'Description': 'Bestimme die Tonleiter', 'Score': '100%', 'Attempts': '3', 'ExerciseTyp': 'Tonleitern' },
-    { 'ÜbungsID': '1', 'Description': 'Lies c,d und e', 'Score': '79%', 'Attempts': '4', 'ExerciseTyp': 'Stammtöne' },
-    { 'ÜbungsID': '12', 'Description': 'Lies c,d und e', 'Score': '93%', 'Attempts': '10', 'ExerciseTyp': 'Notensystem' },
-    { 'ÜbungsID': '27', 'Description': 'Lies alle Intervalle', 'Score': '13%', 'Attempts': '1', 'ExerciseTyp': 'Intervalle' },
-    { 'ÜbungsID': '30', 'Description': 'Bestimme die Tonleiter', 'Score': '100%', 'Attempts': '3', 'ExerciseTyp': 'Tonleitern' }
-  ];
+  exercise: { [key: string]: string }[] = [];
   filteredExercise = [...this.exercise];
   selectedTypes: Set<string> = new Set();
   showSortOptions = false;
   activeSort = signal<string | null>(null);
   selectedExerciseTypes = signal<string[]>([]);
 
-  ngOnInit() {
+  async ngOnInit() {
     var jwt = sessionStorage.getItem("jwt")!;
     const decoded = jwtDecode<MyJwtPayload>(jwt);
-
-    console.log(jwt);
 
     this.email.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]);
     this.benutzername.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
     this.rolle.set('not defined');
+
+    await this.getExercises();
+    this.filteredExercise = [...this.exercise];
+  }
+
+  async getExercises() {
+    var userExercises = await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercises', 'GET', );
+    if (Array.isArray(userExercises)) {
+      const mapped = userExercises.map(ex => ({
+        'ÜbungsID': ex.exerciseId.toString(),
+        'Description': ex.description,
+        'Score': ex.highestScore.toString() + '%',
+        'Attempts': ex.attempts.toString(),
+        'ExerciseTyp': ex.exerciseType
+          .replace(/ae/g, 'ä')
+          .replace(/oe/g, 'ö')
+          .replace(/ue/g, 'ü')
+      }));
+
+      this.exercise.push(...mapped);
+    }
   }
 
   confirmDelete() {
