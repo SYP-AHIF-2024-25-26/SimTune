@@ -357,10 +357,12 @@ export class TaskComponent {
   }
 
   async checkIfRight(letter: string, button: HTMLButtonElement): Promise<void> {
+    this.setButtonsDisabled(true);
     if (this.isCorrect(letter)) {
       const audios: HTMLAudioElement[] = [];
       if(this.toneType === 'Tonleitern') {
         const allNotes = this.pianoComponent.arrays[this.currentQuestion];
+
 
         for (const eachNote of allNotes) {
           try {
@@ -398,6 +400,14 @@ export class TaskComponent {
         button.classList.remove('bg-red-500', 'text-white');
       }, 1000);
     }
+    this.setButtonsDisabled(false);
+  }
+
+  setButtonsDisabled(disabled: boolean): void {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach((btn) => {
+      (btn as HTMLButtonElement).disabled = disabled;
+    });
   }
 
   isCorrect(letter: string): boolean {
