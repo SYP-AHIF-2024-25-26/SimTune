@@ -488,10 +488,9 @@ export class TaskComponent {
         const decoded = jwtDecode<MyJwtPayload>(jwt);
 
         await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
-          exerciseId: this.currentIndex + 1,
+          exerciseId: this.texts[this.currentIndex].exerciseId,
           score: parseFloat(this.evaluation)
         });
-
       }
     }
   }
