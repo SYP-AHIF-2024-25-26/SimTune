@@ -68,6 +68,16 @@ export class ProfilePageComponent {
     }
   }
 
+  goBack() {
+    const previousUrl = sessionStorage.getItem('previousUrl');
+
+    if (previousUrl) {
+      this.router.navigate([previousUrl]);
+    } else {
+      this.router.navigate(['/homepage']);
+    }
+  }
+
   confirmDelete() {
     this.showDialog = true;
   }

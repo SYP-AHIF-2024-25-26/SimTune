@@ -41,3 +41,10 @@ input[type="range"]::-ms-thumb {
   border: none;
   cursor: pointer;
 }
+
+.noselect {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}

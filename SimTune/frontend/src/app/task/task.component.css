@@ -76,3 +76,10 @@
   color: rgb(200, 200, 200);
   cursor: pointer;
 }
+
+.noselect {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
