@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TaskData } from './task-data';
 import { CommonModule } from '@angular/common';
-import { API_URL, fetchRestEndpoint } from '../api-calls/fetch-rest-endpoint';
+import { API_URL, fetchRestEndpoint, fetchRestEndpointWithAuthorization } from '../api-calls/fetch-rest-endpoint';
 
 @Component({
   selector: 'app-uebungen',
@@ -16,7 +16,7 @@ export class UebungenComponent implements OnInit {
   breadcrumb_elements = signal<{ label: string; url: string}[] | undefined>(undefined);
   taskType = signal<string | undefined>(undefined);
 
-  texts: { description: string; values: string }[] = [];
+  texts: { description: string; values: string, done: boolean}[] = [];
   toneType: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
@@ -30,6 +30,7 @@ export class UebungenComponent implements OnInit {
     })
 
     this.taskType.set(this.content()?.['task-type']);
+    var userExercises;
 
     switch (this.taskType()) {
       case 'stammtoene':
@@ -55,6 +56,22 @@ export class UebungenComponent implements OnInit {
       default:
         break;
     }
+    this.markDoneExercises();
+  }
+
+  async markDoneExercises() {
+    var userExercises;
+    if(sessionStorage.getItem('jwt') !== null) {
+      userExercises = await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercises', 'GET', );
+    } else {
+      return;
+    }
+    const completedDescriptions = userExercises.map((ex: { description: any; }) => ex.description);
+
+    this.texts = this.texts.map(t => ({
+      ...t,
+      done: completedDescriptions.includes(t.description)
+    }));
   }
 
   goToTask(text: string): void {

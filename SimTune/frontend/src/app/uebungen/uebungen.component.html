@@ -17,18 +17,33 @@
 </div>
 
 @if (taskType() != '') {
-<div id="container" class="flex flex-wrap gap-20 p-20 items-center justify-center">
-  <div *ngFor="let item of texts"
-    class="bg-costumLightBlue w-80 rounded-lg border-solid border border-black text-center p-4 text-xl hover:shadow-even transition-shadow duration-200 shadow-lg">
-    <p class="font-semibold text-2xl">{{ item.description }}</p>
-    <p class="mt-1">{{ toneType }}</p>
-    <p class="bg-blue-300 rounded-xl mt-4 p-1 drop-shadow-2xl hover:bg-blue-400 duration-100"
-      (click)="goToTask(item.description)">
-      Anfangen
-    </p>
+  <div id="container" class="flex flex-wrap gap-20 p-20 items-center justify-center">
+    <div *ngFor="let item of texts"
+      [ngClass]="{
+        'bg-costumLightGreen': item.done,
+        'bg-costumLightBlue': !item.done
+      }"
+      class="relative w-80 rounded-lg border-solid border border-black text-center p-4 text-xl hover:shadow-even transition-shadow duration-200 shadow-lg">
+
+      <p class="font-semibold text-2xl">{{ item.description }}</p>
+      <p class="mt-1">{{ toneType }}</p>
+
+      <p
+        [ngClass]="{
+          'bg-costumAnfangenBtn hover:bg-costumAnfangenBtnHover': item.done,
+          'bg-blue-300 hover:bg-blue-400': !item.done
+        }"
+        class="rounded-xl mt-4 p-1 drop-shadow-2xl duration-100"
+        (click)="goToTask(item.description)">
+        Anfangen
+      </p>
+
+      <div *ngIf="item.done" class="absolute top-2 right-2 text-xl font-bold text-costumDarkGreen">
+        ✔
+      </div>
+    </div>
   </div>
-</div>
-}
+  }
   @else {
     @for (group of content()?.groups; track group['group-header']) {
       <h2 class="text-3xl font-bold mt-5 text-center">{{ group["group-header"] }}</h2>
