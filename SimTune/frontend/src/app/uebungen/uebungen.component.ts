@@ -16,7 +16,7 @@ export class UebungenComponent implements OnInit {
   breadcrumb_elements = signal<{ label: string; url: string}[] | undefined>(undefined);
   taskType = signal<string | undefined>(undefined);
 
-  texts: { description: string; values: string, done: boolean}[] = [];
+  texts: { exerciseId: number, description: string; values: string, done: boolean}[] = [];
   toneType: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
@@ -66,11 +66,10 @@ export class UebungenComponent implements OnInit {
     } else {
       return;
     }
-    const completedDescriptions = userExercises.map((ex: { description: any; }) => ex.description);
-
+    const completedDescriptions = userExercises.map((ex: { exerciseId: any; }) => ex.exerciseId);
     this.texts = this.texts.map(t => ({
       ...t,
-      done: completedDescriptions.includes(t.description)
+      done: completedDescriptions.includes(t.exerciseId)
     }));
   }
 
