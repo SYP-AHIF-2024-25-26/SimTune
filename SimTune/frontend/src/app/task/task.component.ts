@@ -98,8 +98,6 @@ export class TaskComponent {
           };
         });
 
-        console.log(this.texts);
-
         this.setupQuestionsPruefung();
       } else if (storedTexts) {
         this.texts = JSON.parse(storedTexts);
@@ -182,6 +180,7 @@ export class TaskComponent {
   }
 
   setupQuestions(): void {
+    sessionStorage.setItem('intervallAllowed', 'yes');
     const uniqueLetters = this.letters ? this.letters.split(',') : [];
     const filteredLetters = uniqueLetters.filter(letter => letter.trim() !== 'Orientierungstöne');
     this.allQuestions = [];
@@ -450,6 +449,9 @@ export class TaskComponent {
         this.setupQuestionsPruefung();
       }
     }
+
+    sessionStorage.setItem('intervallAllowed', 'yes');
+    this.notesystemComponent.markOneCircle();
 
     this.firstAttemptCorrect = true;
     if (this.questionIndex < this.randomizedQuestions.length - 1) {

@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { start } from 'node:repl';
-
 
 @Component({
   selector: 'app-notesystem',
@@ -49,17 +47,14 @@ export class NotesystemComponent {
         const intervalIndex = this.allIntervalle.indexOf(this.currentQuestion?.split('-')[0] || '');
 
         if (intervalIndex !== -1) {
-          console.log(this.allIntervalle[intervalIndex], intervalIndex);
           let startIndex = Math.floor(Math.random() * (this.allNotesRead.length - intervalIndex));
           startIndex++;
 
-          console.log(this.allNotesRead[startIndex], startIndex);
           if(this.allNotesRead[startIndex] === 'c-1') {
             startIndex--;
           } else if(this.allNotesRead[startIndex] === 'a-2') {
             startIndex++;
           }
-          console.log(this.allNotesRead[startIndex], startIndex);
           const endIndex = startIndex + intervalIndex;
 
           this.selectedCircle[startIndex] = true;
@@ -97,6 +92,8 @@ export class NotesystemComponent {
       }
     }
 
+    this.markOneCircle();
+
     const selectedExtraCircle = sessionStorage.getItem('selectedExtraCircle');
     if(i !== undefined && this.isClickable === true) {
       const note = this.allNotesRead[i-1];
@@ -111,6 +108,25 @@ export class NotesystemComponent {
 
       this.isErasing === true ? delete this.selectedCircle[i] : this.selectedCircle[i] = true;
       sessionStorage.setItem('selectedCircle', JSON.stringify(this.selectedCircle));
+    }
+  }
+
+  public markOneCircle(): void {
+    if (Object.keys(this.selectedCircle).length > 0) {
+      setTimeout(() => this.markOneCircle(), 1000);
+      return;
+    }
+
+    if(this.action === 'schreibe' && this.isIntervall && (sessionStorage.getItem('intervallAllowed') === 'yes')) {
+      const intervalIndex = this.allIntervalle.indexOf(this.currentQuestion || '');
+
+      const possibleStartNotes = this.allNotesRead.filter((_, index) =>
+        index + intervalIndex < this.allNotesRead.length
+      ).slice(1);
+
+      const startIndex = Math.floor(Math.random() * (possibleStartNotes.length - 1)) + 1;
+      this.selectedCircle[startIndex] = true;
+      sessionStorage.setItem('intervallAllowed', 'no');
     }
   }
 
@@ -131,10 +147,12 @@ export class NotesystemComponent {
         }, 1000);
       }
     }
+    sessionStorage.setItem('intervallAllowed', 'yes');
   }
 
   toggleExtraLine(id: number): void {
     if (!this.isClickable) { return; }
+    sessionStorage.setItem('intervallAllowed', 'no');
 
     if(this.isErasing === false && !this.selectedCircle[id]) {
       const note = this.allNotesRead[id-1];
