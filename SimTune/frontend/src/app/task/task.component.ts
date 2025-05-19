@@ -451,7 +451,6 @@ export class TaskComponent {
     }
 
     sessionStorage.setItem('intervallAllowed', 'yes');
-    console.log(this.toneType);
     if(this.toneType === 'Intervalle') {
       this.notesystemComponent.markOneCircle();
     }
