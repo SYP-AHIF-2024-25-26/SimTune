@@ -112,12 +112,11 @@ export class NotesystemComponent {
   }
 
   public markOneCircle(): void {
-    if (Object.keys(this.selectedCircle).length > 0) {
-      setTimeout(() => this.markOneCircle(), 1000);
-      return;
-    }
-
     if(this.action === 'schreibe' && this.isIntervall && (sessionStorage.getItem('intervallAllowed') === 'yes')) {
+      if (Object.keys(this.selectedCircle).length > 0) {
+        setTimeout(() => this.markOneCircle(), 1000);
+        return;
+      }
       const intervalIndex = this.allIntervalle.indexOf(this.currentQuestion || '');
 
       const possibleStartNotes = this.allNotesRead.filter((_, index) =>

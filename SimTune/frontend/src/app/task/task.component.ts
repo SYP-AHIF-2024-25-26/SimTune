@@ -451,7 +451,10 @@ export class TaskComponent {
     }
 
     sessionStorage.setItem('intervallAllowed', 'yes');
-    this.notesystemComponent.markOneCircle();
+    console.log(this.toneType);
+    if(this.toneType === 'Intervalle') {
+      this.notesystemComponent.markOneCircle();
+    }
 
     this.firstAttemptCorrect = true;
     if (this.questionIndex < this.randomizedQuestions.length - 1) {
