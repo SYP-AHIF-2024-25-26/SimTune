@@ -28,11 +28,12 @@
     <div class="group relative -top-7">
       <div
           class="inset-x-0 h-3 cursor-pointer"
-          (click)="showCircle(2)"
+          (click)="!(selectedCircle[1] || selectedCircle[3]) && showCircle(2)"
           (mouseover)="setHoveredExtraLine(2, true)"
           (mouseout)="setHoveredExtraLine(2, false)">
 
-        <img src="assets/images/kreis.png"
+        <img *ngIf="selectedCircle[2] || (!selectedCircle[1] && !selectedCircle[3])"
+              src="assets/images/kreis.png"
              [class.hidden]="!selectedCircle[2]"
              [ngStyle]="{
               'filter': selectedCircleColor[2]
@@ -40,9 +41,10 @@
                 : 'none'
               }"
               [class.opacity-50]="!selectedCircle[2]"
+              [class.hidden]="!selectedCircle[2]"
               class="group-hover:block w-6 h-6 ml-28" />
 
-            @if (selectedCircle[2]) {
+            @if (selectedCircle[2] || selectedCircle[3] || selectedCircle[1]) {
               <img src="assets/images/kreis.png"
                   [class.hidden]="!selectedExtraCircle[2]"
                   [ngStyle]="{
@@ -51,8 +53,11 @@
                       : 'none'
                   }"
                   [class.opacity-50]="!selectedExtraCircle[2]"
-                  (click)="showExtraCircle(1)"
-                  class="group-hover:block w-6 h-6 ml-36 -mt-6" />
+                  (click)="showExtraCircle(2)"
+                  [ngClass]="{
+                    'group-hover:block w-6 h-6 ml-36': true,
+                    '-mt-6': selectedCircle[2]
+                  }" />
             }
       </div>
     </div>
@@ -60,19 +65,21 @@
     <div *ngFor="let i of [3, 5, 7, 9, 11]; let last = last">
       <div class="group relative -top-10">
         <div class="h-0.5 bg-black w-full" [id]="i"></div>
-        <div class="absolute inset-x-0 -top-2.5 -bottom-2.5 cursor-pointer"
-             (click)="showCircle(i)">
-          <img src="assets/images/kreis.png"
-             [class.hidden]="!selectedCircle[i]"
-             [ngStyle]="{
-               'filter': selectedCircleColor[i]
-                 ? 'invert(20%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[i]) + 'deg)'
-                 : 'none'
-             }"
-             [class.opacity-50]="!selectedCircle[i]"
-             class="group-hover:block w-6 h-6 ml-28" />
+          	<div class="absolute inset-x-0 -top-2.5 -bottom-2.5 cursor-pointer"
+             (click)="!(selectedCircle[i-1] || selectedCircle[i+1]) && showCircle(i)">
+              <img *ngIf="selectedCircle[i] || (!selectedCircle[i-1] && !selectedCircle[i+1])"
+                  src="assets/images/kreis.png"
+                  [ngStyle]="{
+                    'filter': selectedCircleColor[i]
+                      ? 'invert(20%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[i]) + 'deg)'
+                      : 'none'
+                  }"
+                  [class.opacity-50]="!selectedCircle[i]"
+                  [class.hidden]="!selectedCircle[i]"
+                  class="group-hover:block w-6 h-6 ml-28" />
 
-            @if (selectedCircle[i]) {
+
+            @if (selectedCircle[i] || selectedCircle[i-1] || selectedCircle[i+1]) {
               <img src="assets/images/kreis.png"
                 [class.hidden]="!selectedExtraCircle[i]"
                 [ngStyle]="{
@@ -82,25 +89,30 @@
                 }"
                 [class.opacity-50]="!selectedExtraCircle[i]"
                 (click)="showExtraCircle(i)"
-                class="group-hover:block w-6 h-6 ml-36 -mt-6" />
+                [ngClass]="{
+                  'group-hover:block w-6 h-6 ml-36': true,
+                  '-mt-6': selectedCircle[i]
+                }" />
             }
         </div>
       </div>
 
       <div *ngIf="!last" class="group relative -top-10">
         <div class="absolute inset-x-0 h-3 cursor-pointer" [id]="i+1"
-          (click)="showCircle(i+1)">
+          (click)="!(selectedCircle[i] || selectedCircle[i+2]) && showCircle(i+1)">
 
-          <img src="assets/images/kreis.png"
-               [class.hidden]="!selectedCircle[i+1]"
-               [ngStyle]="{
+          <img *ngIf="selectedCircle[i+1] || (!selectedCircle[i] && !selectedCircle[i+2])"
+              src="assets/images/kreis.png"
+              [ngStyle]="{
                 'filter': selectedCircleColor[i+1]
                   ? 'invert(20%) sepia(100%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[i+1]) + 'deg)'
                   : 'none'
               }"
-               [class.opacity-50]="!selectedCircle[i+1]"
-               class="group-hover:block w-6 h-6 ml-28" />
-            @if (selectedCircle[i+1]) {
+              [class.hidden]="!selectedCircle[i+1]"
+              [class.opacity-50]="!selectedCircle[i+1]"
+              class="group-hover:block w-6 h-6 ml-28" />
+
+            @if (selectedCircle[i+1] || selectedCircle[i] || selectedCircle[i+2]) {
               <img src="assets/images/kreis.png"
                 [class.hidden]="!selectedExtraCircle[i+1]"
                 [ngStyle]="{
@@ -110,7 +122,10 @@
                 }"
                 [class.opacity-50]="!selectedExtraCircle[i+1]"
                 (click)="showExtraCircle(i+1)"
-                class="group-hover:block w-6 h-6 ml-36 -mt-6" />
+                [ngClass]="{
+                  'group-hover:block w-6 h-6 ml-36': true,
+                  '-mt-6': selectedCircle[i+1]
+                }" />
             }
         </div>
       </div>
@@ -119,21 +134,23 @@
     <div class="group relative -top-16">
         <div
             class="inset-x-0 h-3 cursor-pointer"
-            (click)="showCircle(12)"
+            (click)="!(selectedCircle[11] || selectedCircle[13]) && showCircle(12)"
             (mouseover)="setHoveredExtraLine(12, true)"
             (mouseout)="setHoveredExtraLine(12, false)">
 
-          <img src="assets/images/kreis.png"
+          <img *ngIf="selectedCircle[12] || (!selectedCircle[11] && !selectedCircle[13])"
+                src="assets/images/kreis.png"
               [class.hidden]="!selectedCircle[12]"
               [ngStyle]="{
                 'filter': selectedCircleColor[12]
                   ? 'invert(20%) sepia(90%) saturate(500%) hue-rotate(' + getHueRotation(selectedCircleColor[12]) + 'deg)'
                   : 'none'
                 }"
-              [class.opacity-50]="!selectedCircle[12]"
-              class="group-hover:block w-6 h-6 ml-28" />
+                [class.opacity-50]="!selectedCircle[12]"
+                [class.hidden]="!selectedCircle[12]"
+                class="group-hover:block w-6 h-6 ml-28" />
 
-            @if (selectedCircle[12]) {
+            @if (selectedCircle[12] || selectedCircle[11] || selectedCircle[13]) {
               <img src="assets/images/kreis.png"
                 [class.hidden]="!selectedExtraCircle[12]"
                 [ngStyle]="{
@@ -143,7 +160,10 @@
                 }"
                 [class.opacity-50]="!selectedExtraCircle[12]"
                 (click)="showExtraCircle(12)"
-                class="group-hover:block w-6 h-6 ml-36 -mt-6" />
+                [ngClass]="{
+                  'group-hover:block w-6 h-6 ml-36': true,
+                  '-mt-6': selectedCircle[12]
+                }"/>
             }
         </div>
     </div>

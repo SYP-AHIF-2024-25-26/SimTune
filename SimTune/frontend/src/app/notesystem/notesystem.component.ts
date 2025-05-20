@@ -21,7 +21,7 @@ export class NotesystemComponent {
 
   selectedCircle: { [key: number]: boolean } = {};
   selectedExtraCircle: { [key: number]: boolean } = {};
-  selectedCircleColor: { [key: number]: string } = {};
+  selectedCircleColor: { [key: string]: string } = {};
   selectedExtraLine: { [key: number]: boolean } = {};
   hoveredExtraLine: { [key: number]: boolean } = {};
   isErasing: boolean = false;
@@ -37,6 +37,10 @@ export class NotesystemComponent {
       this.isErasing === true ? delete this.selectedExtraCircle[i] : this.selectedExtraCircle[i] = true;
       sessionStorage.setItem('selectedExtraCircle', JSON.stringify(this.selectedExtraCircle));
     }
+  }
+
+  public getAllSelectedCircle() {
+    return this.selectedCircle;
   }
 
   showCircle(i?: number): void {
@@ -73,6 +77,7 @@ export class NotesystemComponent {
 
       } else if(this.isIntervall === false){
         this.selectedCircle = {};
+        this.selectedExtraCircle = {};
         const index = this.allNotesRead.indexOf(this.currentQuestion || '');
 
         if (index !== -1) {
@@ -91,7 +96,6 @@ export class NotesystemComponent {
         return
       }
     }
-
     this.markOneCircle();
 
     const selectedExtraCircle = sessionStorage.getItem('selectedExtraCircle');
@@ -130,24 +134,32 @@ export class NotesystemComponent {
   }
 
   public changeMarkColor(color: string) {
-    for (const key in this.selectedCircle) {
-      if (this.selectedCircle[key] || this.selectedExtraCircle[key]) {
-        this.selectedCircleColor[key] = color;
+    const combinedKeys = new Set([
+      ...Object.keys(this.selectedCircle),
+      ...Object.keys(this.selectedExtraCircle)
+    ]);
 
-        setTimeout(() => {
-          delete this.selectedCircleColor[key];
-        }, 1000);
+    for (const key of combinedKeys) {
+      this.selectedCircleColor[key] = color;
 
-        setTimeout(() => {
-          delete this.selectedCircle[key];
-          delete this.selectedExtraCircle[key];
-          sessionStorage.setItem('selectedCircle', JSON.stringify(this.selectedCircle));
-          sessionStorage.setItem('selectedExtraCircle', JSON.stringify(this.selectedExtraCircle));
-        }, 1000);
-      }
+      setTimeout(() => {
+        delete this.selectedCircleColor[key];
+      }, 1000);
+
+      setTimeout(() => {
+        delete this.selectedCircle[Number(key)];
+        delete this.selectedExtraCircle[Number(key)];
+        sessionStorage.setItem('selectedCircle', JSON.stringify(this.selectedCircle));
+        sessionStorage.setItem('selectedExtraCircle', JSON.stringify(this.selectedExtraCircle));
+      }, 1000);
     }
+
     sessionStorage.setItem('intervallAllowed', 'yes');
+    if(this.isIntervall) {
+      this.markOneCircle();
+    }
   }
+
 
   toggleExtraLine(id: number): void {
     if (!this.isClickable) { return; }

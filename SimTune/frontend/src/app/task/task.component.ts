@@ -299,9 +299,10 @@ export class TaskComponent {
       }
     };
 
-    processSelectedCircle(selectedCircle);
+    const allCircles = this.notesystemComponent.getAllSelectedCircle(); 
+    processSelectedCircle(JSON.stringify(allCircles));
     processSelectedCircle(selectedExtraCircle);
-
+    
     if (notes.length === 2) {
       const interval = Math.abs(indices[1] - indices[0]);
 
