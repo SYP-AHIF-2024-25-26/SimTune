@@ -27,13 +27,18 @@ jobs:
 
       - name: Build & Push Frontend Image
         run: |
-          docker build --no-cache -t ghcr.io/syp-ahif-2024-25-26/simtune/simtune-frontend:latest ./frontend
+          docker build --no-cache -t ghcr.io/syp-ahif-2024-25-26/simtune/simtune-frontend:latest ./SimTune/frontend
           docker push ghcr.io/syp-ahif-2024-25-26/simtune/simtune-frontend:latest
 
       - name: Build & Push Backend Image
         run: |
-          docker build --no-cache -t ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest ./backend
+          docker build --no-cache -t ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest ./SimTune/backend
           docker push ghcr.io/syp-ahif-2024-25-26/simtune/simtune-backend:latest
+
+      - name: Build & Push Adminer Image
+        run: |
+          docker build --no-cache -t ghcr.io/syp-ahif-2024-25-26/simtune-adminer:latest ./SimTune/adminer
+          docker push ghcr.io/syp-ahif-2024-25-26/simtune/simtune-adminer:latest
 
       - name: Setup Kubeconfig for LeoCloud
         run: |
