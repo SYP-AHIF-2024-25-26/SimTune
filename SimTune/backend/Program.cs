@@ -8,6 +8,12 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (builder.Environment.IsDevelopment())
+{
+    DotNetEnv.Env.Load();
+}
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services.AddDbContext<SimTuneDbContext>(
     // für lokale Entwicklung
     //options => options.UseSqlite("Data Source=SimTune.db")

@@ -1,4 +1,8 @@
 FROM node:20 AS build
+
+ARG API_URL
+ENV ApiUrl=${API_URL}
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm install

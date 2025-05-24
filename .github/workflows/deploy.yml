@@ -5,6 +5,14 @@ on:
     branches:
       - main
 
+env:
+  APP_URL: ${{ secrets.APP_URL }}
+  JWT_KEY: ${{ secrets.JWT_KEY }}
+  JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+  JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE }}
+  CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+  FRONTEND_API_URL: ${{ secrets.API_URL }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -27,12 +35,24 @@ jobs:
 
       - name: Build & Push Frontend Image
         run: |
-          docker build --no-cache -t ghcr.io/syp-ahif-2024-25-26/simtune-frontend:latest ./SimTune/frontend
+          docker build \
+            --no-cache \
+            --build-arg API_URL=$FRONTEND_API_URL \
+            -t ghcr.io/syp-ahif-2024-25-26/simtune-frontend:latest \
+            ./SimTune/frontend
           docker push ghcr.io/syp-ahif-2024-25-26/simtune-frontend:latest
 
       - name: Build & Push Backend Image
         run: |
-          docker build --no-cache -t ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest ./SimTune/backend
+          docker build \
+            --no-cache \
+            --build-arg APP_URL=$APP_URL \
+            --build-arg JWT_KEY=$JWT_KEY \
+            --build-arg JWT_ISSUER=$JWT_ISSUER \
+            --build-arg JWT_AUDIENCE=$JWT_AUDIENCE \
+            --build-arg CONNECTION_STRING=$CONNECTION_STRING \
+            -t ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest \
+            ./SimTune/backend
           docker push ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest
 
       - name: Build & Push Adminer Image
