@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { API_URL, fetchRestEndpointWithAuthorization } from '../api-calls/fetch-rest-endpoint';
+import { API_URL, fetchRestEndpoint, fetchRestEndpointWithAuthorization } from '../api-calls/fetch-rest-endpoint';
 
 interface MyJwtPayload {
   sub: string;
@@ -32,10 +32,13 @@ export class ProfilePageComponent {
   constructor(private router: Router) {}
 
   exercise: { [key: string]: string }[] = [];
-  filteredExercise = [...this.exercise];
-  selectedTypes: Set<string> = new Set();
+  sortDirection: { [key: string]: 'asc' | 'desc' } = {};
+  exerciseTypes: string[] = ['Stammtöne', 'Notensystem', 'Intervalle', 'Tonleitern'];
+  selectedTypes: string[] = [...this.exerciseTypes];
   showSortOptions = false;
+  progress = signal<number>(0);
   activeSort = signal<string | null>(null);
+  currentSortCol: string | null = null;
   selectedExerciseTypes = signal<string[]>([]);
 
   async ngOnInit() {
@@ -47,7 +50,7 @@ export class ProfilePageComponent {
     this.rolle.set('not defined');
 
     await this.getExercises();
-    this.filteredExercise = [...this.exercise];
+    this.progress.set(await this.getProgress());
   }
 
   async getExercises() {
@@ -103,50 +106,44 @@ export class ProfilePageComponent {
     return parseFloat(score.replace('%', ''));
   }
 
-  toggleFilterVisibility() {
-    this.showSortOptions = !this.showSortOptions;
-    this.activeSort.set(null);
+  get filteredExercise() {
+    return this.exercise
+      .filter(ex => this.selectedTypes.includes(ex['ExerciseTyp']))
+      .sort((a, b) => {
+        const col = this.currentSortCol;
+        if (!col) return 0;
+        const dir = this.sortDirection[col];
+        const aVal = a[col];
+        const bVal = b[col];
+        if (aVal < bVal) return dir === 'asc' ? -1 : 1;
+        if (aVal > bVal) return dir === 'asc' ? 1 : -1;
+        return 0;
+      });
   }
 
-  toggleSort(sortType: string) {
-    if (this.activeSort() === sortType) {
-      this.activeSort.set(null);
+  async getProgress() {
+    const results = await Promise.all(
+      ['Stammtoene', 'Notensystem', 'Intervalle', 'Tonleitern']
+        .map(type => fetchRestEndpoint(API_URL + 'exercises/' + type, 'GET'))
+    );
+    const allExercises = results.flat();
+
+    if (allExercises.length === 0) return 0;
+    const completedCount = this.exercise.length;
+    return Math.round((completedCount / allExercises.length) * 100);
+  }
+
+  sortData(column: string) {
+    const dir = this.sortDirection[column] === 'asc' ? 'desc' : 'asc';
+    this.sortDirection[column] = dir;
+    this.currentSortCol = column;
+  }
+
+  toggleType(type: string) {
+    if (this.selectedTypes.includes(type)) {
+      this.selectedTypes = this.selectedTypes.filter(t => t !== type);
     } else {
-      this.activeSort.set(sortType);
-    }
-  }
-
-  isChecked(type: string): boolean {
-    return this.selectedExerciseTypes().includes(type);
-  }
-
-  sortExercises(property: string, direction: 'asc' | 'desc') {
-    this.filteredExercise.sort((a, b) => {
-      const aValue = property === 'Score' ? parseFloat(a[property]) : parseInt(a[property], 10);
-      const bValue = property === 'Score' ? parseFloat(b[property]) : parseInt(b[property], 10);
-
-      if (direction === 'asc') {
-        return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
-      } else {
-        return aValue < bValue ? 1 : (aValue > bValue ? -1 : 0);
-      }
-    });
-  }
-
-  filterExerciseType(event: any, type: string) {
-    const currentSelection = this.selectedExerciseTypes();
-    if (event.target.checked) {
-      this.selectedTypes.add(type);
-    } else {
-      this.selectedTypes.delete(type);
-    }
-
-    if (this.selectedTypes.size > 0) {
-      this.filteredExercise = this.exercise.filter(ex => this.selectedTypes.has(ex['ExerciseTyp']));
-      this.selectedExerciseTypes.set([...currentSelection, type]);
-    } else {
-      this.filteredExercise = [...this.exercise];
-      this.selectedExerciseTypes.set(currentSelection.filter(t => t !== type));
+      this.selectedTypes.push(type);
     }
   }
 }
