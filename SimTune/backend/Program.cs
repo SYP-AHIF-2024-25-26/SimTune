@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+/*var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     Args = args,
     ContentRootPath = Directory.GetCurrentDirectory()
@@ -14,8 +14,9 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-    .AddEnvironmentVariables();
+    .AddEnvironmentVariables();*/
 
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SimTuneDbContext>(
     // für lokale Entwicklung

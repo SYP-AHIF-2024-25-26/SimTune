@@ -1,15 +1,9 @@
 export { fetchRestEndpoint, API_URL, fetchRestEndpointWithAuthorization };
   // für lokale Entwicklung
-  const API_URL = "http://localhost:5069/";
-
-  // für docker
-  //const API_URL = "http://localhost:8081/";
-
-  // für azure
-  //const API_URL = "https://simtune-backend.salmonmeadow-e01ebf27.germanywestcentral.azurecontainerapps.io/";
+  //const API_URL = "http://localhost:5069/";
 
   // für leocloud
-  //const API_URL = "https://if210019.cloud.htl-leonding.ac.at/api/";
+  const API_URL = "https://if210019.cloud.htl-leonding.ac.at/api/";
 
 
   async function fetchRestEndpoint
