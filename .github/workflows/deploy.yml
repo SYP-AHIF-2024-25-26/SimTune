@@ -35,7 +35,7 @@ jobs:
 
       - name: Build & Push Frontend Image
         run: |
-          docker buildx build \
+          docker build \
             --no-cache \
             --build-arg API_URL=$FRONTEND_API_URL \
             -t ghcr.io/syp-ahif-2024-25-26/simtune-frontend:latest \
@@ -44,7 +44,7 @@ jobs:
 
       - name: Build & Push Backend Image
         run: |
-          docker buildx build \
+          docker build \
             --no-cache \
             --build-arg APP_URL=$APP_URL \
             --build-arg JWT_KEY=$JWT_KEY \
