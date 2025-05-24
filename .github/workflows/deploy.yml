@@ -42,7 +42,9 @@ jobs:
 
       - name: Setup Kubeconfig for LeoCloud
         run: |
+          mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+
 
       - name: Delete all old resources (LeoCloud)
         run: |
