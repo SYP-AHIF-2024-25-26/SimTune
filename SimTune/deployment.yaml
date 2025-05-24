@@ -1,0 +1,161 @@
+# SimTune Backend Deployment mit Persistenz
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simtune-backend
+spec:
+  selector:
+    matchLabels:
+      app: simtune-backend
+  template:
+    metadata:
+      labels:
+        app: simtune-backend
+    spec:
+      containers:
+        - name: simtune-backend
+          image: ghcr.io/SYP-AHIF-2024-25-26/SimTune/simtune-backend:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: db-storage
+              mountPath: /app/data
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: simtune-db-pvc
+
+---
+# PersistentVolumeClaim für die Datenbank
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: simtune-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+# SimTune Backend Service (bleibt unverändert)
+apiVersion: v1
+kind: Service
+metadata:
+  name: simtune-backend
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: simtune-backend
+
+---
+# SimTune Frontend Deployment (bleibt unverändert)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simtune-frontend
+spec:
+  selector:
+    matchLabels:
+      app: simtune-frontend
+  template:
+    metadata:
+      labels:
+        app: simtune-frontend
+    spec:
+      containers:
+        - name: simtune-frontend
+          image: ghcr.io/SYP-AHIF-2024-25-26/SimTune/simtune-frontend:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: BACKEND_URL
+              value: "http://simtune-backend:8080"
+
+---
+# SimTune Frontend Service (bleibt unverändert)
+apiVersion: v1
+kind: Service
+metadata:
+  name: simtune-frontend
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: simtune-frontend
+
+---
+# Adminer Deployment mit Zugriff auf die SQLite-Datenbank
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminer
+spec:
+  selector:
+    matchLabels:
+      app: adminer
+  template:
+    metadata:
+      labels:
+        app: adminer
+    spec:
+      containers:
+        - name: adminer
+          image: ghcr.io/SYP-AHIF-2024-25-26/SimTune/simtune-adminer:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: db-storage
+              mountPath: /db
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: simtune-db-pvc
+
+---
+
+# Adminer Service (nur Cluster-intern)
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminer
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: adminer
+
+---
+
+# Ingress (bleibt unverändert)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simtune-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: if210019.cloud.htl-leonding.ac.at
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: simtune-frontend
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: simtune-backend
+            port:
+              number: 8080

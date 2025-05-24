@@ -45,4 +45,4 @@ jobs:
 
       - name: Apply new deployment.yaml
         run: |
-          kubectl apply -f deployment.yaml
+          kubectl apply -f SimTune/deployment.yaml
