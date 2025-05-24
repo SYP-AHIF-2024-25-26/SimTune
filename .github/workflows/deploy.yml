@@ -44,16 +44,22 @@ jobs:
 
       - name: Build & Push Backend Image
         run: |
-          docker build \
+          docker buildx build \
             --no-cache \
-            --build-arg APP_URL=$APP_URL \
-            --build-arg JWT_KEY=$JWT_KEY \
-            --build-arg JWT_ISSUER=$JWT_ISSUER \
-            --build-arg JWT_AUDIENCE=$JWT_AUDIENCE \
-            --build-arg CONNECTION_STRING=$CONNECTION_STRING \
+            --build-arg APP_URL="$APP_URL" \
+            --build-arg JWT_KEY="$JWT_KEY" \
+            --build-arg JWT_ISSUER="$JWT_ISSUER" \
+            --build-arg JWT_AUDIENCE="$JWT_AUDIENCE" \
+            --build-arg CONNECTION_STRING="$CONNECTION_STRING" \
             -t ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest \
+            --push \
             ./SimTune/backend
-          docker push ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          JWT_KEY: ${{ secrets.JWT_KEY }}
+          JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+          JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE }}
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
 
       - name: Build & Push Adminer Image
         run: |
@@ -64,7 +70,6 @@ jobs:
         run: |
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
-
 
       - name: Delete all old resources (LeoCloud)
         run: |
