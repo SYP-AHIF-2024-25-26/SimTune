@@ -11,8 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 if (builder.Environment.IsDevelopment())
 {
     DotNetEnv.Env.Load();
+    builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 }
-builder.Configuration.AddEnvironmentVariables();
+else
+{
+    builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+}
 
 builder.Services.AddDbContext<SimTuneDbContext>(
     // für lokale Entwicklung
