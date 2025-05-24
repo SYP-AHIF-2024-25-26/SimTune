@@ -6,35 +6,24 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-var builder = WebApplication.CreateBuilder(args);
-/*
- Azure Db
-var connection = String.Empty;
-if (builder.Environment.IsDevelopment())
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
-    builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
-    connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
-}
-else
-{
-    connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
-}
+    Args = args,
+    ContentRootPath = Directory.GetCurrentDirectory()
+});
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+    .AddEnvironmentVariables();
+
+
 builder.Services.AddDbContext<SimTuneDbContext>(
     // für lokale Entwicklung
-    options => options.UseSqlServer(connection)
+    //options => options.UseSqlite("Data Source=SimTune.db")
 
     // für docker
-    //options => options.UseSqlite("FileName=\\app\\Database\\SimTune.db")
-);
-*/
-
-// Sqlite
-builder.Services.AddDbContext<SimTuneDbContext>(
-    // für lokale Entwicklung
-    options => options.UseSqlite("Data Source=SimTune.db")
-
-    // für docker
-    //options => options.UseSqlite("Data Source=/app/data/SimTune.db")
+    options => options.UseSqlite("Data Source=/app/data/SimTune.db")
 );
 
 builder.Services.AddCors(options =>
