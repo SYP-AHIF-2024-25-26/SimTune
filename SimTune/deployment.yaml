@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: simtune-backend
-          image: ghcr.io/SYP-AHIF-2024-25-26/SimTune/simtune-backend:latest
+          image: ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -69,7 +69,7 @@ spec:
     spec:
       containers:
         - name: simtune-frontend
-          image: ghcr.io/SYP-AHIF-2024-25-26/SimTune/simtune-frontend:latest
+          image: ghcr.io/syp-ahif-2024-25-26/simtune-frontend:latest
           ports:
             - containerPort: 80
           env:
@@ -107,7 +107,7 @@ spec:
     spec:
       containers:
         - name: adminer
-          image: ghcr.io/SYP-AHIF-2024-25-26/SimTune/simtune-adminer:latest
+          image: ghcr.io/syp-ahif-2024-25-26/simtune-adminer:latest
           ports:
             - containerPort: 8080
           volumeMounts:
