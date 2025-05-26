@@ -87,7 +87,7 @@ export const toeneData: TaskData = {
           "card-url": "/notensystem"
         },
         {
-          "card-header": "Versetzungzeichen",
+          "card-header": "Versetzungszeichen",
           "card-image-url": "",
           "card-url": "/akkorde"
         },
@@ -107,7 +107,7 @@ export const toeneData: TaskData = {
           "card-url": "/intervalle"
         },
         {
-          "card-header": "Versetzungzeichen",
+          "card-header": "Versetzungszeichen",
           "card-image-url": "",
           "card-url": "/akkorde"
         },

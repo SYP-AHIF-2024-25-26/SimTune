@@ -28,15 +28,20 @@
       <p class="font-semibold text-2xl">{{ item.description }}</p>
       <p class="mt-1">{{ toneType }}</p>
 
-      <p
-        [ngClass]="{
-          'bg-costumAnfangenBtn hover:bg-costumAnfangenBtnHover': item.done,
-          'bg-blue-300 hover:bg-blue-400': !item.done
-        }"
-        class="rounded-xl mt-4 p-1 drop-shadow-2xl duration-100"
-        (click)="goToTask(item.description)">
-        Anfangen
-      </p>
+      <div>
+        <div
+          [ngClass]="{
+            'bg-costumAnfangenBtn hover:bg-costumAnfangenBtnHover': item.done,
+            'bg-blue-300 hover:bg-blue-400': !item.done
+          }"
+          class="rounded-xl mt-4 p-1 drop-shadow-2xl duration-100 flex justify-center items-center gap-2 cursor-pointer"
+          (click)="goToTask(item.description)">
+
+          <span>Los geht's!</span>
+          <span *ngIf="item.done">✔</span>
+
+        </div>
+      </div>
     </div>
   </div>
   }
@@ -46,13 +51,25 @@
 
       <div class="mt-14 text-center grid grid-cols-2 gap-y-16 gap-x-0 place-items-center w-2/3 mx-auto">
         @for (card of group['cards']; track card['card-header'];) {
-          <a routerLink="{{ card['card-url'] }}">
-            <div class="bg-costumGray w-96 rounded-2xl h-56 hover:shadow-even transition-shadow duration-0 shadow-lg">
-              <p class="font-semibold text-3xl pt-3">{{ card["card-header"] }}</p>
+          <ng-container *ngIf="!['Rhythmus', 'Akkorde', 'Tonarten', 'Versetzungszeichen', 'Hilfslinien'].includes(card['card-header']) && group['group-header'] !== 'Basschlüssel'; else lockedCard">
+            <a [routerLink]="card['card-url']" class="block w-96 rounded-3xl bg-costumGray shadow-xl transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1">
+              <div class="h-56 flex flex-col justify-between">
+                <p class="font-semibold text-3xl pt-5 px-6 text-gray-800">
+                  {{ card["card-header"] }}
+                </p>
+                <img [src]="card['card-image-url']" class="object-contain px-6 rounded-b-3xl mb-4 transition-transform duration-300" />
+              </div>
+            </a>
+          </ng-container>
 
-              <img src="{{ card['card-image-url'] }}" class="object-contain px-3 rounded-b-2xl my-4" />
+          <ng-template #lockedCard>
+            <div class="w-96 h-56 rounded-3xl bg-gray-300 opacity-50 cursor-not-allowed shadow-lg flex flex-col justify-between">
+              <p class="font-semibold text-3xl pt-5 px-6 text-gray-600">
+                {{ card["card-header"] }}
+              </p>
+              <img [src]="card['card-image-url']" class="object-contain px-6 rounded-b-3xl mb-4" />
             </div>
-          </a>
+          </ng-template>
         }
       </div>
     }
