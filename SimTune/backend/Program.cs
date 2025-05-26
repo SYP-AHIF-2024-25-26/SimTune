@@ -19,7 +19,7 @@ else
 }
 
 builder.Configuration.AddEnvironmentVariables();
-Console.WriteLine("Verwende DB: " + builder.Configuration.GetConnectionString("ConnectionStrings:DefaultConnection"));
+Console.WriteLine("Verwende DB: " + builder.Configuration["ConnectionStrings:DefaultConnection"]);
 
 
 builder.Services.AddDbContext<SimTuneDbContext>(
