@@ -50,7 +50,7 @@ jobs:
             --build-arg JWT_KEY="$JWT_KEY" \
             --build-arg JWT_ISSUER="$JWT_ISSUER" \
             --build-arg JWT_AUDIENCE="$JWT_AUDIENCE" \
-            --build-arg CONNECTIONSTRINGS__DEFAULTCONNECTION="$CONNECTION_STRING" \
+            --build-arg CONNECTION_STRING="$CONNECTION_STRING" \
             -t ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest \
             --push \
             ./SimTune/backend

@@ -16,13 +16,13 @@ if (builder.Environment.IsDevelopment())
 else
 {
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
-    Console.WriteLine("Verwende DB: " + builder.Configuration["AppUrl"]);
-    Console.WriteLine("Verwende ConnectionString: " + builder.Configuration["ConnectionStrings:DefaultConnection"]);
-    Console.WriteLine("Jwt Key: " + builder.Configuration["Jwt:Issuer"]);
+    
 }
 
 builder.Configuration.AddEnvironmentVariables();
-
+Console.WriteLine("Verwende DB: " + builder.Configuration["AppUrl"]);
+Console.WriteLine("Verwende ConnectionString: " + builder.Configuration["ConnectionString"]);
+Console.WriteLine("Jwt Key: " + builder.Configuration["Jwt:Issuer"]);
 
 builder.Services.AddDbContext<SimTuneDbContext>(
     // für lokale Entwicklung
@@ -30,7 +30,7 @@ builder.Services.AddDbContext<SimTuneDbContext>(
 
     // für docker
     //options => options.UseSqlite("Data Source=/app/data/SimTune.db")
-    options => options.UseSqlite("Data Source=" + builder.Configuration["ConnectionStrings:DefaultConnection"])
+    options => options.UseSqlite("Data Source=" + builder.Configuration["ConnectionString"])
 );
 
 builder.Services.AddCors(options =>
