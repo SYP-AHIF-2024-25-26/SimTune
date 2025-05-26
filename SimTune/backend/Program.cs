@@ -16,7 +16,7 @@ if (builder.Environment.IsDevelopment())
 else
 {
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
-    Console.WriteLine("Verwende DB: " + builder.Configuration["ConnectionStrings:DefaultConnection"]);
+    Console.WriteLine("Verwende DB: " + builder.Configuration["AppUrl"]);
 }
 
 builder.Configuration.AddEnvironmentVariables();
