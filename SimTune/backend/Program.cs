@@ -18,6 +18,7 @@ else
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
     Console.WriteLine("Verwende DB: " + builder.Configuration["AppUrl"]);
     Console.WriteLine("Verwende ConnectionString: " + builder.Configuration["ConnectionStrings:DefaultConnection"]);
+    Console.WriteLine("Jwt Key: " + builder.Configuration["Jwt:Issuer"]);
 }
 
 builder.Configuration.AddEnvironmentVariables();
