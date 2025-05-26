@@ -11,7 +11,7 @@ env:
   JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
   JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE }}
   CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-  FRONTEND_API_URL: ${{ secrets.API_URL }}
+  API_URL: ${{ secrets.API_URL }}
 
 jobs:
   build-and-deploy:
@@ -37,10 +37,12 @@ jobs:
         run: |
           docker build \
             --no-cache \
-            --build-arg API_URL=$FRONTEND_API_URL \
+            --build-arg API_URL="$API_URL" \
             -t ghcr.io/syp-ahif-2024-25-26/simtune-frontend:latest \
             ./SimTune/frontend
           docker push ghcr.io/syp-ahif-2024-25-26/simtune-frontend:latest
+        env:
+          API_URL: ${{ secrets.API_URL}}
 
       - name: Build & Push Backend Image
         run: |

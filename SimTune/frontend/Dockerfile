@@ -7,6 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN sed -i "s|apiUrl: ''|apiUrl: '${API_URL}'|g" src/environments/environment.prod.ts
 RUN npm run build
 
 FROM nginx:alpine
