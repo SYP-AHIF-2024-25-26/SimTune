@@ -20,9 +20,10 @@ else
 }
 
 builder.Configuration.AddEnvironmentVariables();
-Console.WriteLine("Verwende DB: " + builder.Configuration["AppUrl"]);
-Console.WriteLine("Verwende ConnectionString: " + builder.Configuration["ConnectionString"]);
-Console.WriteLine("Jwt Key: " + builder.Configuration["Jwt:Issuer"]);
+
+Console.WriteLine(builder.Configuration["ConnectionString"]);
+Console.WriteLine(builder.Configuration["AppUrl"]);
+Console.WriteLine(builder.Configuration["Jwt:Key"]);
 
 builder.Services.AddDbContext<SimTuneDbContext>(
     // für lokale Entwicklung
