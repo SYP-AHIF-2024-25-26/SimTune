@@ -34,6 +34,7 @@ export class NotesystemComponent {
   }
 
   showExtraCircle(i: number): void {
+    if(Object.keys(this.selectedCircle).length + Object.keys(this.selectedExtraCircle).length >= 2) { return; }
     if(i !== undefined && this.isClickable === true) {
       this.isErasing === true ? delete this.selectedExtraCircle[i] : this.selectedExtraCircle[i] = true;
       sessionStorage.setItem('selectedExtraCircle', JSON.stringify(this.selectedExtraCircle));
@@ -45,6 +46,7 @@ export class NotesystemComponent {
   }
 
   showCircle(i?: number): void {
+    if(Object.keys(this.selectedCircle).length + Object.keys(this.selectedExtraCircle).length >= 2) { return; }
     if(this.action === 'lies') {
       if(this.isIntervall === true && i === undefined) {
         this.selectedCircle = {};
@@ -172,6 +174,7 @@ export class NotesystemComponent {
 
 
   toggleExtraLine(id: number): void {
+    if(Object.keys(this.selectedCircle).length + Object.keys(this.selectedExtraCircle).length >= 2) { return; }
     if (!this.isClickable) { return; }
     sessionStorage.setItem('intervallAllowed', 'no');
 
