@@ -16,10 +16,10 @@ if (builder.Environment.IsDevelopment())
 else
 {
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+    Console.WriteLine("Verwende DB: " + builder.Configuration["ConnectionStrings:DefaultConnection"]);
 }
 
 builder.Configuration.AddEnvironmentVariables();
-Console.WriteLine("Verwende DB: " + builder.Configuration["ConnectionStrings:DefaultConnection"]);
 
 
 builder.Services.AddDbContext<SimTuneDbContext>(
