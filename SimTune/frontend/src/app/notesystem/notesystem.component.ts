@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
+import e from 'express';
 
 @Component({
   selector: 'app-notesystem',
@@ -111,6 +112,15 @@ export class NotesystemComponent {
       }
 
       this.isErasing === true ? delete this.selectedCircle[i] : this.selectedCircle[i] = true;
+
+      if(this.isErasing === true) {
+        for(let extraLine in this.selectedExtraCircle) {
+          if (this.selectedCircle[Number(extraLine) - 1] === undefined && this.selectedCircle[Number(extraLine) + 1] === undefined) {
+            delete this.selectedExtraCircle[extraLine];
+          }
+        }
+      }
+
       sessionStorage.setItem('selectedCircle', JSON.stringify(this.selectedCircle));
     }
   }
