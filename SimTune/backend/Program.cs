@@ -21,16 +21,7 @@ else
 
 builder.Configuration.AddEnvironmentVariables();
 
-Console.WriteLine(builder.Configuration["ConnectionString"]);
-Console.WriteLine(builder.Configuration["AppUrl"]);
-Console.WriteLine(builder.Configuration["Jwt:Key"]);
-
 builder.Services.AddDbContext<SimTuneDbContext>(
-    // für lokale Entwicklung
-    //options => options.UseSqlite("Data Source=SimTune.db")
-
-    // für docker
-    //options => options.UseSqlite("Data Source=/app/data/SimTune.db")
     options => options.UseSqlite("Data Source=" + builder.Configuration["ConnectionString"])
 );
 
