@@ -12,12 +12,14 @@ if (builder.Environment.IsDevelopment())
 {
     DotNetEnv.Env.Load();
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-    builder.Configuration.AddEnvironmentVariables();
 }
 else
 {
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
 }
+
+builder.Configuration.AddEnvironmentVariables();
+Console.WriteLine("Verwende DB: " + builder.Configuration.GetConnectionString("ConnectionStrings:DefaultConnection"));
 
 
 builder.Services.AddDbContext<SimTuneDbContext>(
