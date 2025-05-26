@@ -12,18 +12,21 @@ if (builder.Environment.IsDevelopment())
 {
     DotNetEnv.Env.Load();
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+    builder.Configuration.AddEnvironmentVariables();
 }
 else
 {
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
 }
 
+
 builder.Services.AddDbContext<SimTuneDbContext>(
     // für lokale Entwicklung
     //options => options.UseSqlite("Data Source=SimTune.db")
 
     // für docker
-    options => options.UseSqlite("Data Source=/app/data/SimTune.db")
+    //options => options.UseSqlite("Data Source=/app/data/SimTune.db")
+    options => options.UseSqlite("Data Source=" + builder.Configuration["ConnectionStrings:DefaultConnection"])
 );
 
 builder.Services.AddCors(options =>

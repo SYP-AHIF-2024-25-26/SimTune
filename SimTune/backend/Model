@@ -1,0 +1,41 @@
+﻿Exercise
+ - ExerciseId
+ - Instruction (was IN der Übung zu tun ist)
+ - Description (was BEI der Übung zu tun ist)
+ - NotationType (Klavier od. Notensystem)
+ - Clef (Violinschlüssel, Bassschlüssel (nur bei NotationType=Notensystem)
+ - ExerciseType (Intervalle, Tonleitern)
+ - ExerciseModus (lesen od. schreiben)
+ - AllAnswers (z.B. c, d, e, f, g, a, h, c)
+ - PossibleAnswers (z.B. c, d, e)
+ - NotesToSet (falls ExerciseModus = "schreiben", z.B. c-1, d-1, cis-2, ...)
+ - NotesToRead (fallses ExerciseModus = "lesen", z.B. c-1, d-1, cis-2, ...)
+ 
+ 
+ExerciseContent
+ - 
+
+PianoExercise
+ - ExerciseId
+ - Instruction (was IN der Übung zu tun ist)
+ - Description (was BEI der Übung zu tun ist)
+ - ExerciseType (Intervalle, Tonleitern)
+ - ExerciseModus (lesen od. schreiben)
+ - AllAnswers (z.B. c, d, e, f, g, a, h, c)
+ - PossibleAnswers (z.B. c, d, e)
+ - NotesToSet (falls ExerciseModus = "lesen", z.B. c-1, d-1, cis-2, ...)
+
+NotesystemExercise
+ - ExerciseId
+ - Instruction (was IN der Übung zu tun ist)
+ - Description (was BEI der Übung zu tun ist)
+ - Clef (Violinschlüssel, Bassschlüssel)
+ - ExerciseType (Intervalle, Tonleitern)
+ - ExerciseModus (lesen od. schreiben)
+ - AllAnswers (z.B. c, d, e, f, g, a, h, c)
+ - PossibleAnswers (z.B. c, d, e)
+ - NotesToSet (falls ExerciseModus = "lesen", z.B. c-1, d-1, cis-2, ...)
+ 
+ Präsentation
+ Was nicht gut funktioniert hat
+ Ausblick auf die 5. Klasse (was wir machen)
