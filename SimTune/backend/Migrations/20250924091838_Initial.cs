@@ -5,7 +5,7 @@
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class Inital : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,10 +16,10 @@ namespace backend.Migrations
                 {
                     ExerciseId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Values = table.Column<string>(type: "TEXT", nullable: true),
-                    ExerciseType = table.Column<int>(type: "INTEGER", nullable: false)
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    NotationType = table.Column<string>(type: "TEXT", nullable: false),
+                    ExerciseType = table.Column<int>(type: "INTEGER", nullable: false),
+                    ExerciseModus = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,18 +48,18 @@ namespace backend.Migrations
                 name: "ExerciseContents",
                 columns: table => new
                 {
-                    ContentId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ExerciseContentId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ExerciseId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Question = table.Column<string>(type: "TEXT", nullable: false),
-                    NotePositions = table.Column<string>(type: "TEXT", nullable: true),
-                    AnswerOptions = table.Column<string>(type: "TEXT", nullable: false),
+                    Instruction = table.Column<string>(type: "TEXT", nullable: false),
+                    NotesToRead = table.Column<string>(type: "TEXT", nullable: false),
                     CorrectAnswer = table.Column<string>(type: "TEXT", nullable: false),
-                    StaffImage = table.Column<string>(type: "TEXT", nullable: true)
+                    PossibleAnswers = table.Column<string>(type: "TEXT", nullable: false),
+                    AllAnswers = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExerciseContents", x => x.ContentId);
+                    table.PrimaryKey("PK_ExerciseContents", x => x.ExerciseContentId);
                     table.ForeignKey(
                         name: "FK_ExerciseContents_Exercises_ExerciseId",
                         column: x => x.ExerciseId,

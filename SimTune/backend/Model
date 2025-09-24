@@ -3,17 +3,17 @@
  - Instruction (was IN der Übung zu tun ist)
  - Description (was BEI der Übung zu tun ist)
  - NotationType (Klavier od. Notensystem)
- - Clef (Violinschlüssel, Bassschlüssel (nur bei NotationType=Notensystem)
  - ExerciseType (Intervalle, Tonleitern)
  - ExerciseModus (lesen od. schreiben)
- - AllAnswers (z.B. c, d, e, f, g, a, h, c)
- - PossibleAnswers (z.B. c, d, e)
- - NotesToSet (falls ExerciseModus = "schreiben", z.B. c-1, d-1, cis-2, ...)
- - NotesToRead (fallses ExerciseModus = "lesen", z.B. c-1, d-1, cis-2, ...)
+ - ExerciseContents
  
  
 ExerciseContent
- - 
+ - Exercise
+ - NotesToRead (falls ExerciseModus = "lesen", z.B. "X:1 K:A major M:C L:1/4 A B C D E F G A|]")
+ - CorrectAnswer (z.B. "A-Dur")
+ - PossibleAnswers (z.B. "F-Dur", "A-Dur", "C-Dur")
+ - AllAnswers
 
 PianoExercise
  - ExerciseId

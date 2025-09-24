@@ -16,8 +16,9 @@ public static class ExercisesGetter
         
         var exercises = await context.Exercises
             .Where(exercise => exercise.ExerciseType == exerciseType)
+            .Include(e => e.ExerciseContents)
             .ToListAsync();
-        
+
         return Results.Ok(exercises);
     }
 }

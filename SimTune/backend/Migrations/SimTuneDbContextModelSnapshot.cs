@@ -23,15 +23,18 @@ namespace backend.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ExerciseModus")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ExerciseType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Values")
+                    b.Property<string>("NotationType")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("ExerciseId");
@@ -41,11 +44,11 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.DataAccess.ExerciseContent", b =>
                 {
-                    b.Property<int>("ContentId")
+                    b.Property<int>("ExerciseContentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AnswerOptions")
+                    b.Property<string>("AllAnswers")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -56,17 +59,19 @@ namespace backend.Migrations
                     b.Property<int>("ExerciseId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("NotePositions")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Question")
+                    b.Property<string>("Instruction")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("StaffImage")
+                    b.Property<string>("NotesToRead")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ContentId");
+                    b.Property<string>("PossibleAnswers")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ExerciseContentId");
 
                     b.HasIndex("ExerciseId");
 
@@ -146,7 +151,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.DataAccess.UserExercise", b =>
                 {
                     b.HasOne("backend.DataAccess.Exercise", "Exercise")
-                        .WithMany("UserExercises")
+                        .WithMany()
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -165,8 +170,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.DataAccess.Exercise", b =>
                 {
                     b.Navigation("ExerciseContents");
-
-                    b.Navigation("UserExercises");
                 });
 
             modelBuilder.Entity("backend.DataAccess.User", b =>

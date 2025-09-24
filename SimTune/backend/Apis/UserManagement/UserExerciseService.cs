@@ -27,7 +27,6 @@ public class UserExerciseService
             .Select(ue => new
             {
                 ue.ExerciseId,
-                ue.Exercise.Title,
                 ue.Exercise.Description,
                 ExerciseType = ue.Exercise.ExerciseType.ToString(),
                 ue.HighestScore,
