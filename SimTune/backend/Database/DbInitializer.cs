@@ -50,6 +50,8 @@ public static class DbInitializer
         context.SaveChanges();
         
         var path = configuration["ExerciseContentsPath"];
+        Console.WriteLine("ExerciseContentsPath: " + path);
+        throw new Exception("Error: " + path);
         ImportCsv.ImportExerciseContents(path, context);
     }
 }
