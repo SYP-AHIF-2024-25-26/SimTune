@@ -87,7 +87,7 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<SimTuneDbContext>();
     await context.Database.MigrateAsync();
 
-    DbInitializer.Initialize(context);
+    DbInitializer.Initialize(context, builder.Configuration);
 }
 
 app.MapExercisesApi();

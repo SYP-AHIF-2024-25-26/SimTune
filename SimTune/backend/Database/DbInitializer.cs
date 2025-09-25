@@ -1,10 +1,11 @@
 ﻿using backend.DataAccess;
+using Microsoft.Extensions.Configuration;
 
 namespace backend.Database;
 
 public static class DbInitializer
 {
-    public static void Initialize(SimTuneDbContext context)
+    public static void Initialize(SimTuneDbContext context, IConfiguration configuration)
     {
         if (context.Exercises.Any())
         {
@@ -48,6 +49,7 @@ public static class DbInitializer
 
         context.SaveChanges();
         
-        ImportCsv.ImportExerciseContents("./exercisecontents.csv", context);
+        var path = configuration["ExerciseContentsPath"];
+        ImportCsv.ImportExerciseContents(path, context);
     }
 }
