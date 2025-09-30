@@ -77,7 +77,7 @@ ExerciseId,ContentId,Instruction,NotesToRead,AllAnswers,PossibleAnswers,CorrectA
 19,2,"Bezeichne die Note","X:5 % L:4/4 % K:C % D","c,d,e,f,g,a,h","c,d,e,f,g,a,h","d"
 19,3,"Bezeichne die Note","X:5 % L:4/4 % K:C % E","c,d,e,f,g,a,h","c,d,e,f,g,a,h","e"
 19,4,"Bezeichne die Note","X:5 % L:4/4 % K:C % F","c,d,e,f,g,a,h","c,d,e,f,g,a,h","f"
-19,5,"Bezeichne die Note","X:5 % L:4/4 % K:C % G,"c,d,e,f,g,a,h","c,d,e,f,g,a,h","g"
+19,5,"Bezeichne die Note","X:5 % L:4/4 % K:C % G","c,d,e,f,g,a,h","c,d,e,f,g,a,h","g"
 19,6,"Bezeichne die Note","X:5 % L:4/4 % K:C % A","c,d,e,f,g,a,h","c,d,e,f,g,a,h","a"
 19,7,"Bezeichne die Note","X:5 % L:4/4 % K:C % H","c,d,e,f,g,a,h","c,d,e,f,g,a,h","h"
 20,1,"Markiere die Note: c","","","","c"
