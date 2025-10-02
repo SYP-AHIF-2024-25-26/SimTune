@@ -7,19 +7,19 @@ namespace backend.DataAccess
 {
     public class Exercise
     {
-        public int ExerciseId { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; } = string.Empty; // Was BEI der Übung zu tun ist
-        public string NotationType { get; set; } = string.Empty; // Klavier oder Notensystem
+        public NotationType NotationType { get; set; }  // Klavier oder Notensystem
         public ExerciseType ExerciseType { get; set; }  // Intervalle, Tonleitern
-        public string ExerciseModus { get; set; } = string.Empty; // lesen oder schreiben
+        public ExerciseModus ExerciseModus { get; set; }  // lesen oder schreiben
         public List<ExerciseContent> ExerciseContents { get; set; } = new();
     }
 
     public class ExerciseContent
     {
-        public int ExerciseContentId { get; set; }
-        [JsonIgnore]
-        public Exercise Exercise { get; set; } // Navigation Property
+        public int Id { get; set; }
+        public int ExerciseId { get; set; }
+        public Exercise? Exercise { get; set; } // Navigation Property
         public string Instruction { get; set; } = string.Empty; // Was IN der Übung zu tun ist
         public string NotesToRead { get; set; } = string.Empty; // falls ExerciseModus = "lesen"
         public string CorrectAnswer { get; set; } = string.Empty;
@@ -30,7 +30,7 @@ namespace backend.DataAccess
     public class User
     {
         [Key]
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Username { get; set; } = string.Empty;
@@ -46,7 +46,7 @@ namespace backend.DataAccess
 
         public int Progress { get; set; } = 0;
 
-        public ICollection<UserExercise> UserExercises { get; set; } = new List<UserExercise>();
+        public List<UserExercise> UserExercises { get; set; } = new();
     }
 
 
@@ -54,18 +54,30 @@ namespace backend.DataAccess
     public class UserExercise
     {
         [Key]
-        public int UserExerciseId { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("User")]
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
 
         [ForeignKey("Exercise")]
         public int ExerciseId { get; set; }
-        public Exercise Exercise { get; set; }
+        public Exercise? Exercise { get; set; }
 
         public double HighestScore { get; set; }
         public int Attempts { get; set; }
+    }
+
+    public enum NotationType
+    {
+        Klavier,
+        Notensystem
+    }
+
+    public enum ExerciseModus
+    {
+        Lesen,
+        Schreiben
     }
 
     public enum ExerciseType

@@ -52,7 +52,7 @@ public class UserExerciseService
 
         // 2. Check if exercise exists
         var exerciseExists = await context.Exercises
-            .AnyAsync(e => e.ExerciseId == userExerciseDto.ExerciseId);
+            .AnyAsync(e => e.Id == userExerciseDto.ExerciseId);
 
         if (!exerciseExists)
         {

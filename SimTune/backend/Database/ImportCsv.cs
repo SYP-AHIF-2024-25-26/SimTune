@@ -13,7 +13,7 @@ public static class ImportCsv
 
         foreach (var record in records)
         {
-            var exercise = context.Exercises.FirstOrDefault(e => e.ExerciseId == record.ExerciseId);
+            var exercise = context.Exercises.FirstOrDefault(e => e.Id == record.ExerciseId);
             if (exercise != null)
             {
                 var content = new ExerciseContent

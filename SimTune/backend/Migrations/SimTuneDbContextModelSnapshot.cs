@@ -18,7 +18,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.DataAccess.Exercise", b =>
                 {
-                    b.Property<int>("ExerciseId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -26,25 +26,23 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ExerciseModus")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ExerciseModus")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ExerciseType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("NotationType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("NotationType")
+                        .HasColumnType("INTEGER");
 
-                    b.HasKey("ExerciseId");
+                    b.HasKey("Id");
 
                     b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("backend.DataAccess.ExerciseContent", b =>
                 {
-                    b.Property<int>("ExerciseContentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -71,7 +69,7 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ExerciseContentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ExerciseId");
 
@@ -80,7 +78,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.DataAccess.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -105,14 +103,14 @@ namespace backend.Migrations
                     b.Property<string>("VerificationToken")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("backend.DataAccess.UserExercise", b =>
                 {
-                    b.Property<int>("UserExerciseId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -128,7 +126,7 @@ namespace backend.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("UserExerciseId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ExerciseId");
 

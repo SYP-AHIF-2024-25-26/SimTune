@@ -28,7 +28,7 @@ public class UserRegisterService
 
         var newUser = new User
         {
-            UserId = 0,
+            Id = 0,
             Username = userDto.Username,
             Email = userDto.Email,
             PasswordHashed = BCrypt.Net.BCrypt.HashPassword(userDto.Password),

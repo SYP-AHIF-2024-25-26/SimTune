@@ -16,7 +16,25 @@ public static class ExercisesGetter
         
         var exercises = await context.Exercises
             .Where(exercise => exercise.ExerciseType == exerciseType)
-            .Include(e => e.ExerciseContents)
+            .Select(e => new ExerciseDto
+            {
+                Id = e.Id,
+                Description = e.Description,
+                NotationType = e.NotationType.ToString(),
+                ExerciseType = e.ExerciseType.ToString(),
+                ExerciseModus = e.ExerciseModus.ToString(),
+                ExerciseContents = context.ExerciseContents
+                    .Where(ec => ec.ExerciseId == e.Id)
+                    .Select(ec => new ExerciseContentDto
+                    {
+                        Id = ec.Id,
+                        Instruction = ec.Instruction,
+                        NotesToRead = ec.NotesToRead,
+                        AllAnswers = ec.AllAnswers,
+                        PossibleAnswers = ec.PossibleAnswers,
+                        CorrectAnswer = ec.CorrectAnswer
+                    }).ToList()
+            })
             .ToListAsync();
 
         return Results.Ok(exercises);
