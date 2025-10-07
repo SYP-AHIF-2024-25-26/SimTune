@@ -10,7 +10,7 @@ using backend.Database;
 namespace backend.Migrations
 {
     [DbContext(typeof(SimTuneDbContext))]
-    [Migration("20251002084734_Initial")]
+    [Migration("20251007063017_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

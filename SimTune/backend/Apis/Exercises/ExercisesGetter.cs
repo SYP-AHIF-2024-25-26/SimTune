@@ -7,15 +7,15 @@ namespace backend.Apis.Exercises;
 
 public static class ExercisesGetter
 {
-    public static async Task<IResult> GetExercises([FromRoute] ExerciseType exerciseType, SimTuneDbContext context)
+    public static async Task<IResult> GetExercises([FromRoute] string exerciseType, SimTuneDbContext context)
     {
-        if (!Enum.IsDefined(typeof(ExerciseType), exerciseType))
+        if (!Enum.TryParse<ExerciseType>(exerciseType, true, out var parsedExerciseType))
         {
-            return Results.BadRequest("Invalid exercise type");
+            return Results.BadRequest($"Invalid exercise type: '{exerciseType}'. Valid values are: {string.Join(", ", Enum.GetNames<ExerciseType>())}");
         }
         
         var exercises = await context.Exercises
-            .Where(exercise => exercise.ExerciseType == exerciseType)
+            .Where(exercise => exercise.ExerciseType == parsedExerciseType)
             .Select(e => new ExerciseDto
             {
                 Id = e.Id,
