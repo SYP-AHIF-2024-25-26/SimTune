@@ -10,6 +10,14 @@
       class="w-40 h-2 rounded-full appearance-none cursor-pointer transition-all duration-200 bg-blue-300"/>
   </div>
 
+  <ng-template #logfgedIn>
+    <span class="bg-white text-gray-600 text-sm px-3 py-1 rounded-full border shadow-sm">
+      Rolle: {{ getRoleFromJwt() || 'Unbekannt' }}
+    </span>
+    <a routerLink="/profile-page" class="p-1 px-4 rounded-3xl">
+      <img src="/assets/images/ProfilePage.png" class="h-9 w-auto">
+    </a>
+  </ng-template>
 
   <div class="flex items-center space-x-2 mr-5">
       @if (!isLoggedIn()) {
@@ -19,6 +27,7 @@
         <a routerLink="/profile-page" class="p-1 px-4 rounded-3xl"> <img src="/assets/images/ProfilePage.png" class="h-9 w-auto"> </a>
       }
   </div>
+
 </div>
 
 <router-outlet />

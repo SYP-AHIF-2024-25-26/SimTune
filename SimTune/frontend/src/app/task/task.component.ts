@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PianoComponent } from "../piano/piano.component";
 import { NotesystemComponent } from '../notesystem/notesystem.component';
+import * as abcjs from 'abcjs';
 import { jwtDecode } from 'jwt-decode';
 import { API_URL, fetchRestEndpoint, fetchRestEndpointWithAuthorization, } from '../api-calls/fetch-rest-endpoint';
 
@@ -23,10 +24,11 @@ interface MyJwtPayload {
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit {
   @ViewChild(PianoComponent) pianoComponent!: PianoComponent;
   @ViewChild(NotesystemComponent) notesystemComponent!: NotesystemComponent;
 
+  /*
   // Notensystem
   allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
   allNotesNotensystemSounds = ['c-1', 'd-1', 'e-1', 'f-1', 'g-1', 'a-1', 'h-1', 'c-2', 'd-2', 'e-2', 'f-2', 'g-2', 'a-2'];
@@ -299,10 +301,10 @@ export class TaskComponent {
       }
     };
 
-    const allCircles = this.notesystemComponent.getAllSelectedCircle(); 
+    const allCircles = this.notesystemComponent.getAllSelectedCircle();
     processSelectedCircle(JSON.stringify(allCircles));
     processSelectedCircle(selectedExtraCircle);
-    
+
     if (notes.length === 2) {
       const interval = Math.abs(indices[1] - indices[0]);
 
@@ -458,7 +460,8 @@ export class TaskComponent {
 
     this.firstAttemptCorrect = true;
     if (this.questionIndex < this.randomizedQuestions.length - 1) {
-      /*if(this.texts[0].exerciseId != undefined) {*/ this.questionIndex++; //}
+      //if(this.texts[0].exerciseId != undefined) {
+      this.questionIndex++; //}
       this.currentQuestion = this.randomizedQuestions[this.questionIndex];
       //if(this.texts[0].exerciseId == undefined) { this.questionIndex++; }
 
@@ -474,20 +477,20 @@ export class TaskComponent {
     this.checkCompletion();
   }
 
-  /*
+  //
   extractData(element: string) {
     const [note, height] = element.split('-');
     return {
       note,
       height: +height,
     };
-  }*/
+  }//
 
-  /*
-  getNoteIndex(note: string) {
-    return this.allNotesNotensystem.indexOf(note);
-  }
-  */
+  //
+  //getNoteIndex(note: string) {
+    //return this.allNotesNotensystem.indexOf(note);
+  //}
+  //
 
   async checkCompletion(): Promise<void> {
     if (this.progress === this.totalSegments) {
@@ -565,6 +568,262 @@ export class TaskComponent {
 
   get dashOffset() {
     return 0;
+  }*/
+
+  audio: HTMLAudioElement | null = null;
+  previousUrl: string | null = null;
+  showHelpMessage = false;
+  shuffledContents: any[] = [];
+  currentIndex = 0;
+  progress: number = 0;
+  totalSegments: number = 0;
+  possibleAnswers: string[] | null = null;
+  correctAnswers: string = '';
+  lastPressedLetter: string | null = null;
+  firstAttemptSuccess: boolean = true;
+  exerciseModus: string = '';
+  notationType: string = '';
+  exerciseType: string = '';
+
+  // Notensystem
+  allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
+  intervalNames = ['Prime','Sekunde','Terz','Quarte','Quinte','Sexte','Septime','Oktave'];
+
+  // Progressbar
+  evaluation: string = '';
+  firstAttemptCorrectCount: number = 0;
+  storedTexts: any = null;
+
+  // signal
+  allAnswers = signal<string[]>([]);
+  instruction = signal<string>('');
+
+  constructor(private route: ActivatedRoute, private router: Router) { }
+
+  ngOnInit(): void {
+    this.storedTexts = sessionStorage.getItem('texts');
+    this.previousUrl = sessionStorage.getItem('previousUrl') || null;
+    const parsed = this.storedTexts ? JSON.parse(this.storedTexts) : null;
+    console.log(parsed);
+
+    if (parsed) {
+      let exerciseContents = parsed.exerciseContents;
+      this.exerciseModus = parsed.exerciseModus;
+      this.notationType = parsed.notationType;
+      this.exerciseType = parsed.exerciseType;
+
+      exerciseContents = exerciseContents.map((item: any) => ({
+        ...item,
+        notesToRead: item.notesToRead
+          ? item.notesToRead.replace(/%/g, '\n')
+          : item.notesToRead
+      }));
+
+      const duplicated = [...exerciseContents, ...exerciseContents];
+
+      this.totalSegments = Number(duplicated.length);
+
+      this.shuffledContents = this.shuffleArray(duplicated);
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.setUpForUI();
+
+    switch (this.exerciseModus) {
+      case 'Schreiben':
+        console.error('No texts found in sessionStorage.');
+        return;
+      case 'Lesen':
+        this.renderCurrentNote();
+        return;
+    }
+  }
+
+  shuffleArray<T>(array: T[]): T[] {
+    return array
+      .map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  }
+
+  get dashArray() {
+    const incorrectAnswers = this.totalSegments - this.firstAttemptCorrectCount;
+    return incorrectAnswers * (2 * Math.PI * 45 / this.totalSegments);
+  }
+
+  get dashOffset() {
+    return 0;
+  }
+
+  setUpForUI(): void {
+    const currentQuestion = this.shuffledContents[this.currentIndex];
+
+    this.correctAnswers = currentQuestion.correctAnswer;
+    this.instruction.set(currentQuestion.instruction);
+  }
+
+  async renderCurrentNote(): Promise<void> {
+    if (
+      this.shuffledContents &&
+      this.shuffledContents.length > 0 &&
+      this.shuffledContents[this.currentIndex].notesToRead
+    ) {
+      const currentQuestion = this.shuffledContents[this.currentIndex];
+
+      let raw = currentQuestion.allAnswers;
+      let splitted = raw.split(',').map((s: string) => s.trim());
+      this.allAnswers.set(splitted);
+
+      raw = currentQuestion.possibleAnswers;
+      splitted = raw.split(',').map((s: string) => s.trim());
+      this.possibleAnswers = splitted;
+
+      /*ABCJS Rendering*/
+      abcjs.renderAbc("abc-container", currentQuestion.notesToRead, {
+        responsive: "resize",
+        add_classes: true,
+        staffwidth: 500,
+        scale: 2
+      });
+    }
+  }
+
+  goBack(): void {
+    if (this.previousUrl) {
+      sessionStorage.removeItem('texts from pruefung');
+      if(this.audio !== null) {
+        this.audio!.pause();
+        this.audio!.currentTime = 0;
+      }
+
+      this.router.navigateByUrl(this.previousUrl);
+    } else {
+      console.log('No previous URL found!');
+    }
+  }
+
+  extendQuestion(): void {
+    this.showHelpMessage = !this.showHelpMessage;
+  }
+
+  async checkIfRightButton(letter: string, button: HTMLButtonElement): Promise<void> {
+    if (letter === this.correctAnswers) {
+      button.classList.add('bg-green-500', 'text-white');
+
+      this.firstAttemptCorrectCount += this.firstAttemptSuccess ? 1 : 0;
+      this.firstAttemptSuccess = true;
+      this.progress++;
+      this.currentIndex++;
+
+      setTimeout(() => button.classList.remove('bg-green-500', 'text-white'), 1000);
+
+      if (this.progress < this.totalSegments) {
+        this.setUpForUI();
+        switch (this.exerciseModus) {
+          case 'Schreiben':
+            console.error('No texts found in sessionStorage.');
+            return;
+          case 'Lesen':
+            this.renderCurrentNote();
+            return;
+        }
+      } else {
+        this.evaluation = `${((this.firstAttemptCorrectCount / this.totalSegments) * 100).toFixed(2)}%`;
+        var jwt = sessionStorage.getItem('jwt');
+
+          if(jwt != undefined) {
+            const decoded = jwtDecode<MyJwtPayload>(jwt);
+            /*
+            await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
+              exerciseId: this.storedTexts[this.currentIndex].exerciseId,
+              score: parseFloat(this.evaluation)
+            });*/
+          }
+      }
+    } else {
+      button.classList.add('bg-red-500', 'text-white');
+      this.firstAttemptSuccess = false;
+      setTimeout(() => button.classList.remove('bg-red-500', 'text-white'), 1000);
+    }
+  }
+
+  nextTask(): void {
+    let parsed = null;
+    if (this.storedTexts) {
+      parsed = JSON.parse(this.storedTexts);
+    }
+
+    if(parsed?.id !== undefined) {
+      //this.audio!.pause();
+      //this.audio!.currentTime = 0;
+
+      const nextIndex = (this.currentIndex + 1) % this.storedTexts.length;
+      let nextAction = '';
+
+      /*
+      if (this.storedTexts[nextIndex].description.startsWith('Schreibe')) {
+        nextAction = 'schreibe';
+      } else {
+        nextAction = this.storedTexts[nextIndex].description.startsWith('Markiere') ? 'markiere' : 'lies';
+      }*/
+
+      const nextLetters = this.storedTexts[nextIndex].values;
+      const id = this.storedTexts[nextIndex];
+      console.log(this.storedTexts[nextIndex], JSON.parse(this.storedTexts));
+
+      /*Get aber nur eine excercise mit der id von mir*/
+
+      this.router.navigate(['/task'], { queryParams: { action: 'schreibe', letters: nextLetters, index: nextIndex } });
+      this.ngOnInit();
+    }
+  }
+
+  // schreiben
+
+  // Klavier
+  buttonDisabled = true;
+
+  onSelectedKeyChanged(selectedKey: boolean) {
+    this.buttonDisabled = !selectedKey;
+  }
+
+  checkRightWriting() {
+    const selectedCircle = sessionStorage.getItem('selectedCircle');
+    const selectedExtraCircle = sessionStorage.getItem('selectedExtraCircle');
+    let notes: string[] = [];
+    let indices: number[] = [];
+
+    const processSelectedCircle = (selectedCircle: string | null) => {
+      if (!selectedCircle) return;
+
+      const parsedSelectedCircle = JSON.parse(selectedCircle);
+      for (const key in parsedSelectedCircle) {
+        if (parsedSelectedCircle[key]) {
+          const noteIndex = +key;
+          notes.push(this.allNotesNotensystem[noteIndex]);
+          indices.push(noteIndex);
+        }
+      }
+    };
+
+    const allCircles = this.notesystemComponent.getAllSelectedCircle();
+    processSelectedCircle(JSON.stringify(allCircles));
+    processSelectedCircle(selectedExtraCircle);
+
+    switch(notes.length) {
+      case 1:
+        this.checkIfRightAnswer(notes[0]);
+        break;
+      case 2:
+        this.checkIfRightAnswer(this.intervalNames[Math.abs(indices[1] - indices[0])]!);
+        break;
+    }
+  }
+
+  checkIfRightAnswer(notes: string) {
+    if(notes === this.correctAnswers) {
+      console.log('correct');
+    }
   }
 }
-

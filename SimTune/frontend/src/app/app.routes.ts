@@ -12,6 +12,8 @@ import { RegisterComponent } from './register/register.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { Verify } from 'crypto';
 import { VerifyComponent } from './verify/verify.component';
+import { SchuelerDashboardComponent } from './schueler-dashboard/schueler-dashboard.component';
+import { LehrerDashboardComponent } from './lehrer-dashboard/lehrer-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -131,5 +133,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile-page', component: ProfilePageComponent },
   { path: 'verify', component: VerifyComponent},
+  { path: 'schueler-dashboard', component: SchuelerDashboardComponent},
+  { path: 'lehrer-dashboard', component: LehrerDashboardComponent},
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 ];

@@ -34,12 +34,12 @@ export class UebungenComponent implements OnInit {
 
     switch (this.taskType()) {
       case 'stammtoene':
-        this.texts = await fetchRestEndpoint(API_URL + 'exercises/Stammtoene', 'GET');
+        this.texts = await fetchRestEndpoint(API_URL + 'exercises/StammtoeneKlavier', 'GET');
 
         this.toneType = 'Stammtoene';
         break;
       case 'notensystem':
-        this.texts = await fetchRestEndpoint(API_URL + 'exercises/Notensystem', 'GET');
+        this.texts = await fetchRestEndpoint(API_URL + 'exercises/StammtoeneViolinschluessel', 'GET');
 
         this.toneType = 'Notensystem';
         break;
@@ -92,7 +92,7 @@ export class UebungenComponent implements OnInit {
     const letters = foundItem ? foundItem.values : '';
     const index = foundItem ? this.texts.indexOf(foundItem) : 0;
 
-    sessionStorage.setItem('texts', JSON.stringify(this.texts));
+    sessionStorage.setItem('texts', JSON.stringify(foundItem));
     sessionStorage.setItem('toneType', this.toneType);
 
     sessionStorage.setItem('previousUrl', this.router.url);

@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'SimTune';
   volume: number = 100;
   lastVolume: number = 100;
 
@@ -33,6 +34,17 @@ export class AppComponent {
       this.volume = this.lastVolume;
     } else {
       this.volume = 0;
+    }
+  }
+
+  getRoleFromJwt(): string | null {
+    const token = sessionStorage.getItem('jwt');
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role;
+    } catch {
+      return null;
     }
   }
 }

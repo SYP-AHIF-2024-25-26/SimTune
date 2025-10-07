@@ -1,0 +1,40 @@
+<div class="space-y-6">
+  <div class="bg-white p-4 rounded-2xl shadow-md flex items-center gap-4">
+    <input [(ngModel)]="neueGruppe" placeholder="Gruppenname" class="p-2 rounded-xl bg-[#F0F0F0] w-1/2" />
+    <button class="bg-[#7ccf98] hover:bg-[#69ba82] text-white px-6 py-2 rounded-2xl">Gruppe erstellen</button>
+  </div>
+
+  <div class="space-y-4">
+    <div *ngFor="let gruppe of gruppen" class="bg-[#F0F0F0] p-4 rounded-2xl shadow-md">
+      <h3 class="text-xl font-semibold mb-2">{{ gruppe.name }} <span class="text-sm text-gray-500">(Key: {{ gruppe.key }})</span></h3>
+
+      <div class="mb-3">
+        <h4 class="font-medium">Beitrittsanfragen:</h4>
+        <ul class="list-disc ml-5">
+          <li *ngFor="let s of gruppe.beitrittsanfragen" class="flex justify-between items-center">
+            {{ s }}
+            <button class="text-green-700 hover:underline">Akzeptieren</button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mb-3">
+        <h4 class="font-medium">Mitglieder:</h4>
+        <ul class="list-disc ml-5">
+          <li *ngFor="let s of gruppe.schueler" class="flex justify-between items-center">
+            {{ s }}
+            <button class="text-red-600 hover:underline">Entfernen</button>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-medium mb-1">Aufgaben:</h4>
+        <input placeholder="Neue Aufgabe" class="p-2 rounded-xl bg-white w-full mb-2" />
+        <ul class="list-disc ml-5">
+          <li *ngFor="let a of gruppe.aufgaben">{{ a }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

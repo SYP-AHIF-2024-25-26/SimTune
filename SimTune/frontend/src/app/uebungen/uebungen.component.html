@@ -54,20 +54,20 @@
           <ng-container *ngIf="!['Rhythmus', 'Akkorde', 'Tonarten', 'Versetzungszeichen', 'Hilfslinien'].includes(card['card-header']) && group['group-header'] !== 'Basschlüssel'; else lockedCard">
             <a [routerLink]="card['card-url']" class="block w-96 rounded-3xl bg-costumGray shadow-xl transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1">
               <div class="h-56 flex flex-col justify-between">
-                <p class="font-semibold text-3xl pt-5 px-6 text-gray-800">
+                <p class="font-semibold text-3xl pt-8 px-6 text-gray-800">
                   {{ card["card-header"] }}
                 </p>
-                <img [src]="card['card-image-url']" class="object-contain px-6 rounded-b-3xl mb-4 transition-transform duration-300" />
+                <img [src]="card['card-image-url']" class="object-contain px-6 rounded-b-3xl mb-8 transition-transform duration-300" />
               </div>
             </a>
           </ng-container>
 
           <ng-template #lockedCard>
             <div class="w-96 h-56 rounded-3xl bg-gray-300 opacity-50 cursor-not-allowed shadow-lg flex flex-col justify-between">
-              <p class="font-semibold text-3xl pt-5 px-6 text-gray-600">
+              <p class="font-semibold text-3xl pt-8 px-6 text-gray-600">
                 {{ card["card-header"] }}
               </p>
-              <img [src]="card['card-image-url']" class="object-contain px-6 rounded-b-3xl mb-4" />
+              <img [src]="card['card-image-url']" class="object-contain px-6 rounded-b-3xl mb-8" />
             </div>
           </ng-template>
         }

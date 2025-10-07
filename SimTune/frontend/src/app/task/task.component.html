@@ -18,45 +18,29 @@
     Wir sind nicht die wo antworten haben
   </div>
 
-
-
   <div *ngIf="progress < totalSegments" class="mt-4 justify-center items-center flex font-semibold text-4xl">
-    <ng-container *ngIf="action == 'lies'; else otherAction">
-
-      <ng-container *ngIf="toneType == 'Intervalle'; else otherAction">
-        Wie ist der Name dieses Intervalls?
-      </ng-container>
-      <ng-template #otherAction>
-        Bezeichne die Note
-      </ng-template>
-
-    </ng-container>
-    <ng-template #otherAction>
-
-      <ng-container *ngIf="toneType == 'Intervalle'; else otherAction">
-        Schreibe das Intervall {{ currentQuestion }}
-      </ng-container>
-      <ng-template #otherAction>
-        <ng-container *ngIf="toneType == 'Tonleitern'; else otherAction">
-          Bestimme die Tonleiter
-        </ng-container>
-        <ng-template #otherAction>
-          Markiere die Note: {{ currentQuestion }}
-        </ng-template>
-      </ng-template>
-
-    </ng-template>
+    {{ instruction() }}
   </div>
 
-  <div *ngIf="progress < totalSegments" class="flex justify-center mt-24 flex-col">
-    <ng-container *ngIf="toneType == 'Stammtoene' || toneType == 'Tonleitern'; else notensystemTemplate">
-      <app-piano [action]="action" [currentQuestion]="currentQuestion" [toneType]="toneType" (enableButton)="onSelectedKeyChanged($event)"></app-piano>
+  <div *ngIf="progress < totalSegments" class="flex items-center justify-center mt-24 flex-col">
+    <ng-container *ngIf="this.exerciseModus=='Schreiben'; else abcNotationTemplate">
+      <ng-container *ngIf="exerciseType == 'StammtoeneKlavier' || exerciseType == 'Tonleitern'; else notensystemTemplate">
+        <app-piano [action]="this.exerciseModus" [currentQuestion]="this.shuffledContents[this.currentIndex]" [toneType]="this.notationType" (enableButton)="onSelectedKeyChanged($event)"></app-piano>
+      </ng-container>
+      <ng-template #notensystemTemplate>
+        <app-notesystem [action]="this.exerciseModus" [currentQuestion]="this.shuffledContents[this.currentIndex]" [isIntervall]="false" (enableButton)="onSelectedKeyChanged($event)"></app-notesystem>
+      </ng-template>
     </ng-container>
-    <ng-template #notensystemTemplate>
-      <app-notesystem [action]="action" [currentQuestion]="currentQuestion" [isIntervall]="isIntervall" (enableButton)="onSelectedKeyChanged($event)"></app-notesystem>
+    <ng-template #abcNotationTemplate>
+      <div class="w-full flex items-center flex-col">
+        <div id="abc-container"></div>
+      </div>
     </ng-template>
 
+
+      <!--
     <div *ngIf="action == 'lies' || action == 'bestimme'" class="flex justify-center">
+
 
       <div *ngIf="toneType == 'Intervalle'">
         <button
@@ -72,24 +56,25 @@
           (click)="checkIfRight(interval, button)">
           {{ interval }}
         </button>
-      </div>
+      </div>-->
 
-      <div *ngIf="toneType == 'Stammtoene' || toneType == 'Notensystem'">
+      <div>
         <button
-          *ngFor="let letter of ['c', 'd', 'e', 'f', 'g', 'a', 'h']"
+          *ngFor="let answers of allAnswers()"
           #button
-          [disabled]="!letters?.includes(letter)"
+          [disabled]="!possibleAnswers?.includes(answers)"
           [ngClass]="{
-            'bg-green-500 text-white': lastPressedLetter == letter,
-            'enabled-button': letters?.includes(letter),
-            'disabled-button': !letters?.includes(letter)
+            'bg-green-500 text-white': lastPressedLetter == answers,
+            'enabled-button': possibleAnswers?.includes(answers),
+            'disabled-button': !possibleAnswers?.includes(answers)
           }"
           class="mr-4 p-2 rounded"
-          (click)="checkIfRight(letter, button)">
-          {{ letter }}
+          (click)="checkIfRightButton(answers, button)">
+          {{ answers }}
         </button>
       </div>
 
+      <!--
       <div *ngIf="toneType == 'Tonleitern'">
         <button
           *ngFor="let letter of ['Dur', 'Natürliches Moll', 'Harmonisches Moll', 'Melodisches Moll']"
@@ -105,19 +90,19 @@
           {{ letter }}
         </button>
       </div>
-    </div>
+    </div>-->
 
-    <div class="flex justify-center z-1" *ngIf="action == 'schreibe'">
+    <div class="flex justify-center z-1" *ngIf="exerciseModus == 'Schreiben'">
       <div class="flex-1 flex justify-center z-1" style="margin-top: -45px;">
         <button
-          (click)="toneType == 'Notensystem' ? checkIfRightNotensystem() : checkIfRightNotensystemIntervalle()"
+          (click)="checkRightWriting()"
           class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-700">
           Antworten
         </button>
       </div>
     </div>
 
-
+    <!--
     <div class="flex justify-center" *ngIf="action == 'markiere'">
       <button [disabled]="buttonDisabled"
             [ngClass]="{
@@ -129,12 +114,9 @@
         Antworten
       </button>
 
-     </div>
+     </div>-->
   </div>
-
-
   <!-- Progressbar -->
-
   <div *ngIf="progress == totalSegments" class="flex flex-col justify-center items-center p-6">
     <p class="text-4xl font-semibold">Du hast die Übung erfolgreich abgeschlossen!</p>
 
@@ -166,7 +148,7 @@
     <p class="text-2xl font-semibold">Bewertung</p>
     <span class="font-bold text-xl text-green-600">{{ evaluation }}</span>
     <p class="text-lg">
-        <span class="font-bold">{{ correctAnswers }}</span>/{{ totalQuestions }} Fragen richtig
+        <span class="font-bold">{{ firstAttemptCorrectCount }}</span>/{{ totalSegments }} Fragen richtig
     </p>
     <div class="mt-8 flex gap-10">
       <button (click)="goBack()" class="bg-costumBlue py-2 px-3 text-lg rounded-2xl font-medium w-40 hover:bg-blue-500 hover:shadow-lg transition duration-200">Zurück</button>
