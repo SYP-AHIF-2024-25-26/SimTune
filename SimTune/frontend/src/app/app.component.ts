@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,6 +14,7 @@ export class AppComponent {
   title = 'SimTune';
   volume: number = 100;
   lastVolume: number = 100;
+  showMobileDropdown: boolean = false;
 
   ngOnInit(): void {
     this.volume = parseInt(sessionStorage.getItem('volume') ?? '100');
@@ -45,6 +46,23 @@ export class AppComponent {
       return payload.role;
     } catch {
       return null;
+    }
+  }
+
+  toggleMobileDropdown(): void {
+    this.showMobileDropdown = !this.showMobileDropdown;
+  }
+
+  closeMobileDropdown(): void {
+    this.showMobileDropdown = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    const dropdownContainer = target.closest('.relative');
+    if (!dropdownContainer && this.showMobileDropdown) {
+      this.showMobileDropdown = false;
     }
   }
 }

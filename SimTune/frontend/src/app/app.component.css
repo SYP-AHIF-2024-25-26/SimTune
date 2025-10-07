@@ -48,3 +48,43 @@ input[type="range"]::-ms-thumb {
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
+/* Mobile Dropdown Animation */
+.mobile-dropdown {
+  animation: dropdownSlide 0.2s ease-out;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .volume-control {
+    display: none !important;
+  }
+}
+
+/* Ensure dropdown is above other content */
+.dropdown-container {
+  z-index: 1000;
+}
+
+/* Mobile Dropdown with higher z-index */
+.mobile-dropdown {
+  animation: dropdownSlide 0.2s ease-out;
+  z-index: 10001 !important;
+  position: relative;
+}
+
+/* Navigation should have lower z-index than dropdown */
+nav, .bg-costumLightGray {
+  z-index: 1;
+}
