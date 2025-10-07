@@ -1,14 +1,14 @@
-<div class="flex text-2xl ml-32 mt-12">
-  <p class="text-gray-400">
+<div class="flex text-sm sm:text-lg md:text-xl lg:text-2xl ml-4 sm:ml-8 md:ml-16 lg:ml-32 mt-6 sm:mt-8 md:mt-10 lg:mt-12 px-4">
+  <p class="text-gray-400 break-words">
     <ng-container *ngFor="let breadcrumb of breadcrumb_elements(); let last = last">
       <ng-container *ngIf="!last">
-        <a [routerLink]="breadcrumb.url">
+        <a [routerLink]="breadcrumb.url" class="hover:text-gray-600 transition-colors">
           {{ breadcrumb.label }}
         </a>
-        <span> → </span>
+        <span class="mx-1"> → </span>
       </ng-container>
       <ng-container *ngIf="last">
-        <a [routerLink]="breadcrumb.url" class="font-semibold text-black">
+        <a [routerLink]="breadcrumb.url" class="font-semibold text-black hover:text-gray-800 transition-colors">
           {{ breadcrumb.label }}
         </a>
       </ng-container>
@@ -47,27 +47,27 @@
   }
   @else {
     @for (group of content()?.groups; track group['group-header']) {
-      <h2 class="text-3xl font-bold mt-5 text-center">{{ group["group-header"] }}</h2>
+      <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mt-3 md:mt-5 text-center px-4">{{ group["group-header"] }}</h2>
 
-      <div class="mt-14 text-center grid grid-cols-2 gap-y-16 gap-x-0 place-items-center w-2/3 mx-auto">
+      <div class="mt-8 md:mt-14 text-center grid grid-cols-1 lg:grid-cols-2 gap-y-8 md:gap-y-16 gap-x-0 place-items-center w-full lg:w-2/3 mx-auto px-4">
         @for (card of group['cards']; track card['card-header'];) {
           <ng-container *ngIf="!['Rhythmus', 'Akkorde', 'Tonarten', 'Versetzungszeichen', 'Hilfslinien'].includes(card['card-header']) && group['group-header'] !== 'Basschlüssel'; else lockedCard">
-            <a [routerLink]="card['card-url']" class="block w-96 rounded-3xl bg-costumGray shadow-xl transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1">
-              <div class="h-56 flex flex-col justify-between">
-                <p class="font-semibold text-3xl pt-8 px-6 text-gray-800">
+            <a [routerLink]="card['card-url']" class="block w-80 sm:w-96 rounded-3xl bg-white border-2 border-black shadow-xl transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1">
+              <div class="h-48 sm:h-56 flex flex-col justify-between">
+                <p class="font-bold text-xl sm:text-2xl md:text-3xl pt-6 sm:pt-8 px-4 sm:px-6 text-black">
                   {{ card["card-header"] }}
                 </p>
-                <img [src]="card['card-image-url']" class="object-contain px-6 rounded-b-3xl mb-8 transition-transform duration-300" />
+                <img [src]="card['card-image-url']" class="object-contain px-4 sm:px-6 rounded-b-3xl mb-6 sm:mb-8 transition-transform duration-300 h-20 sm:h-24" />
               </div>
             </a>
           </ng-container>
 
           <ng-template #lockedCard>
-            <div class="w-96 h-56 rounded-3xl bg-gray-300 opacity-50 cursor-not-allowed shadow-lg flex flex-col justify-between">
-              <p class="font-semibold text-3xl pt-8 px-6 text-gray-600">
+            <div class="w-80 sm:w-96 h-48 sm:h-56 rounded-3xl bg-white border-2 border-black opacity-50 cursor-not-allowed shadow-lg flex flex-col justify-between">
+              <p class="font-bold text-xl sm:text-2xl md:text-3xl pt-6 sm:pt-8 px-4 sm:px-6 text-black">
                 {{ card["card-header"] }}
               </p>
-              <img [src]="card['card-image-url']" class="object-contain px-6 rounded-b-3xl mb-8" />
+              <img [src]="card['card-image-url']" class="object-contain px-4 sm:px-6 rounded-b-3xl mb-6 sm:mb-8 transition-transform duration-300 h-20 sm:h-24" />
             </div>
           </ng-template>
         }
