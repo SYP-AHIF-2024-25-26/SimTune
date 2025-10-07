@@ -12,6 +12,13 @@ public static partial class ExercisesApi
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
             .Produces<int>(StatusCodes.Status200OK);
 
+        app.MapGet("/exercises/{exerciseId:int}", ExercisesGetter.GetExerciseById)
+            .WithName(nameof(ExercisesGetter.GetExerciseById))
+            .WithDescription("Gets an exercise by its ID")
+            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
+            .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
+            .Produces<int>(StatusCodes.Status200OK);
+
         return app;
     }
 }

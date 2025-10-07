@@ -7,15 +7,15 @@ namespace backend.Apis.Exercises;
 
 public static class ExercisesGetter
 {
-    public static async Task<IResult> GetExercises([FromRoute] string exerciseType, SimTuneDbContext context)
+    public static async Task<IResult> GetExercises([FromRoute] ExerciseType exerciseType, SimTuneDbContext context)
     {
-        if (!Enum.TryParse<ExerciseType>(exerciseType, true, out var parsedExerciseType))
+        if (!Enum.IsDefined(typeof(ExerciseType), exerciseType))
         {
-            return Results.BadRequest($"Invalid exercise type: '{exerciseType}'. Valid values are: {string.Join(", ", Enum.GetNames<ExerciseType>())}");
+            return Results.BadRequest("Invalid exercise type");
         }
-        
+
         var exercises = await context.Exercises
-            .Where(exercise => exercise.ExerciseType == parsedExerciseType)
+            .Where(exercise => exercise.ExerciseType == exerciseType)
             .Select(e => new ExerciseDto
             {
                 Id = e.Id,
@@ -38,5 +38,33 @@ public static class ExercisesGetter
             .ToListAsync();
 
         return Results.Ok(exercises);
+    }
+
+    public static async Task<IResult> GetExerciseById([FromRoute] int exerciseId, SimTuneDbContext context)
+    {
+        var exercise = await context.Exercises
+            .Where(e => e.Id == exerciseId)
+            .Select(e => new ExerciseDto
+            {
+                Id = e.Id,
+                Description = e.Description,
+                NotationType = e.NotationType.ToString(),
+                ExerciseType = e.ExerciseType.ToString(),
+                ExerciseModus = e.ExerciseModus.ToString(),
+                ExerciseContents = context.ExerciseContents
+                    .Where(ec => ec.ExerciseId == e.Id)
+                    .Select(ec => new ExerciseContentDto
+                    {
+                        Id = ec.Id,
+                        Instruction = ec.Instruction,
+                        NotesToRead = ec.NotesToRead,
+                        AllAnswers = ec.AllAnswers,
+                        PossibleAnswers = ec.PossibleAnswers,
+                        CorrectAnswer = ec.CorrectAnswer
+                    }).ToList()
+            })
+            .FirstOrDefaultAsync();
+
+        return exercise is not null ? Results.Ok(exercise) : Results.NotFound();
     }
 }
