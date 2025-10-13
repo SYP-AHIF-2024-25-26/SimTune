@@ -7,7 +7,7 @@
     </a>
 
     <!-- Volume-Regler - nur auf Desktop sichtbar -->
-    <div class="hidden md:flex items-center space-x-2 ml-16">
+    <div class="hidden md:flex items-center space-x-2 ml-8">
       <img src="/assets/images/Volume.png" class="h-7 w-auto" (click)="noSound()">
       <input type="range" id="volume" min="0" max="100" [(ngModel)]="volume"
         (click)="adjustVolume()"

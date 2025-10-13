@@ -64,6 +64,7 @@ export class TaskComponent implements OnInit {
   buttonDisabled = true;
   toneType: string = '';
   previousUrl: string | null = null;
+  currentAbcVisualObj: any = null;
   pruefungQuestionIndex: number = 0;
   pruefungQuestionLength: number = 0;
   currentQuestionPruefung!: { description: string, values: string, exerciseId: number, exerciseType: string, title: string | null };
@@ -71,6 +72,7 @@ export class TaskComponent implements OnInit {
   texts: { description: string, values: string, exerciseId: number, exerciseType: string, title: string | null }[] = []
 
   currentIndex: number = 0;
+  currentAbcVisualObj: any = null;
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
@@ -711,6 +713,14 @@ export class TaskComponent implements OnInit {
     if (letter === this.correctAnswers) {
       button.classList.add('bg-green-500', 'text-white');
 
+      // Play audio if this is a "Lesen" exercise with abcjs rendering
+      if (this.exerciseModus === 'Lesen' && this.shuffledContents[this.currentIndex]?.notesToRead) {
+        // Use current question's notation for correct audio playback
+        this.playAbcAudio(this.shuffledContents[this.currentIndex].notesToRead).catch(error => {
+          console.warn('Audio playback failed:', error);
+        });
+      }
+
       this.firstAttemptCorrectCount += this.firstAttemptSuccess ? 1 : 0;
       this.firstAttemptSuccess = true;
       this.progress++;
@@ -745,6 +755,52 @@ export class TaskComponent implements OnInit {
       button.classList.add('bg-red-500', 'text-white');
       this.firstAttemptSuccess = false;
       setTimeout(() => button.classList.remove('bg-red-500', 'text-white'), 1000);
+    }
+  }
+
+  async playAbcAudio(abcNotation: string): Promise<void> {
+    try {
+      // Create temporary container
+      const tempDiv = document.createElement('div');
+      tempDiv.id = 'temp-audio-' + Date.now();
+      tempDiv.style.display = 'none';
+      document.body.appendChild(tempDiv);
+
+      // Render ABC notation
+      const visualObj = abcjs.renderAbc(tempDiv.id, abcNotation);
+
+      if (visualObj && visualObj.length > 0) {
+        // Create synth
+        const synth = new abcjs.synth.CreateSynth();
+
+        // Simple init with minimal options
+        await synth.init({
+          visualObj: visualObj[0]
+        });
+
+        // Prime and start
+        await synth.prime();
+        synth.start();
+
+        // Auto-stop after 5 seconds for longer playback
+        setTimeout(() => {
+          try {
+            synth.stop();
+          } catch (e) {
+            // Ignore errors on stop
+          }
+        }, 5000);
+      }
+
+      // Cleanup
+      setTimeout(() => {
+        if (document.body.contains(tempDiv)) {
+          document.body.removeChild(tempDiv);
+        }
+      }, 100);
+
+    } catch (error) {
+      console.warn('ABC audio failed:', error);
     }
   }
 
