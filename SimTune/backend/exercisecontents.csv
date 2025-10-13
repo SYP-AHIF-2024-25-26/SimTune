@@ -119,3 +119,6 @@ ExerciseId,ContentId,Instruction,NotesToRead,AllAnswers,PossibleAnswers,CorrectA
 26,6,"Schreibe das Intervall: Sexte","","","","Sexte"
 26,7,"Schreibe das Intervall: Septime","","","","Septime"
 26,8,"Schreibe das Intervall: Oktave","","","","Oktave"
+27,1,"Ist diese Tonleiter Dur oder Moll?","X:5 % L:1/4 % K:C % C D E F G A B c","Dur,Moll","Dur,Moll","Dur"
+27,2,"Ist diese Tonleiter Dur oder Moll?","X:5 % L:1/4 % K:A % A B c d e f g a","Dur,Moll","Dur,Moll","Moll"
+
