@@ -3,6 +3,7 @@ import { Component, ElementRef, Input, signal, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { EventEmitter, Output } from '@angular/core';
 import { AppComponent } from '../app.component';
+import * as abcjs from 'abcjs';
 
 export interface Question {
   id: number;
@@ -87,10 +88,60 @@ export class PianoComponent {
 
       sessionStorage.setItem('selectedKey', this.selectedKey);
 
-      const audio = new Audio("/assets/sounds/" + keyId + ".ogg");
-      const volume = sessionStorage.getItem('volume');
-      audio.volume = parseInt(volume || '100') / 100;
-      audio.play();
+      // Spiele den Ton mit abcjs ab
+      this.playNoteSound(keyId);
+    }
+  }
+
+  private async playNoteSound(keyId: string): Promise<void> {
+    try {
+      // Konvertiere keyId zu ABC Notation (z.B. "c-1" -> "C", "d-2" -> "d")
+      let noteName = keyId.split('-')[0];
+      const octave = parseInt(keyId.split('-')[1]);
+
+      // Konvertiere deutsche Notation "h" zu englischer Notation "b"
+      if (noteName === 'h') {
+        noteName = 'b';
+      } else if (noteName === 'his') {
+        noteName = 'bis';
+      }
+
+      // ABC Notation: Großbuchstaben = tiefe Oktave, Kleinbuchstaben = mittlere Oktave
+      let abcNote = octave === 1 ? noteName.toUpperCase() : noteName.toLowerCase();
+
+      // Behandle Vorzeichen (cis -> ^C, dis -> ^D, etc.)
+      if (noteName.includes('is')) {
+        const baseNote = noteName.substring(0, noteName.length - 2);
+        abcNote = '^' + (octave === 1 ? baseNote.toUpperCase() : baseNote.toLowerCase());
+      }
+
+      const abcNotation = `L:1/4\nK:C\n${abcNote}`;
+
+      const tempDiv = document.createElement('div');
+      tempDiv.style.display = 'none';
+      document.body.appendChild(tempDiv);
+
+      const visualObj = abcjs.renderAbc(tempDiv, abcNotation);
+
+      if (visualObj && visualObj.length > 0) {
+        const synth = new abcjs.synth.CreateSynth();
+        await synth.init({ visualObj: visualObj[0] });
+        await synth.prime();
+        synth.start();
+
+        setTimeout(() => {
+          try {
+            synth.stop();
+            if (document.body.contains(tempDiv)) {
+              document.body.removeChild(tempDiv);
+            }
+          } catch (e) {
+            console.warn('Synth cleanup failed:', e);
+          }
+        }, 1000);
+      }
+    } catch (error) {
+      console.warn('Piano audio playback failed:', error);
     }
   }
 
