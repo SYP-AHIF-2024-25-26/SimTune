@@ -69,12 +69,12 @@ export const toeneData: TaskData = {
         {
           "card-header": "Stammtöne",
           "card-image-url": "assets/images/klaviertasten.png",
-          "card-url": "/stammtoene"
+          "card-url": "/stammtoene-klavier"
         },
         {
           "card-header": "Versetzungszeichen",
           "card-image-url": "assets/images/klaviertasten.png",
-          "card-url": "/versetzungszeichen"
+          "card-url": "/versetzungszeichen-klavier"
         }
       ]
     },
@@ -84,17 +84,17 @@ export const toeneData: TaskData = {
         {
           "card-header": "Stammtöne",
           "card-image-url": "assets/images/musiknoten.png",
-          "card-url": "/notensystem"
+          "card-url": "/stammtoene-violinschluessel"
         },
         {
           "card-header": "Versetzungszeichen",
           "card-image-url": "assets/images/musiknoten.png",
-          "card-url": "/akkorde"
+          "card-url": "/versetzungszeichen-violinschluessel"
         },
         {
           "card-header": "Hilfslinien",
           "card-image-url": "assets/images/musiknoten.png",
-          "card-url": "/tonleitern"
+          "card-url": "/hilfslinien-violinschluessel"
         }
       ]
     },
@@ -104,17 +104,17 @@ export const toeneData: TaskData = {
         {
           "card-header": "Stammtöne",
           "card-image-url": "assets/images/musiknoten.png",
-          "card-url": "/intervalle"
+          "card-url": "/stammtoene-basschluessel"
         },
         {
           "card-header": "Versetzungszeichen",
           "card-image-url": "assets/images/musiknoten.png",
-          "card-url": "/akkorde"
+          "card-url": "/versetzungszeichen-basschluessel"
         },
         {
           "card-header": "Hilfslinien",
           "card-image-url": "assets/images/musiknoten.png",
-          "card-url": "/tonleitern"
+          "card-url": "/hilfslinien-basschluessel"
         }
       ]
     }

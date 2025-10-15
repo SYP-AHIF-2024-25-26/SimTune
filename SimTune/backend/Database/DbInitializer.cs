@@ -44,7 +44,13 @@ public static class DbInitializer
 
             new Exercise { Description = "Bestimme die Tonleiter, dur und natürliches moll", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.Tonleitern, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Description = "Bestimme die Tonleiter, dur und moll", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.Tonleitern, ExerciseModus = ExerciseModus.Lesen },
-            new Exercise { Description = "Bestimme die Tonleiter, dur, moll und natürliches moll", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.Tonleitern, ExerciseModus = ExerciseModus.Lesen }
+            new Exercise { Description = "Bestimme die Tonleiter, dur, moll und natürliches moll", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.Tonleitern, ExerciseModus = ExerciseModus.Lesen },
+            
+            new Exercise { Description = "Lies Kreuz-Noten (cis, dis, fis)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Lies B-Noten (des, es, ges)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Lies alle Versetzungszeichen", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Lies Versetzungszeichen verschiedene Oktaven", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Lies alle Versetzungszeichen mit Oktaven", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen }
         );
 
         context.SaveChanges();

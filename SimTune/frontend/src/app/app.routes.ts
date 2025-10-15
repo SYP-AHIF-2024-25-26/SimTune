@@ -22,6 +22,7 @@ export const routes: Routes = [
     data: {
       content: uebungenData,
       breadcrumbElements: [{ label: 'Übungen', url: '/uebungen' }],
+      taskType: ''
     },
   },
   {
@@ -34,10 +35,11 @@ export const routes: Routes = [
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
       ],
+      taskType: ''
     },
   },
   {
-    path: 'stammtoene',
+    path: 'stammtoene-klavier',
     component: UebungenComponent,
     data: {
       content: stammtoeneData,
@@ -46,12 +48,28 @@ export const routes: Routes = [
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
         { label: 'Klavier', url: '/toene' },
-        { label: 'Stammtöne', url: '/stammtoene' },
+        { label: 'Stammtöne', url: '/stammtoene-klavier' },
       ],
+      taskType: 'StammtoeneKlavier'
     },
   },
   {
-    path: 'notensystem',
+    path: 'versetzungszeichen-klavier',
+    component: UebungenComponent,
+    data: {
+      content: stammtoeneData,
+      breadcrumbElements: [
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Töne', url: '/toene' },
+        { label: 'Klavier', url: '/toene' },
+        { label: 'Versetzungszeichen', url: '/versetzungszeichen-klavier' },
+      ],
+      taskType: 'VersetzungszeichenKlavier'
+    },
+  },
+  {
+    path: 'stammtoene-violinschluessel',
     component: UebungenComponent,
     data: {
       content: notenSystemData,
@@ -60,8 +78,84 @@ export const routes: Routes = [
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
         { label: 'Violinschlüssel', url: '/toene' },
-        { label: 'Stammtöne', url: '/stammtoene' },
+        { label: 'Stammtöne', url: '/stammtoene-violinschluessel' },
       ],
+      taskType: 'StammtoeneViolinschluessel'
+    }
+  },
+  {
+    path: 'versetzungszeichen-violinschluessel',
+    component: UebungenComponent,
+    data: {
+      content: notenSystemData,
+      breadcrumbElements: [
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Töne', url: '/toene' },
+        { label: 'Violinschlüssel', url: '/toene' },
+        { label: 'Versetzungszeichen', url: '/versetzungszeichen-violinschluessel' },
+      ],
+      taskType: 'VersetzungszeichenViolinschluessel'
+    }
+  },
+  {
+    path: 'hilfslinien-violinschluessel',
+    component: UebungenComponent,
+    data: {
+      content: notenSystemData,
+      breadcrumbElements: [
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Töne', url: '/toene' },
+        { label: 'Violinschlüssel', url: '/toene' },
+        { label: 'Hilfslinien', url: '/hilfslinien-violinschluessel' },
+      ],
+      taskType: 'HilfslinienViolinschluessel'
+    }
+  },
+  {
+    path: 'stammtoene-basschluessel',
+    component: UebungenComponent,
+    data: {
+      content: notenSystemData,
+      breadcrumbElements: [
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Töne', url: '/toene' },
+        { label: 'Bassschlüssel', url: '/toene' },
+        { label: 'Stammtöne', url: '/stammtoene-basschluessel' },
+      ],
+      taskType: 'StammtoeneBassschluessel'
+    }
+  },
+  {
+    path: 'versetzungszeichen-basschluessel',
+    component: UebungenComponent,
+    data: {
+      content: notenSystemData,
+      breadcrumbElements: [
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Töne', url: '/toene' },
+        { label: 'Bassschlüssel', url: '/toene' },
+        { label: 'Versetzungszeichen', url: '/versetzungszeichen-basschluessel' },
+      ],
+      taskType: 'VersetzungszeichenBassschluessel'
+    }
+  },
+  {
+    path: 'hilfslinien-basschluessel',
+    component: UebungenComponent,
+    data: {
+      content: notenSystemData,
+      breadcrumbElements: [
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Töne', url: '/toene' },
+        { label: 'Bassschlüssel', url: '/toene' },
+        { label: 'Hilfslinien', url: '/hilfslinien-basschluessel' },
+      ],
+      taskType: 'HilfslinienBassschluessel'
     }
   },
   {
@@ -86,6 +180,7 @@ export const routes: Routes = [
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Intervalle', url: '/intervalle' },
       ],
+      taskType: 'Intervalle'
     },
   },
   {
@@ -110,6 +205,7 @@ export const routes: Routes = [
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Tonleitern', url: '/tonleitern' },
       ],
+      taskType: 'Tonleitern'
     },
   },
   {
@@ -122,6 +218,7 @@ export const routes: Routes = [
         { label: 'Struktur', url: '/uebungen' },
         {label: 'Tonarten', url: '/tonarten' },
       ],
+      taskType: 'Tonarten'
     },
   },
   { path: 'pruefungen', component: PruefungenComponent },

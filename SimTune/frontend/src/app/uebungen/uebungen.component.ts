@@ -29,32 +29,13 @@ export class UebungenComponent implements OnInit {
       this.breadcrumb_elements.set(data['breadcrumbElements']);
     })
 
-    this.taskType.set(this.content()?.['task-type']);
+    this.route.data.subscribe(data => {
+      this.taskType.set(data['taskType']);
+    });
     var userExercises;
 
-    switch (this.taskType()) {
-      case 'stammtoene':
-        this.texts = await fetchRestEndpoint(API_URL + 'exercises/StammtoeneKlavier', 'GET');
-
-        this.toneType = 'Stammtoene';
-        break;
-      case 'notensystem':
-        this.texts = await fetchRestEndpoint(API_URL + 'exercises/StammtoeneViolinschluessel', 'GET');
-
-        this.toneType = 'Notensystem';
-        break;
-      case 'intervalle':
-        this.texts = await fetchRestEndpoint(API_URL + 'exercises/Intervalle', 'GET');
-
-        this.toneType = 'Intervalle';
-        break;
-      case 'tonleitern':
-        this.texts = await fetchRestEndpoint(API_URL + 'exercises/Tonleitern', 'GET');
-
-        this.toneType = 'Tonleitern';
-        break;
-      default:
-        break;
+    if (this.taskType() !== undefined && this.taskType() !== '') {
+      this.texts = await fetchRestEndpoint(API_URL + 'exercises/' + this.taskType(), 'GET');
     }
     this.markDoneExercises();
   }

@@ -121,4 +121,9 @@ ExerciseId,ContentId,Instruction,NotesToRead,AllAnswers,PossibleAnswers,CorrectA
 26,8,"Schreibe das Intervall: Oktave","","","","Oktave"
 27,1,"Ist diese Tonleiter Dur oder Moll?","X:5 % L:1/4 % K:C % C D E F G A B c","Dur,Moll","Dur,Moll","Dur"
 27,2,"Ist diese Tonleiter Dur oder Moll?","X:5 % L:1/4 % K:A % A B c d e f g a","Dur,Moll","Dur,Moll","Moll"
-
+30,1,"Bezeichne die Note","X:5 % L:4/4 % K:C % ^c","c,cis,d","c,cis,d","cis"
+30,2,"Bezeichne die Note","X:6 % L:4/4 % K:C % ^f","f,fis,g","f,fis,g","fis"
+30,3,"Bezeichne die Note","X:7 % L:4/4 % K:C % _b","a,b,h","a,b,h","b"
+30,4,"Bezeichne die Note","X:8 % L:4/4 % K:G % ^c","c,cis,d","c,cis,d","cis"
+30,5,"Bezeichne die Note","X:9 % L:4/4 % K:F % _e","d,es,e","d,es,e","es"
+30,6,"Bezeichne die Note","X:10 % L:4/4 % K:D % ^f","f,fis,g","f,fis,g","fis"
