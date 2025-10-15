@@ -4,6 +4,15 @@ import { RouterModule } from '@angular/router';
 import { EventEmitter, Output } from '@angular/core';
 import { AppComponent } from '../app.component';
 
+export interface Question {
+  id: number;
+  instruction: string;
+  notesToRead: string;
+  correctAnswer: string;
+  possibleAnswers: string;
+  allAnswers: string;
+}
+
 @Component({
   selector: 'app-piano',
   standalone: true,
@@ -15,10 +24,11 @@ export class PianoComponent {
   @Output() enableButton = new EventEmitter<boolean>();
   @ViewChild('myDiv') myDiv!: ElementRef;
   @Input() action: string | null = null;
-  @Input() currentQuestion: string = '';
+  @Input() currentQuestion: Question | null = null;
   @Input() toneType: string = '';
   @Input() volume!: number;
   public isClickable: boolean = true;
+  correctAnswer = '';
   currentColor = signal('gray');
   selectedKey: string | null = null;
   allNotesRead = ['a-2', 'g-2', 'f-2', 'e-2', 'd-2', 'c-2', 'h-1', 'a-1', 'g-1', 'f-1', 'e-1', 'd-1', 'c-1'];
@@ -75,7 +85,7 @@ export class PianoComponent {
       this.selectedKey = keyId;
       this.enableButton.emit(true);
 
-      sessionStorage.setItem('selectedKey', keyId);
+      sessionStorage.setItem('selectedKey', this.selectedKey);
 
       const audio = new Audio("/assets/sounds/" + keyId + ".ogg");
       const volume = sessionStorage.getItem('volume');
@@ -91,21 +101,30 @@ export class PianoComponent {
     setTimeout(() => {
       this.currentColor.set('gray');
       this.isClickable = true;
+      this.selectedKey = null;
     }, 500);
   }
 
   isMarked(keyId: string) {
     if(this.action === 'markiere') { return this.selectedKey === keyId; }
 
-    if(this.toneType === 'Tonleitern'){
-      let selectedArray = this.arrays[this.currentQuestion];
+    if (this.action === 'Lesen') {
+      const base = this.currentQuestion?.correctAnswer;
+      if (!base) return false;
 
-      for (let note of selectedArray) {
-        if(this.action === 'bestimme' && note === keyId) { return true; }
+      if (!this.currentQuestion!.correctAnswer.includes('-')) {
+        const randomVariant = Math.random() < 0.5 ? 1 : 2;
+        this.currentQuestion!.correctAnswer = `${base}-${randomVariant}`;
       }
-      return false;
+
+      if(this.currentQuestion!.correctAnswer === keyId) {
+        this.currentQuestion!.correctAnswer = base;
+        return true;
+      } else {
+        return false;
+      }
     }
 
-    return this.action === 'lies' && this.currentQuestion === keyId;
+    return this.selectedKey === keyId;
   }
 }

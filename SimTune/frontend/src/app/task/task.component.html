@@ -23,7 +23,7 @@
   </div>
 
   <div *ngIf="progress < totalSegments" class="flex items-center justify-center mt-24 flex-col">
-    <ng-container *ngIf="this.exerciseModus=='Schreiben'; else abcNotationTemplate">
+    <ng-container *ngIf="this.notationType=='Klavier' || this.exerciseModus=='Schreiben'; else abcNotationTemplate">
       <ng-container *ngIf="exerciseType == 'StammtoeneKlavier' || exerciseType == 'Tonleitern'; else notensystemTemplate">
         <app-piano [action]="this.exerciseModus" [currentQuestion]="this.shuffledContents[this.currentIndex]" [toneType]="this.notationType" (enableButton)="onSelectedKeyChanged($event)"></app-piano>
       </ng-container>
@@ -33,67 +33,30 @@
     </ng-container>
     <ng-template #abcNotationTemplate>
       <div class="w-full flex items-center flex-col">
-        <div id="abc-container"></div>
+        <div #abcContainer id="abc-container"></div>
       </div>
     </ng-template>
 
-
-      <!--
-    <div *ngIf="action == 'lies' || action == 'bestimme'" class="flex justify-center">
-
-
-      <div *ngIf="toneType == 'Intervalle'">
-        <button
-          *ngFor="let interval of ['Prime', 'Sekunde', 'Terz', 'Quarte', 'Quinte', 'Sexte', 'Septime', 'Oktave']"
-          #button
-          [disabled]="!letters?.includes(interval)"
-          [ngClass]="{
-            'bg-green-500 text-white': lastPressedLetter == interval,
-            'enabled-button-intervall': letters?.includes(interval),
-            'disabled-button-intervall': !letters?.includes(interval)
-          }"
-          class="mr-4 p-2 rounded"
-          (click)="checkIfRight(interval, button)">
-          {{ interval }}
-        </button>
-      </div>-->
-
-      <div>
-        <button
-          *ngFor="let answers of allAnswers()"
-          #button
-          [disabled]="!possibleAnswers?.includes(answers)"
-          [ngClass]="{
-            'bg-green-500 text-white': lastPressedLetter == answers,
-            'enabled-button': possibleAnswers?.includes(answers),
-            'disabled-button': !possibleAnswers?.includes(answers)
-          }"
-          class="mr-4 p-2 rounded"
-          (click)="checkIfRightButton(answers, button)">
-          {{ answers }}
-        </button>
-      </div>
-
-      <!--
-      <div *ngIf="toneType == 'Tonleitern'">
-        <button
-          *ngFor="let letter of ['Dur', 'Natürliches Moll', 'Harmonisches Moll', 'Melodisches Moll']"
-          #button
-          [disabled]="!letters?.includes(letter)"
-          [ngClass]="{
-            'bg-green-500 text-white': lastPressedLetter == letter,
-            'enabled-button-tonleiter': letters?.includes(letter),
-            'disabled-button-tonleiter': !letters?.includes(letter)
-          }"
-          class="mr-4 p-2 rounded"
-          (click)="checkIfRight(letter, button)">
-          {{ letter }}
-        </button>
-      </div>
-    </div>-->
+    <div>
+      <button
+        *ngFor="let answers of allAnswers()"
+        #button
+        [disabled]="!possibleAnswers?.includes(answers)"
+        [ngClass]="{
+          'bg-green-500 text-white': lastPressedLetter == answers,
+          'enabled-button': possibleAnswers?.includes(answers),
+          'disabled-button': !possibleAnswers?.includes(answers)
+        }"
+        class="mr-4 p-2 rounded"
+        (click)="checkIfRightButton(answers, button)">
+        {{ answers }}
+      </button>
+    </div>
 
     <div class="flex justify-center z-1" *ngIf="exerciseModus == 'Schreiben'">
-      <div class="flex-1 flex justify-center z-1" style="margin-top: -45px;">
+      <div class="flex-1 flex justify-center z-1"   [ngStyle]="{
+        'margin-top': exerciseType === 'StammtoeneKlavier' ? '-10px' : '-45px'
+      }">
         <button
           (click)="checkRightWriting()"
           class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-700">
@@ -102,19 +65,6 @@
       </div>
     </div>
 
-    <!--
-    <div class="flex justify-center" *ngIf="action == 'markiere'">
-      <button [disabled]="buttonDisabled"
-            [ngClass]="{
-              'text-black border-gray-400': buttonDisabled,
-              'text-white bg-costumBlue hover:bg-blue-600': !buttonDisabled
-            }"
-            class="p-2 px-4 rounded-3xl text-lg w-32 border"
-            (click)="checkIfRightMark()">
-        Antworten
-      </button>
-
-     </div>-->
   </div>
   <!-- Progressbar -->
   <div *ngIf="progress == totalSegments" class="flex flex-col justify-center items-center p-6">

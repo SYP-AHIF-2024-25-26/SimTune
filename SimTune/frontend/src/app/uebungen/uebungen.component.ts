@@ -16,7 +16,8 @@ export class UebungenComponent implements OnInit {
   breadcrumb_elements = signal<{ label: string; url: string}[] | undefined>(undefined);
   taskType = signal<string | undefined>(undefined);
 
-  texts: { exerciseId: number, description: string; values: string, done: boolean}[] = [];
+  //texts: { exerciseId: number, description: string; values: string, done: boolean}[] = [];
+  texts: any[] = [];
   toneType: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
@@ -70,14 +71,9 @@ export class UebungenComponent implements OnInit {
     }
 
     const foundItem = this.texts.find(item => item.description === text);
-    const letters = foundItem ? foundItem.values : '';
-    const index = foundItem ? this.texts.indexOf(foundItem) : 0;
-
-    sessionStorage.setItem('texts', JSON.stringify(foundItem));
-    sessionStorage.setItem('toneType', this.toneType);
 
     sessionStorage.setItem('previousUrl', this.router.url);
 
-    this.router.navigate(['/task'], { queryParams: { action, letters, index } });
+    this.router.navigate(['/task'], { queryParams: { id: foundItem?.id } });
   }
 }

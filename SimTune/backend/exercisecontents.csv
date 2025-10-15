@@ -1,7 +1,7 @@
 ExerciseId,ContentId,Instruction,NotesToRead,AllAnswers,PossibleAnswers,CorrectAnswer
 1,1,"Bezeichne die Note","c","c,d,e,f,g,a,h","c,d,e","c"
 1,2,"Bezeichne die Note","d","c,d,e,f,g,a,h","c,d,e","d"
-1,3,"Bezeichne die Note","e","c,d,e,f,g,ah","c,d,e","e"
+1,3,"Bezeichne die Note","e","c,d,e,f,g,a,h","c,d,e","e"
 2,1,"Markiere die Note: c","","","","c"
 2,2,"Markiere die Note: d","","","","d"
 2,3,"Markiere die Note: e","","","","e"
