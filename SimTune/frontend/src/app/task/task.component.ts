@@ -27,7 +27,8 @@ interface MyJwtPayload {
 export class TaskComponent implements OnInit {
   @ViewChild(PianoComponent) pianoComponent!: PianoComponent;
   @ViewChild(NotesystemComponent) notesystemComponent!: NotesystemComponent;
-  @ViewChild('abcContainer', { static: false }) abcContainer!: ElementRef<HTMLDivElement>;
+
+  @ViewChild('abcContainer', { static: false }) abcContainer!: ElementRef;
 
   audio: HTMLAudioElement | null = null;
   previousUrl: string | null = null;
@@ -222,11 +223,11 @@ export class TaskComponent implements OnInit {
 
           if(jwt != undefined) {
             const decoded = jwtDecode<MyJwtPayload>(jwt);
-            /*
+
             await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
-              exerciseId: this.storedTexts[this.currentIndex].exerciseId,
+              exerciseId: this.parsed[this.currentIndex].exerciseId,
               score: parseFloat(this.evaluation)
-            });*/
+            });
           }
       }
     } else {
