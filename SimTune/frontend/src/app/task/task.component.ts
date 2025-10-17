@@ -266,6 +266,7 @@ export class TaskComponent implements OnInit {
 
       this.firstAttemptCorrectCount += this.firstAttemptSuccess ? 1 : 0;
       this.firstAttemptSuccess = true;
+      this.evaluation = `${((this.firstAttemptCorrectCount / this.totalSegments) * 100).toFixed(2)}%`;
       this.progress++;
       this.currentIndex++;
 
@@ -294,7 +295,6 @@ export class TaskComponent implements OnInit {
             return;
         }
       } else {
-        this.evaluation = `${((this.firstAttemptCorrectCount / this.totalSegments) * 100).toFixed(2)}%`;
         var jwt = sessionStorage.getItem('jwt');
 
           if(jwt != undefined) {
