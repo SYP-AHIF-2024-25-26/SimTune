@@ -3,25 +3,27 @@
 @tailwind utilities;
 
 .enabled-button {
-  border: 1px solid rgb(100, 100, 100);
-  font-size: 1.2rem;
+  border: 2px solid rgb(100, 100, 100);
+  font-size: 1.7rem;
+  font-weight: semibold;
   border-radius: 15px;
-  min-width: 3rem;
-  min-height: 3rem;
+  min-width: 4rem;
+  min-height: 4rem;
   color: black;
   cursor: pointer;
 }
 .enabled-button:hover {
-  border: 1.5px solid rgb(150, 150, 150);
+  border: 2.5px solid rgb(150, 150, 150);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
 }
 
 .disabled-button {
   border: 1px solid rgb(200, 200, 200);
+  font-size: 1.5rem;
   border-radius: 15px;
-  min-width: 3rem;
-  min-height: 3rem;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
   color: rgb(200, 200, 200);
   cursor: pointer;
 }
@@ -84,3 +86,23 @@
   -ms-user-select: none;
 }
 
+
+/*Richtig Animation*/
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+canvas {
+  position: fixed;
+  z-index: 9999;
+}

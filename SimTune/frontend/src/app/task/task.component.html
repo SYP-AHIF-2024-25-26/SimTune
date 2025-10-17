@@ -9,16 +9,27 @@
       <div class="absolute h-full bg-blue-500 rounded-2xl transition-all duration-300" [style.width.%]="(progress / totalSegments) * 100"></div>
     </div>
 
-    <button (click)="extendQuestion()" class="">
-      <img src="assets/images/question-mark.png" class="h-6 w-auto">
-    </button>
+    <span class="text-sm text-gray-600 font-medium h-6 w-auto">
+      {{ progress }}/{{ totalSegments }}
+    </span>
   </div>
 
-  <div *ngIf="showHelpMessage" class="absolute right-0 max-w-xs z-10 bg-costumLightGray p-4 rounded shadow-lg text-right mr-24">
-    Wir sind nicht die wo antworten haben
+  <div class="relative flex flex-col items-center justify-center my-4 h-6">
+  <h1
+      *ngIf="showStatusText"
+      [ngClass]="{
+        'text-green-300': isCorrect,
+        'text-red-400': !isCorrect
+      }"
+      class="text-lg font-semibold fade-in-up z-20 transition-all duration-700"
+    >
+      {{ isCorrect ? 'Richtig!' : 'Falsch!' }}
+  </h1>
+
+    <canvas #confettiCanvas class="absolute -top-12 left-1/2 -translate-x-1/2 w-40 h-40 pointer-events-none z-[9999]"></canvas>
   </div>
 
-  <div *ngIf="progress < totalSegments" class="mt-4 justify-center items-center flex font-semibold text-4xl">
+  <div *ngIf="progress < totalSegments" class="-mt-4 justify-center items-center flex font-semibold text-4xl">
     {{ instruction() }}
   </div>
 
@@ -59,16 +70,15 @@
       }">
         <button
           (click)="checkRightWriting()"
-          class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-700">
+          class="text-white bg-costumBlue p-1 px-4 py-2 rounded-3xl hover:bg-blue-600">
           Antworten
         </button>
       </div>
     </div>
-
   </div>
   <!-- Progressbar -->
   <div *ngIf="progress == totalSegments" class="flex flex-col justify-center items-center p-6">
-    <p class="text-4xl font-semibold">Du hast die Übung erfolgreich abgeschlossen!</p>
+    <p class="-mt-4 text-4xl font-semibold">Du hast die Übung erfolgreich abgeschlossen!</p>
 
     <div class="relative my-4">
       <svg width="200" height="200" viewBox="0 0 100 100" class="mx-auto">
