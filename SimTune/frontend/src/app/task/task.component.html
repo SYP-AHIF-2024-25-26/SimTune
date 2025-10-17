@@ -9,13 +9,9 @@
       <div class="absolute h-full bg-blue-500 rounded-2xl transition-all duration-300" [style.width.%]="(progress / totalSegments) * 100"></div>
     </div>
 
-    <button (click)="extendQuestion()" class="">
-      <img src="assets/images/question-mark.png" class="h-6 w-auto">
-    </button>
-  </div>
-
-  <div *ngIf="showHelpMessage" class="absolute right-0 max-w-xs z-10 bg-costumLightGray p-4 rounded shadow-lg text-right mr-24">
-    Wir sind nicht die wo antworten haben
+    <span class="text-sm text-gray-600 font-medium h-6 w-auto">
+      {{ progress }}/{{ totalSegments }}
+    </span>
   </div>
 
   <div class="relative flex flex-col items-center justify-center my-4 h-6">

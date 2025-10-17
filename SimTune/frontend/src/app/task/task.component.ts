@@ -33,7 +33,6 @@ export class TaskComponent implements OnInit {
 
   audio: HTMLAudioElement | null = null;
   previousUrl: string | null = null;
-  showHelpMessage = false;
   shuffledContents: any[] = [];
   currentIndex = 0;
   progress: number = 0;
@@ -184,10 +183,6 @@ export class TaskComponent implements OnInit {
     } else {
       console.log('No previous URL found!');
     }
-  }
-
-  extendQuestion(): void {
-    this.showHelpMessage = !this.showHelpMessage;
   }
 
   private launchConfetti(): void {
