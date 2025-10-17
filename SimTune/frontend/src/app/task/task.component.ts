@@ -29,6 +29,7 @@ export class TaskComponent implements OnInit {
   @ViewChild(NotesystemComponent) notesystemComponent!: NotesystemComponent;
 
   @ViewChild('abcContainer', { static: false }) abcContainer!: ElementRef;
+  @ViewChild('confettiCanvas') confettiCanvas!: ElementRef<HTMLCanvasElement>;
 
   audio: HTMLAudioElement | null = null;
   previousUrl: string | null = null;
@@ -53,6 +54,9 @@ export class TaskComponent implements OnInit {
   evaluation: string = '';
   firstAttemptCorrectCount: number = 0;
   parsed: any = null;
+  showStatusText = false;
+  isCorrect = false;
+  blockAnswer = false;
 
   // signal
   allAnswers = signal<string[]>([]);
@@ -186,7 +190,67 @@ export class TaskComponent implements OnInit {
     this.showHelpMessage = !this.showHelpMessage;
   }
 
+  private launchConfetti(): void {
+    const canvas = this.confettiCanvas.nativeElement;
+    const ctx = canvas.getContext('2d')!;
+    const colors = ['#FF595E', '#FFCA3A', '#8AC926', '#1982C4', '#6A4C93'];
+
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * devicePixelRatio;
+    canvas.height = rect.height * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+
+    const particles: {
+      x: number; y: number; vx: number; vy: number;
+      color: string; size: number; life: number;
+    }[] = [];
+
+    const count = 30;
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * 2 * Math.PI;
+      const speed = Math.random() * 5 + 2;
+      particles.push({
+        x: canvas.width / (2 * devicePixelRatio),
+        y: canvas.height / (2 * devicePixelRatio) - 10,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: Math.random() * 2 + 1.5,
+        life: 70 + Math.random() * 40
+      });
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.1;
+        p.vx *= 0.99;
+        p.vy *= 0.99;
+        p.life--;
+
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.size, p.size * 0.6);
+      }
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        if (particles[i].life <= 0) particles.splice(i, 1);
+      }
+
+      if (particles.length > 0) requestAnimationFrame(animate);
+    };
+
+    animate();
+  }
+
+  private delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   async checkIfRightButton(letter: string, button: HTMLButtonElement): Promise<void> {
+    if (this.blockAnswer) return;
     if (this.correctAnswers.includes("-")) {
       this.correctAnswers = this.correctAnswers.split("-")[0];
     }
@@ -205,7 +269,19 @@ export class TaskComponent implements OnInit {
       this.progress++;
       this.currentIndex++;
 
-      setTimeout(() => button.classList.remove('bg-green-500', 'text-white'), 1000);
+      this.showStatusText = true;
+      this.isCorrect = true;
+
+      this.blockAnswer = true;
+      await this.delay(1000);
+
+      await this.launchConfetti();
+
+      await this.delay(500);
+      this.blockAnswer = false;
+      this.showStatusText = false;
+
+      button.classList.remove('bg-green-500', 'text-white');
 
       if (this.progress < this.totalSegments) {
         this.setUpForUI();
@@ -232,8 +308,16 @@ export class TaskComponent implements OnInit {
       }
     } else {
       button.classList.add('bg-red-500', 'text-white');
+
+      this.showStatusText = true;
+      this.isCorrect = false;
+      this.blockAnswer = true;
+      await this.delay(1000);
+      this.showStatusText = false;
+      this.blockAnswer = false;
       this.firstAttemptSuccess = false;
-      setTimeout(() => button.classList.remove('bg-red-500', 'text-white'), 1000);
+
+      button.classList.remove('bg-red-500', 'text-white');
     }
   }
 
@@ -301,6 +385,7 @@ export class TaskComponent implements OnInit {
   }
 
   checkRightWriting() {
+    if (this.blockAnswer) return;
     const selectedCircle = sessionStorage.getItem('selectedCircle');
     const selectedKey = sessionStorage.getItem('selectedKey');
     const selectedExtraCircle = sessionStorage.getItem('selectedExtraCircle');
@@ -343,7 +428,7 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  checkIfRightAnswer(answer: string) {
+  async checkIfRightAnswer(answer: string) {
     answer = answer.split('-')[0];
     if(answer === this.correctAnswers) {
 
@@ -359,12 +444,30 @@ export class TaskComponent implements OnInit {
         this.notesystemComponent.changeMarkColor('green');
       }
 
+      this.showStatusText = true;
+      this.isCorrect = true;
+
+      this.blockAnswer = true;
+      await this.delay(1000);
+
+      await this.launchConfetti();
+
+      await this.delay(500);
+      this.blockAnswer = false;
+      this.showStatusText = false;
 
       this.setUpForUI();
     } else {
       this.firstAttemptSuccess = false;
 
       this.notesystemComponent.changeMarkColor('red');
+
+      this.showStatusText = true;
+      this.isCorrect = false;
+      this.blockAnswer = true;
+      await this.delay(1000);
+      this.blockAnswer = false;
+      this.showStatusText = false;
     }
   }
 }
