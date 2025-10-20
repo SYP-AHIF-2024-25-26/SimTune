@@ -21,7 +21,10 @@ export const routes: Routes = [
     component: UebungenComponent,
     data: {
       content: uebungenData,
-      breadcrumbElements: [{ label: 'Übungen', url: '/uebungen' }],
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' }
+      ],
       taskType: ''
     },
   },
@@ -31,6 +34,7 @@ export const routes: Routes = [
     data: {
       content: toeneData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -44,6 +48,7 @@ export const routes: Routes = [
     data: {
       content: stammtoeneData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -59,6 +64,7 @@ export const routes: Routes = [
     data: {
       content: stammtoeneData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -74,6 +80,7 @@ export const routes: Routes = [
     data: {
       content: notenSystemData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -89,6 +96,7 @@ export const routes: Routes = [
     data: {
       content: notenSystemData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -104,6 +112,7 @@ export const routes: Routes = [
     data: {
       content: notenSystemData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -119,6 +128,7 @@ export const routes: Routes = [
     data: {
       content: notenSystemData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -134,6 +144,7 @@ export const routes: Routes = [
     data: {
       content: notenSystemData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -149,6 +160,7 @@ export const routes: Routes = [
     data: {
       content: notenSystemData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Töne', url: '/toene' },
@@ -164,6 +176,7 @@ export const routes: Routes = [
     data: {
       content: toeneData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Rhythmus', url: '/rhythmus' },
@@ -176,6 +189,7 @@ export const routes: Routes = [
     data: {
       content: intervalleData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Intervalle', url: '/intervalle' },
@@ -189,6 +203,7 @@ export const routes: Routes = [
     data: {
       content: intervalleData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Akkorde', url: '/akkorde' },
@@ -201,6 +216,7 @@ export const routes: Routes = [
     data: {
       content: tonleiternData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Tonleitern', url: '/tonleitern' },
@@ -214,9 +230,10 @@ export const routes: Routes = [
     data: {
       content: intervalleData,
       breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Struktur', url: '/uebungen' },
-        {label: 'Tonarten', url: '/tonarten' },
+        { label: 'Tonarten', url: '/tonarten' },
       ],
       taskType: 'Tonarten'
     },
