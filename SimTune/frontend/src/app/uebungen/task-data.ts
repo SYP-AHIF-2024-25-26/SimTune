@@ -4,6 +4,7 @@ export type TaskData = {
       "group-header": string,
       "cards": {
         "card-header": string,
+        "card-header-image-url": string,
         "card-image-url": string,
         "card-url": string,
       }[]
@@ -20,11 +21,13 @@ export const uebungenData: TaskData = {
       "cards": [
         {
           "card-header": "Töne",
+          "card-header-image-url": "assets/images/Toene.png",
           "card-image-url": "assets/images/Töne-Notes.png",
           "card-url": "/toene"
         },
         {
           "card-header": "Rhythmus",
+          "card-header-image-url": "assets/images/Rythmus.png",
           "card-image-url": "assets/images/Rhythmus-Notes.png",
           "card-url": "/rhythmus"
         }
@@ -35,21 +38,25 @@ export const uebungenData: TaskData = {
       "cards": [
         {
           "card-header": "Intervalle",
+          "card-header-image-url": "assets/images/Intervalle.png",
           "card-image-url": "assets/images/Intervalle-Notes.png",
           "card-url": "/intervalle"
         },
         {
           "card-header": "Akkorde",
+          "card-header-image-url": "assets/images/Akkorde.png",
           "card-image-url": "assets/images/Akkorde-Notes.png",
           "card-url": "/akkorde"
         },
         {
           "card-header": "Tonleitern",
+          "card-header-image-url": "assets/images/Tonleitern.png",
           "card-image-url": "assets/images/Tonleitern-Notes.png",
           "card-url": "/tonleitern"
         },
         {
           "card-header": "Tonarten",
+          "card-header-image-url": "assets/images/Tonarten.png",
           "card-image-url": "assets/images/Tonarten-Notes.png",
           "card-url": "/tonarten"
         }
@@ -68,11 +75,13 @@ export const toeneData: TaskData = {
       "cards": [
         {
           "card-header": "Stammtöne",
+          "card-header-image-url": "",
           "card-image-url": "assets/images/klaviertasten.png",
           "card-url": "/stammtoene-klavier"
         },
         {
           "card-header": "Versetzungszeichen",
+          "card-header-image-url": "",
           "card-image-url": "assets/images/klaviertasten.png",
           "card-url": "/versetzungszeichen-klavier"
         }
@@ -83,16 +92,19 @@ export const toeneData: TaskData = {
       "cards": [
         {
           "card-header": "Stammtöne",
+          "card-header-image-url": "",
           "card-image-url": "assets/images/musiknoten.png",
           "card-url": "/stammtoene-violinschluessel"
         },
         {
           "card-header": "Versetzungszeichen",
+          "card-header-image-url": "",
           "card-image-url": "assets/images/musiknoten.png",
           "card-url": "/versetzungszeichen-violinschluessel"
         },
         {
           "card-header": "Hilfslinien",
+          "card-header-image-url": "",
           "card-image-url": "assets/images/musiknoten.png",
           "card-url": "/hilfslinien-violinschluessel"
         }
@@ -103,16 +115,19 @@ export const toeneData: TaskData = {
       "cards": [
         {
           "card-header": "Stammtöne",
+          "card-header-image-url": "",
           "card-image-url": "assets/images/musiknoten.png",
           "card-url": "/stammtoene-basschluessel"
         },
         {
           "card-header": "Versetzungszeichen",
+          "card-header-image-url": "",
           "card-image-url": "assets/images/musiknoten.png",
           "card-url": "/versetzungszeichen-basschluessel"
         },
         {
           "card-header": "Hilfslinien",
+          "card-header-image-url": "",
           "card-image-url": "assets/images/musiknoten.png",
           "card-url": "/hilfslinien-basschluessel"
         }
@@ -131,6 +146,7 @@ export const stammtoeneData: TaskData = {
       "cards": [
         {
           "card-header": "",
+          "card-header-image-url": "",
           "card-image-url": "",
           "card-url": ""
         }
@@ -149,6 +165,7 @@ export const notenSystemData: TaskData = {
       "cards": [
         {
           "card-header": "",
+          "card-header-image-url": "",
           "card-image-url": "",
           "card-url": ""
         }
@@ -167,6 +184,7 @@ export const tonleiternData: TaskData = {
       "cards": [
         {
           "card-header": "",
+          "card-header-image-url": "",
           "card-image-url": "",
           "card-url": ""
         }
@@ -185,11 +203,13 @@ export const intervalleData: TaskData = {
       "cards": [
         {
           "card-header": "Noten",
+          "card-header-image-url": "",
           "card-image-url": "",
           "card-url": "/stammtoene"
         },
         {
           "card-header": "Gehörbildung",
+          "card-header-image-url": "",
           "card-image-url": "",
           "card-url": "/rhythmus"
         }
