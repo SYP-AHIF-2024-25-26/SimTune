@@ -18,12 +18,13 @@
 
 @if (taskType() != '') {
   <div id="container" class="flex flex-wrap gap-20 p-20 items-center justify-center">
-    <div *ngFor="let item of texts"
+    <button *ngFor="let item of texts"
+      (click)="goToTask(item.description)"
       [ngClass]="{
         'bg-costumLightGreen': item.done,
         'bg-costumLightBlue': !item.done
       }"
-      class="relative w-80 rounded-lg border-solid border border-black text-center p-4 text-xl hover:shadow-even transition-shadow duration-200 shadow-lg">
+      class="relative w-80 rounded-lg border-solid border border-black text-center p-4 text-xl hover:shadow-even transition-shadow duration-200 shadow-lg cursor-pointer">
 
       <p class="font-semibold text-2xl">{{ item.description }}</p>
       <p class="mt-1">{{ toneType }}</p>
@@ -31,18 +32,17 @@
       <div>
         <div
           [ngClass]="{
-            'bg-costumAnfangenBtn hover:bg-costumAnfangenBtnHover': item.done,
-            'bg-blue-300 hover:bg-blue-400': !item.done
+            'bg-costumAnfangenBtn': item.done,
+            'bg-blue-300': !item.done
           }"
-          class="rounded-xl mt-4 p-1 drop-shadow-2xl duration-100 flex justify-center items-center gap-2 cursor-pointer"
-          (click)="goToTask(item.description)">
+          class="rounded-xl mt-4 p-1 drop-shadow-2xl flex justify-center items-center gap-2 pointer-events-none">
 
           <span>Los geht's!</span>
           <span *ngIf="item.done">✔</span>
 
         </div>
       </div>
-    </div>
+    </button>
   </div>
   }
   @else {
