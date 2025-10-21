@@ -73,6 +73,8 @@ module.exports = {
         mediumDarkBlue: '#4E78CE',
         costumLightGreen: 'rgba(130, 230, 170, 0.25)',
         costumDarkGreen: '#064e3b',
+        costumMediumGreen: '#4fd27a',
+        costumGreen: '#9af0b1',
         costumAnfangenBtn: '#7ccf98',
         costumAnfangenBtnHover: '#69ba82',
         costumLightBlue: 'rgba(100, 150, 255, 0.25)',

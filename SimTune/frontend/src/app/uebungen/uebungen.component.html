@@ -24,70 +24,41 @@
     (click)="goToTask(item.description)"
     [ngClass]="[
       item.done
-        ? 'bg-gradient-to-br from-costumGreen to-costumLightGreen'
+        ? 'bg-gradient-to-br from-costumMediumGreen to-costumGreen'
         : 'bg-gradient-to-br from-mediumDarkBlue to-costumBlue',
       'group relative w-full max-w-sm rounded-2xl border border-black/10',
       'text-center py-5 sm:py-6 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer select-none',
       'backdrop-blur-sm hover:-translate-y-0.5 flex flex-col'
     ]"
   >
-
-  <div class="flex-1 flex items-center justify-center">
-    <p class="text-center font-bold text-base md:text-2xl leading-snug text-white/95 drop-shadow text-balance sm:px-6">
-      {{ item.description }}
-    </p>
-  </div>
-
-  <div class="mt-auto pt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-white/95">
-    <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
-      {{ item.exerciseModus }}
-    </span>
-    <span class="opacity-60">•</span>
-    <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
-      {{ item.exerciseContents?.length * 2 || 0 }} Aufgaben
-    </span>
-    <span class="opacity-60">•</span>
-    <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/10 backdrop-blur-sm">
-      {{ item.notationType }}
-    </span>
-  </div>
-
-    <div
-      *ngIf="item.done"
-      class="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full px-2 py-0.5 text-xs font-medium bg-black/10 text-white/95 backdrop-blur-sm"
-    >
-      ✔ Fertig
+    <div class="flex-1 flex items-center justify-center">
+      <p class="text-center font-bold text-base md:text-2xl leading-snug text-white/95 drop-shadow text-balance sm:px-6">
+        {{ item.description }}
+      </p>
     </div>
-  </button>
 
-  <!--
-  <div id="container" class="flex flex-wrap gap-20 p-20 items-center justify-center">
-    <button *ngFor="let item of texts"
-      (click)="goToTask(item.description)"
-      [ngClass]="{
-        'bg-costumLightGreen': item.done,
-        'bg-costumLightBlue': !item.done
-      }"
-      class="relative w-80 rounded-lg border-solid border border-black text-center p-4 text-xl hover:shadow-even transition-shadow duration-200 shadow-lg cursor-pointer">
+    <div class="mt-auto pt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-white/95">
+      <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
+        {{ item.exerciseModus }}
+      </span>
+      <span class="opacity-60">•</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
+        {{ item.exerciseContents?.length * 2 || 0 }} Aufgaben
+      </span>
+      <span class="opacity-60">•</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/10 backdrop-blur-sm">
+        {{ item.notationType }}
+      </span>
+    </div>
 
-      <p class="font-semibold text-2xl">{{ item.description }}</p>-->
-      <!--<p class="mt-1">{{ toneType }}</p>-->
-
-      <!--
-      <div>
-        <div
-          [ngClass]="{
-            'bg-costumAnfangenBtn': item.done,
-            'bg-blue-300': !item.done
-          }"
-          class="rounded-xl mt-4 p-1 drop-shadow-2xl flex justify-center items-center gap-2 pointer-events-none">
-
-          <span>Los geht's!</span>
-          <span *ngIf="item.done">✔</span>
-
-        </div>
-      </div>
-    </button>-->
+    <!--
+      <div
+        *ngIf="item.done"
+        class="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 rounded-full px-2 py-0.5 text-xs font-medium bg-black/10 text-white/95 backdrop-blur-sm"
+      >
+        ✔ Fertig
+      </div>-->
+    </button>
   </div>
   }
   @else {
@@ -99,13 +70,16 @@
           <a [routerLink]="card['card-url']" class="block w-80 sm:w-96 rounded-3xl bg-white border-2 border-black shadow-xl transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1">
             <div class="h-48 sm:h-56 flex flex-col justify-between">
               <div class="flex items-center justify-center pt-6 sm:pt-8 px-4 sm:px-6 relative">
-                <img
-                  *ngIf="card['card-header-image-url'] && card['card-header-image-url'] !== ''"
-                  [src]="card['card-header-image-url']"
-                  class="h-10 sm:h-12 w-auto object-contain absolute left-8 sm:left-12" />
-                <p class="font-bold text-xl sm:text-2xl md:text-3xl text-black text-center w-full">
-                  {{ card["card-header"] }}
-                </p>
+                <div class="flex items-center justify-center gap-3">
+                  <img
+                    *ngIf="card['card-header-image-url'] && card['card-header-image-url'] !== ''"
+                    [src]="card['card-header-image-url']"
+                    class="flex items-center justify-center h-6 sm:h-7 w-auto object-contain opacity-90"
+                  />
+                  <p class="font-bold text-xl sm:text-2xl md:text-3xl text-black text-center w-full">
+                    {{ card["card-header"] }}
+                  </p>
+                </div>
               </div>
               <img [src]="card['card-image-url']" class="object-contain px-4 sm:px-6 rounded-b-3xl mb-6 sm:mb-8 transition-transform duration-300 h-20 sm:h-24" />
             </div>

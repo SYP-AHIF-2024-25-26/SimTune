@@ -37,7 +37,7 @@ export class UebungenComponent implements OnInit {
     if (this.taskType() !== undefined && this.taskType() !== '') {
       this.texts = await fetchRestEndpoint(API_URL + 'exercises/' + this.taskType(), 'GET');
     }
-    console.log(this.texts);
+
     this.markDoneExercises();
   }
 
@@ -49,9 +49,10 @@ export class UebungenComponent implements OnInit {
       return;
     }
     const completedDescriptions = userExercises.map((ex: { exerciseId: any; }) => ex.exerciseId);
+
     this.texts = this.texts.map(t => ({
       ...t,
-      done: completedDescriptions.includes(t.exerciseId)
+      done: completedDescriptions.includes(t.id)
     }));
   }
 
