@@ -1,117 +1,99 @@
-<div class="flex justify-between items-center p-2 bg-costumGray drop-shadow-md relative" style="z-index: 10;">
+<div class="md:sticky md:top-0 flex justify-between items-center p-2 bg-costumGray drop-shadow-md relative" style="z-index: 1000;">
   <!-- Logo und SimTune - links -->
-  <div class="flex items-center space-x-2 ml-2 md:ml-5">
-    <a routerLink="/homepage" class="flex items-center space-x-2">
-      <img src="/assets/images/Logo.png" class="h-8 md:h-10 w-auto">
-      <span class="text-lg font-semibold">SimTune</span>
+  <div class="flex items-center space-x-1 ml-1 md:ml-5 md:space-x-2">
+    <a routerLink="/homepage" class="flex items-center space-x-1">
+      <img src="/assets/images/Logo.png" class="h-6 md:h-10 w-auto">
+      <span class="text-sm md:text-lg font-semibold">SimTune</span>
     </a>
 
     <!-- Vertikaler Trennstrich -->
-    <div class="hidden md:block h-8 w-px bg-gray-400 mx-6"></div>
+    <div class="hidden md:block h-8 w-px bg-gray-400 mx-16"></div>
 
-    <!-- Navigation Links - neben dem Logo -->
-    <div class="hidden md:flex items-center space-x-6">
-      <a routerLink="/uebungen" class="text-base hover:font-semibold">Übungen</a>
-      <a routerLink="/pruefungen" class="text-base hover:font-semibold">Prüfungssimulationen</a>
+    <!-- Navigation Links - neben dem Logo (nur Desktop) -->
+    <div class="hidden md:flex items-center space-x-8">
+      <a routerLink="/uebungen"
+         routerLinkActive="active-link"
+         [routerLinkActiveOptions]="{exact: false}"
+         class="text-base relative nav-link font-medium">
+        Übungen
+      </a>
+      <a routerLink="/pruefungen"
+         routerLinkActive="active-link"
+         [routerLinkActiveOptions]="{exact: false}"
+         class="text-base relative nav-link font-medium">
+        Prüfungssimulationen
+      </a>
     </div>
   </div>
 
-  <!-- Rechte Seite - Desktop Layout -->
-  <div class="hidden md:flex items-center space-x-2 mr-5 relative">
-    @if (!isLoggedIn()) {
-      <button (click)="toggleDesktopDropdown()" class="p-1 px-4 rounded-3xl relative" style="z-index: 11;">
-        <img src="/assets/images/ProfilePage.png" class="h-9 w-auto">
+  <!-- Rechte Seite - Desktop und Mobile Layout -->
+  <div class="flex items-center space-x-1 mr-1 md:space-x-2 md:mr-5 relative">
+    <!-- Hamburger Menu Button (nur Mobile) -->
+    <div class="nav-dropdown-container relative">
+      <button (click)="toggleNavDropdown(); $event.stopPropagation()" class="md:hidden p-1.5 rounded-lg hover:bg-gray-200 transition-colors" style="z-index: 11;">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
       </button>
 
-      @if (showDesktopDropdown) {
-        <div class="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg border" style="z-index: 10000;">
-          <!-- Volume-Regler im Dropdown -->
-          <div class="px-4 py-3 border-b">
-            <div class="flex items-center space-x-2">
-              <img src="/assets/images/Volume.png" class="h-6 w-auto cursor-pointer" (click)="noSound()">
-              <input type="range" id="volume" min="0" max="100" [(ngModel)]="volume"
-                (input)="adjustVolume()"
-                class="flex-1 h-2 rounded-full appearance-none cursor-pointer transition-all duration-200 bg-blue-300"/>
-              <span class="text-sm text-gray-600 w-8">{{volume}}</span>
-            </div>
-          </div>
-          <a routerLink="/login" (click)="closeDesktopDropdown()" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 border-b">
-            Anmelden
+      <!-- Navigation Dropdown (nur Mobile) -->
+      @if (showNavDropdown) {
+        <div class="md:hidden absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg border text-sm" style="z-index: 10000;">
+          <a routerLink="/uebungen"
+             (click)="closeNavDropdown()"
+             routerLinkActive="bg-blue-50"
+             class="block px-3 py-2 text-gray-700 hover:bg-gray-100 border-b">
+            Übungen
           </a>
-          <!--
-          <a routerLink="/register" (click)="closeDesktopDropdown()" class="block px-4 py-3 text-gray-700 hover:bg-gray-100">
-            Konto erstellen
-          </a>
-          -->
-        </div>
-      }
-    } @else {
-      <button (click)="toggleDesktopDropdown()" class="p-1 px-4 rounded-3xl relative" style="z-index: 11;">
-        <img src="/assets/images/ProfilePage.png" class="h-9 w-auto">
-      </button>
-
-      @if (showDesktopDropdown) {
-        <div class="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg border" style="z-index: 10000;">
-          <!-- Volume-Regler im Dropdown -->
-          <div class="px-4 py-3 border-b">
-            <div class="flex items-center space-x-2">
-              <img src="/assets/images/Volume.png" class="h-6 w-auto cursor-pointer" (click)="noSound()">
-              <input type="range" id="volume" min="0" max="100" [(ngModel)]="volume"
-                (input)="adjustVolume()"
-                class="flex-1 h-2 rounded-full appearance-none cursor-pointer transition-all duration-200 bg-blue-300"/>
-              <span class="text-sm text-gray-600 w-8">{{volume}}</span>
-            </div>
-          </div>
-          <div class="px-4 py-3 border-b">
-            <span class="text-sm text-gray-600">
-              Rolle: {{ getRoleFromJwt() || 'Unbekannt' }}
-            </span>
-          </div>
-          <a routerLink="/profile-page" (click)="closeDesktopDropdown()" class="block px-4 py-3 text-gray-700 hover:bg-gray-100">
-            Profil
+          <a routerLink="/pruefungen"
+             (click)="closeNavDropdown()"
+             routerLinkActive="bg-blue-50"
+             class="block px-3 py-2 text-gray-700 hover:bg-gray-100">
+            Prüfungssimulationen
           </a>
         </div>
       }
-    }
-  </div>
+    </div>
 
-  <!-- Mobile Layout - Nur Benutzerprofil mit Dropdown -->
-  <div class="md:hidden relative mr-2">
-    <button (click)="toggleMobileDropdown()" class="p-2 rounded-full relative" style="z-index: 11;">
-      <img src="/assets/images/ProfilePage.png" class="h-8 w-auto">
-    </button>
+    <!-- Profil Button (Desktop und Mobile) -->
+    <div class="profile-dropdown-container relative">
+      <button (click)="toggleDesktopDropdown(); $event.stopPropagation()" class="p-1 md:px-4 rounded-3xl relative" style="z-index: 11;">
+        <img src="/assets/images/ProfilePage.png" class="h-7 md:h-9 w-auto">
+      </button>
 
-    @if (showMobileDropdown) {
-      <div class="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg border mobile-dropdown" style="z-index: 10000;">
-        <!-- Volume-Regler im Mobile Dropdown -->
-        <div class="px-4 py-3 border-b">
-          <div class="flex items-center space-x-2">
-            <img src="/assets/images/Volume.png" class="h-6 w-auto cursor-pointer" (click)="noSound()">
-            <input type="range" id="volume-mobile" min="0" max="100" [(ngModel)]="volume"
-              (input)="adjustVolume()"
-              class="flex-1 h-2 rounded-full appearance-none cursor-pointer transition-all duration-200 bg-blue-300"/>
-            <span class="text-sm text-gray-600 w-8">{{volume}}</span>
+      <!-- Profil Dropdown -->
+      @if (showDesktopDropdown) {
+        <div class="absolute right-0 top-full mt-2 w-56 md:w-64 bg-white rounded-lg shadow-lg border" style="z-index: 10000;">
+          <!-- Volume-Regler im Dropdown -->
+          <div class="px-3 py-2 md:px-4 md:py-3 border-b">
+            <div class="flex items-center space-x-2">
+              <img src="/assets/images/Volume.png" class="h-5 md:h-6 w-auto cursor-pointer" (click)="noSound()">
+              <input type="range" id="volume" min="0" max="100" [(ngModel)]="volume"
+                (input)="adjustVolume()"
+                class="flex-1 h-2 rounded-full appearance-none cursor-pointer transition-all duration-200 bg-blue-300"/>
+              <span class="text-xs md:text-sm text-gray-600 w-8">{{volume}}</span>
+            </div>
           </div>
+          @if (!isLoggedIn()) {
+            <a routerLink="/login" (click)="closeDesktopDropdown()" class="block px-3 py-2 md:px-4 md:py-3 text-sm text-gray-700 hover:bg-gray-100 border-b">
+              Anmelden
+            </a>
+            <a routerLink="/register" (click)="closeDesktopDropdown()" class="block px-3 py-2 md:px-4 md:py-3 text-sm text-gray-700 hover:bg-gray-100">
+              Konto erstellen
+            </a>
+          } @else {
+            <div class="px-3 py-2 md:px-4 md:py-3 border-b">
+              <span class="text-xs md:text-sm text-gray-600">
+                Rolle: {{ getRoleFromJwt() || 'Unbekannt' }}
+              </span>
+            </div>
+            <a routerLink="/profile-page" (click)="closeDesktopDropdown()" class="block px-3 py-2 md:px-4 md:py-3 text-sm text-gray-700 hover:bg-gray-100">
+              Profil
+            </a>
+          }
         </div>
-        @if (!isLoggedIn()) {
-          <a routerLink="/login" (click)="closeMobileDropdown()" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 border-b">
-            Anmelden
-          </a>
-          <a routerLink="/register" (click)="closeMobileDropdown()" class="block px-4 py-3 text-gray-700 hover:bg-gray-100">
-            Konto erstellen
-          </a>
-        } @else {
-          <div class="px-4 py-3 border-b">
-            <span class="text-sm text-gray-600">
-              Rolle: {{ getRoleFromJwt() || 'Unbekannt' }}
-            </span>
-          </div>
-          <a routerLink="/profile-page" (click)="closeMobileDropdown()" class="block px-4 py-3 text-gray-700 hover:bg-gray-100">
-            Profil
-          </a>
-        }
-      </div>
-    }
+      }
+    </div>
   </div>
 </div>
 

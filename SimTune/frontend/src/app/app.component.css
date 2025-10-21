@@ -70,6 +70,15 @@ input[type="range"]::-ms-thumb {
   .volume-control {
     display: none !important;
   }
+  .nav-dropdown-container a,
+  .profile-dropdown-container a {
+    font-size: 0.875rem;
+    padding: 0.625rem 0.875rem;
+  }
+  .nav-dropdown-container .block,
+  .profile-dropdown-container .block {
+    font-size: 0.875rem;
+  }
 }
 
 /* Ensure dropdown is above other content */
@@ -87,4 +96,34 @@ input[type="range"]::-ms-thumb {
 /* Navigation should have lower z-index than dropdown */
 nav, .bg-costumLightGray {
   z-index: 1;
+}
+
+.nav-link {
+  position: relative;
+  transition: color 0.2s;
+  display: inline-block;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #6496FF;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.active-link {
+  font-weight: 600;
+  color: #000000;
+}
+
+.active-link::after {
+  width: 100%;
 }

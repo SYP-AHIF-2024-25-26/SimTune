@@ -16,6 +16,7 @@ export class AppComponent {
   lastVolume: number = 100;
   showMobileDropdown: boolean = false;
   showDesktopDropdown: boolean = false;
+  showNavDropdown = false;
 
   ngOnInit(): void {
     this.volume = parseInt(sessionStorage.getItem('volume') ?? '100');
@@ -60,22 +61,39 @@ export class AppComponent {
 
   toggleDesktopDropdown(): void {
     this.showDesktopDropdown = !this.showDesktopDropdown;
+    if (this.showDesktopDropdown) {
+      this.showNavDropdown = false;
+    }
   }
 
   closeDesktopDropdown(): void {
     this.showDesktopDropdown = false;
   }
 
+  toggleNavDropdown() {
+    this.showNavDropdown = !this.showNavDropdown;
+    if (this.showNavDropdown) {
+      this.showDesktopDropdown = false;
+    }
+  }
+
+  closeNavDropdown() {
+    this.showNavDropdown = false;
+  }
+
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event): void {
+  onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
 
-    // Prüfe ob innerhalb eines Dropdowns oder Buttons geklickt wurde
-    const clickedInsideDropdown = target.closest('.absolute, .mobile-dropdown') ||
-                                   target.closest('button img[src*="ProfilePage"]')?.parentElement;
+    // Prüfe ob innerhalb der Dropdown-Container geklickt wurde
+    const clickedInsideNav = target.closest('.nav-dropdown-container');
+    const clickedInsideProfile = target.closest('.profile-dropdown-container');
 
-    if (!clickedInsideDropdown) {
-      this.showMobileDropdown = false;
+    if (!clickedInsideNav) {
+      this.showNavDropdown = false;
+    }
+
+    if (!clickedInsideProfile) {
       this.showDesktopDropdown = false;
     }
   }
