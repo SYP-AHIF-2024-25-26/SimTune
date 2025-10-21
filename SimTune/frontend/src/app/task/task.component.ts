@@ -271,9 +271,10 @@ export class TaskComponent implements OnInit {
       this.blockAnswer = true;
       await this.delay(1000);
 
-      await this.launchConfetti();
-
-      await this.delay(500);
+      if(this.progress < this.totalSegments) {
+        await this.launchConfetti();
+        await this.delay(500);
+      }
       this.blockAnswer = false;
       this.showStatusText = false;
 
@@ -290,16 +291,7 @@ export class TaskComponent implements OnInit {
             return;
         }
       } else {
-        var jwt = sessionStorage.getItem('jwt');
-
-          if(jwt != undefined) {
-            const decoded = jwtDecode<MyJwtPayload>(jwt);
-
-            await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
-              exerciseId: this.parsed[this.currentIndex].exerciseId,
-              score: parseFloat(this.evaluation)
-            });
-          }
+        this.saveExcercise();
       }
     } else {
       button.classList.add('bg-red-500', 'text-white');
@@ -313,6 +305,19 @@ export class TaskComponent implements OnInit {
       this.firstAttemptSuccess = false;
 
       button.classList.remove('bg-red-500', 'text-white');
+    }
+  }
+
+  async saveExcercise() {
+    var jwt = sessionStorage.getItem('jwt');
+
+    if(jwt != undefined) {
+      const decoded = jwtDecode<MyJwtPayload>(jwt);
+
+      await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
+        exerciseId: this.parsed.id,
+        score: parseFloat(this.evaluation)
+      });
     }
   }
 
@@ -429,6 +434,7 @@ export class TaskComponent implements OnInit {
 
       this.firstAttemptCorrectCount += this.firstAttemptSuccess ? 1 : 0;
       this.firstAttemptSuccess = true;
+      this.evaluation = `${((this.firstAttemptCorrectCount / this.totalSegments) * 100).toFixed(2)}%`;
       this.progress++;
       this.currentIndex++;
 
@@ -445,17 +451,28 @@ export class TaskComponent implements OnInit {
       this.blockAnswer = true;
       await this.delay(1000);
 
-      await this.launchConfetti();
+      if(this.progress < this.totalSegments) {
+        await this.launchConfetti();
+        await this.delay(500);
+      } else {
+        this.saveExcercise();
+      }
 
-      await this.delay(500);
       this.blockAnswer = false;
       this.showStatusText = false;
 
-      this.setUpForUI();
+      if(this.progress < this.totalSegments) {
+        this.setUpForUI();
+      }
     } else {
       this.firstAttemptSuccess = false;
 
-      this.notesystemComponent.changeMarkColor('red');
+      if(this.exerciseType === 'StammtoeneKlavier') {
+        this.pianoComponent.changeMarkColor('red');
+        sessionStorage.removeItem('selectedKey');
+      } else {
+        this.notesystemComponent.changeMarkColor('red');
+      }
 
       this.showStatusText = true;
       this.isCorrect = false;
