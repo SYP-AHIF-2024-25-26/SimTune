@@ -153,7 +153,7 @@ export class PianoComponent {
       this.currentColor.set('gray');
       this.isClickable = true;
       this.selectedKey = null;
-    }, 500);
+    }, 1500);
   }
 
   isMarked(keyId: string) {
