@@ -16,3 +16,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
+@layer utilities {
+  .animate-wobbleA { animation: wobbleA 5.5s ease-in-out infinite; }
+  .animate-wobbleB { animation: wobbleB 5.2s ease-in-out infinite; }
+  .animate-drift   { animation: driftSlow 24s linear infinite; }
+  .animate-drift-2 { animation: driftSlow 30s linear infinite; } /* 2. Variante */
+}

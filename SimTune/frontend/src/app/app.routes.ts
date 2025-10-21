@@ -14,6 +14,7 @@ import { Verify } from 'crypto';
 import { VerifyComponent } from './verify/verify.component';
 import { SchuelerDashboardComponent } from './schueler-dashboard/schueler-dashboard.component';
 import { LehrerDashboardComponent } from './lehrer-dashboard/lehrer-dashboard.component';
+import { UebungenSubpageComponent } from './uebungen-subpage/uebungen-subpage.component';
 
 export const routes: Routes = [
   {
@@ -249,5 +250,6 @@ export const routes: Routes = [
   { path: 'verify', component: VerifyComponent},
   { path: 'schueler-dashboard', component: SchuelerDashboardComponent},
   { path: 'lehrer-dashboard', component: LehrerDashboardComponent},
+  { path: 'uebungen-subpage', component:  UebungenSubpageComponent},
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 ];
