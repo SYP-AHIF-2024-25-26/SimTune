@@ -18,7 +18,6 @@ export class UebungenComponent implements OnInit {
 
   //texts: { exerciseId: number, description: string; values: string, done: boolean}[] = [];
   texts: any[] = [];
-  toneType: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -38,6 +37,7 @@ export class UebungenComponent implements OnInit {
     if (this.taskType() !== undefined && this.taskType() !== '') {
       this.texts = await fetchRestEndpoint(API_URL + 'exercises/' + this.taskType(), 'GET');
     }
+    console.log(this.texts);
     this.markDoneExercises();
   }
 

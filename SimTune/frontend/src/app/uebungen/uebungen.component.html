@@ -17,6 +17,50 @@
 </div>
 
 @if (taskType() != '') {
+<div id="container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-12 p-6 mt-6 mx-36">
+
+  <button
+    *ngFor="let item of texts"
+    (click)="goToTask(item.description)"
+    [ngClass]="[
+      item.done
+        ? 'bg-gradient-to-br from-costumGreen to-costumLightGreen'
+        : 'bg-gradient-to-br from-mediumDarkBlue to-costumBlue',
+      'group relative w-full max-w-sm rounded-2xl border border-black/10',
+      'text-center py-5 sm:py-6 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer select-none',
+      'backdrop-blur-sm hover:-translate-y-0.5 flex flex-col'
+    ]"
+  >
+
+  <div class="flex-1 flex items-center justify-center">
+    <p class="text-center font-bold text-base md:text-2xl leading-snug text-white/95 drop-shadow text-balance sm:px-6">
+      {{ item.description }}
+    </p>
+  </div>
+
+  <div class="mt-auto pt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-white/95">
+    <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
+      {{ item.exerciseModus }}
+    </span>
+    <span class="opacity-60">•</span>
+    <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
+      {{ item.exerciseContents?.length * 2 || 0 }} Aufgaben
+    </span>
+    <span class="opacity-60">•</span>
+    <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/10 backdrop-blur-sm">
+      {{ item.notationType }}
+    </span>
+  </div>
+
+    <div
+      *ngIf="item.done"
+      class="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full px-2 py-0.5 text-xs font-medium bg-black/10 text-white/95 backdrop-blur-sm"
+    >
+      ✔ Fertig
+    </div>
+  </button>
+
+  <!--
   <div id="container" class="flex flex-wrap gap-20 p-20 items-center justify-center">
     <button *ngFor="let item of texts"
       (click)="goToTask(item.description)"
@@ -26,9 +70,10 @@
       }"
       class="relative w-80 rounded-lg border-solid border border-black text-center p-4 text-xl hover:shadow-even transition-shadow duration-200 shadow-lg cursor-pointer">
 
-      <p class="font-semibold text-2xl">{{ item.description }}</p>
-      <p class="mt-1">{{ toneType }}</p>
+      <p class="font-semibold text-2xl">{{ item.description }}</p>-->
+      <!--<p class="mt-1">{{ toneType }}</p>-->
 
+      <!--
       <div>
         <div
           [ngClass]="{
@@ -42,7 +87,7 @@
 
         </div>
       </div>
-    </button>
+    </button>-->
   </div>
   }
   @else {

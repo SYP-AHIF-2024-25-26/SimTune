@@ -70,6 +70,7 @@ module.exports = {
       colors: {
         costumGray: '#D9D9D9',
         costumBlue: '#6496FF',
+        mediumDarkBlue: '#4E78CE',
         costumLightGreen: 'rgba(130, 230, 170, 0.25)',
         costumDarkGreen: '#064e3b',
         costumAnfangenBtn: '#7ccf98',
