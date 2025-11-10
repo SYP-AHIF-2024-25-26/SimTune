@@ -147,7 +147,14 @@ export class TaskComponent implements OnInit {
     abcjs.renderAbc(
       this.abcContainer.nativeElement,
       currentQuestion.notesToRead,
-      { responsive: 'resize', add_classes: true, staffwidth: 500, scale: 2 }
+      {
+        add_classes: true,
+        staffwidth: 800,
+        scale: 3,
+        wrap: { minSpacing: 1, maxSpacing: 1, preferredMeasuresPerLine: 1 },
+        paddingright: 0,
+        paddingbottom: 0,
+      }
     );
   }
 

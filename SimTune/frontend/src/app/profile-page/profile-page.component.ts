@@ -33,7 +33,7 @@ export class ProfilePageComponent {
 
   exercise: { [key: string]: string }[] = [];
   sortDirection: { [key: string]: 'asc' | 'desc' } = {};
-  exerciseTypes: string[] = ['Stammtöne', 'Notensystem', 'Intervalle', 'Tonleitern'];
+  exerciseTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten'];
   selectedTypes: string[] = [...this.exerciseTypes];
   showSortOptions = false;
   progress = signal<number>(0);
@@ -108,7 +108,7 @@ export class ProfilePageComponent {
 
   get filteredExercise() {
     return this.exercise
-      .filter(ex => this.selectedTypes.includes(ex['ExerciseTyp']))
+      /*.filter(ex => this.selectedTypes.includes(ex['ExerciseTyp']))*/
       .sort((a, b) => {
         const col = this.currentSortCol;
         if (!col) return 0;
@@ -123,7 +123,7 @@ export class ProfilePageComponent {
 
   async getProgress() {
     const results = await Promise.all(
-      ['Stammtoene', 'Notensystem', 'Intervalle', 'Tonleitern']
+      ['StammtoeneKlavier', 'StammtoeneViolinschluessel', 'Intervalle', 'Tonleitern']
         .map(type => fetchRestEndpoint(API_URL + 'exercises/' + type, 'GET'))
     );
     const allExercises = results.flat();

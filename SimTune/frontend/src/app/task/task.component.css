@@ -106,3 +106,10 @@ canvas {
   position: fixed;
   z-index: 9999;
 }
+
+#abc-container svg {
+  width: 800px !important;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}

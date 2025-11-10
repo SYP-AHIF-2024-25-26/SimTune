@@ -1,9 +1,9 @@
 <div class="p-4">
   <!--  Header  -->
   <div class="flex justify-center items-center ml-52 mr-52 mt-12 mb-8">
-    <button (click)="goBack()" class="">
-      <img src="assets/images/X.png" class="h-6 w-auto">
-    </button>
+    <div (click)="goBack()" class="text-4xl cursor-pointer transition-transform hover:scale-110 text-gray-500 hover:text-gray-700 ml-8 select-none">
+      ←
+    </div>
 
     <div class="h-6 w-3/4 bg-costumGray rounded-2xl shadow-lg mx-12 relative">
       <div class="absolute h-full bg-blue-500 rounded-2xl transition-all duration-300" [style.width.%]="(progress / totalSegments) * 100"></div>
@@ -14,11 +14,11 @@
     </span>
   </div>
 
-  <div *ngIf="progress < totalSegments" class="-mt-4 justify-center items-center flex font-semibold text-4xl">
+  <div *ngIf="progress < totalSegments" class="justify-center items-center flex font-semibold text-4xl">
     {{ instruction() }}
   </div>
 
-  <div *ngIf="progress < totalSegments" class="flex items-center justify-center mt-24 flex-col">
+  <div *ngIf="progress < totalSegments" class="flex items-center justify-center mt-12 flex-col">
     <ng-container *ngIf="this.notationType=='Klavier' || this.exerciseModus=='Schreiben'; else abcNotationTemplate">
       <ng-container *ngIf="exerciseType == 'StammtoeneKlavier' || exerciseType == 'Tonleitern'; else notensystemTemplate">
         <app-piano [action]="this.exerciseModus" [currentQuestion]="this.shuffledContents[this.currentIndex]" [toneType]="this.notationType" (enableButton)="onSelectedKeyChanged($event)"></app-piano>
@@ -28,7 +28,7 @@
       </ng-template>
     </ng-container>
     <ng-template #abcNotationTemplate>
-      <div class="w-full flex items-center flex-col">
+      <div class="w-full flex items-center flex-col mb-20">
         <div #abcContainer id="abc-container"></div>
       </div>
     </ng-template>
