@@ -12,14 +12,12 @@
     <!-- Navigation Links - neben dem Logo (nur Desktop) -->
     <div class="hidden md:flex items-center space-x-8">
       <a routerLink="/uebungen"
-         routerLinkActive="active-link"
-         [routerLinkActiveOptions]="{exact: false}"
+        [class.active-link]="isActiveUebungen()"
          class="text-base relative nav-link font-medium">
         Übungen
       </a>
       <a routerLink="/pruefungen"
-         routerLinkActive="active-link"
-         [routerLinkActiveOptions]="{exact: false}"
+        [class.active-link]="isActivePruefung()"
          class="text-base relative nav-link font-medium">
         Prüfungssimulationen
       </a>

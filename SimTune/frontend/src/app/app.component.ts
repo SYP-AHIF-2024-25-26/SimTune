@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,8 @@ export class AppComponent {
   showMobileDropdown: boolean = false;
   showDesktopDropdown: boolean = false;
   showNavDropdown = false;
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.volume = parseInt(sessionStorage.getItem('volume') ?? '100');
@@ -39,6 +42,22 @@ export class AppComponent {
       this.volume = 0;
     }
   }
+
+  isActiveUebungen(): boolean {
+    const currentUrl = this.router.url;
+
+    return !(
+      currentUrl.startsWith('/homepage') ||
+      currentUrl.startsWith('/pruefungen')
+    );
+  }
+
+  isActivePruefung(): boolean {
+    const currentUrl = this.router.url;
+
+    return currentUrl.startsWith('/pruefungen');
+  }
+
 
   getRoleFromJwt(): string | null {
     const token = sessionStorage.getItem('jwt');
