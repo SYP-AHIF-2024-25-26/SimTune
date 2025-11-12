@@ -48,6 +48,9 @@ export class AppComponent {
 
     return !(
       currentUrl.startsWith('/homepage') ||
+      currentUrl.startsWith('/login') ||
+      currentUrl.startsWith('/register') ||
+      currentUrl.startsWith('/profile-page') ||
       currentUrl.startsWith('/pruefungen')
     );
   }

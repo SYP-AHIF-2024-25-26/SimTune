@@ -58,6 +58,7 @@ export class ProfilePageComponent {
     if (Array.isArray(userExercises)) {
       const mapped = userExercises.map(ex => ({
         'ÜbungsID': ex.exerciseId.toString(),
+        'Exercise Allocation': ex.exerciseAllocation,
         'Description': ex.description,
         'Score': ex.highestScore.toString() + '%',
         'Attempts': ex.attempts.toString(),
@@ -107,8 +108,8 @@ export class ProfilePageComponent {
   }
 
   get filteredExercise() {
-    return this.exercise
-      /*.filter(ex => this.selectedTypes.includes(ex['ExerciseTyp']))*/
+    const test = this.exercise
+      .filter(ex => this.selectedTypes.includes(ex['Exercise Allocation']))
       .sort((a, b) => {
         const col = this.currentSortCol;
         if (!col) return 0;
@@ -119,11 +120,13 @@ export class ProfilePageComponent {
         if (aVal > bVal) return dir === 'asc' ? 1 : -1;
         return 0;
       });
+
+      return test;
   }
 
   async getProgress() {
     const results = await Promise.all(
-      ['StammtoeneKlavier', 'StammtoeneViolinschluessel', 'Intervalle', 'Tonleitern']
+      ['Intervalle', 'Tonleitern', 'StammtoeneKlavier', 'VersetzungszeichenKlavier', 'StammtoeneViolinschluessel', 'VersetzungszeichenViolinschluessel', 'HilfslinienViolinschluessel', 'HilfslinienBassschluessel', 'VersetzungszeichenBasschluessel', 'StammtoeneBassschluessel']
         .map(type => fetchRestEndpoint(API_URL + 'exercises/' + type, 'GET'))
     );
     const allExercises = results.flat();
