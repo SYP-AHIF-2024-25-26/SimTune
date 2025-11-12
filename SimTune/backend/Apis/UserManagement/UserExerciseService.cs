@@ -24,18 +24,37 @@ public class UserExerciseService
         var userExercises = await context.UserExercises
             .Where(ue => ue.UserId == userId)
             .Include(ue => ue.Exercise)
-            .Select(ue => new
+            .Select(ue => new UserExerciseDto
             {
-                ue.ExerciseId,
-                ue.Exercise.Description,
+                ExerciseId = ue.ExerciseId,
+                Description = ue.Exercise.Description,
                 ExerciseType = ue.Exercise.ExerciseType.ToString(),
-                ue.HighestScore,
-                ue.Attempts
+                ExerciseAllocation = GetExerciseAllocation(ue.Exercise.ExerciseType.ToString()),
+                HighestScore = ue.HighestScore,
+                Attempts = ue.Attempts
             })
             .ToListAsync();
 
         // Return the raw values
         return Results.Ok(userExercises);
+    }
+
+    private static string GetExerciseAllocation(string exerciseType)
+    {
+        if (exerciseType.Contains("Stammtoene", StringComparison.OrdinalIgnoreCase))
+            return "Töne";
+        if (exerciseType.Contains("Intervall", StringComparison.OrdinalIgnoreCase))
+            return "Intervalle";
+        if (exerciseType.Contains("Tonleiter", StringComparison.OrdinalIgnoreCase))
+            return "Tonleitern";
+        if (exerciseType.Contains("Rhythmus", StringComparison.OrdinalIgnoreCase))
+            return "Rhythmus";
+        if (exerciseType.Contains("Akkord", StringComparison.OrdinalIgnoreCase))
+            return "Akkorde";
+        if (exerciseType.Contains("Tonart", StringComparison.OrdinalIgnoreCase))
+            return "Tonarten";
+        
+        return "Sonstiges";
     }
 
     [Authorize]
@@ -96,6 +115,16 @@ public class UserExerciseService
             HighestScore = userExercise.HighestScore,
             Attempts = userExercise.Attempts
         });
+    }
+
+    public class UserExerciseDto
+    {
+        public int ExerciseId { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public string ExerciseType { get; set; } = string.Empty;
+        public string ExerciseAllocation { get; set; } = string.Empty;
+        public double HighestScore { get; set; }
+        public int Attempts { get; set; }
     }
 
     public class StoreCompletedUserExerciseDto
