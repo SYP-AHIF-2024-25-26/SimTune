@@ -41,7 +41,9 @@ public class UserExerciseService
 
     private static string GetExerciseAllocation(string exerciseType)
     {
-        if (exerciseType.Contains("Stammtoene", StringComparison.OrdinalIgnoreCase))
+        if (exerciseType.Contains("Stammtoene", StringComparison.OrdinalIgnoreCase)
+            || exerciseType.Contains("Violin", StringComparison.OrdinalIgnoreCase)
+            || exerciseType.Contains("Bass", StringComparison.OrdinalIgnoreCase))
             return "Töne";
         if (exerciseType.Contains("Intervall", StringComparison.OrdinalIgnoreCase))
             return "Intervalle";
