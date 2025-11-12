@@ -7,12 +7,9 @@ public static class DbInitializer
 {
     public static void Initialize(SimTuneDbContext context, IConfiguration configuration)
     {
-        if (context.Exercises.Any())
+        // Alle Übungen definieren
+        var allExercises = new List<Exercise>
         {
-            return; // Seed-Daten existieren bereits
-        }
-
-        context.Exercises.AddRange(
             new Exercise { Description = "Lies c, d und e", NotationType = NotationType.Klavier, ExerciseType = ExerciseType.StammtoeneKlavier, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Description = "Markiere c, d und e", NotationType = NotationType.Klavier, ExerciseType = ExerciseType.StammtoeneKlavier, ExerciseModus = ExerciseModus.Schreiben },
             new Exercise { Description = "Lies e, f und g", NotationType = NotationType.Klavier, ExerciseType = ExerciseType.StammtoeneKlavier, ExerciseModus = ExerciseModus.Lesen },
@@ -22,7 +19,7 @@ public static class DbInitializer
             new Exercise { Description = "Lies g, a, h und c", NotationType = NotationType.Klavier, ExerciseType = ExerciseType.StammtoeneKlavier, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Description = "Markiere g, a, h und c", NotationType = NotationType.Klavier, ExerciseType = ExerciseType.StammtoeneKlavier, ExerciseModus = ExerciseModus.Schreiben },
             new Exercise { Description = "Lies alle Stammtöne", NotationType = NotationType.Klavier, ExerciseType = ExerciseType.StammtoeneKlavier, ExerciseModus = ExerciseModus.Lesen },
-            new Exercise { Description = "Markiere alle Stammtöne", NotationType = NotationType.Klavier, ExerciseType = ExerciseType.StammtoeneKlavier, ExerciseModus = ExerciseModus.Schreiben }, //10
+            new Exercise { Description = "Markiere alle Stammtöne", NotationType = NotationType.Klavier, ExerciseType = ExerciseType.StammtoeneKlavier, ExerciseModus = ExerciseModus.Schreiben },
 
             new Exercise { Description = "Lies c, d und e", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Description = "Schreibe c, d und e", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneViolinschluessel, ExerciseModus = ExerciseModus.Schreiben },
@@ -52,16 +49,60 @@ public static class DbInitializer
             new Exercise { Description = "Lies alle B-Noten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Description = "Lies alle Versetzungszeichen mit Oktaven", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
 
+            new Exercise { Description = "Bezeichne die kleine Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Bezeichne die eingestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Bezeichne die zweigestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Bezeichne die dreigestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Bezeichne Noten in allen Oktaven", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
 
-            new Exercise { Description = "Bezeichne die kleine Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen }, //35
-            new Exercise { Description = "Bezeichne die eingestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen }, //36
-            new Exercise { Description = "Bezeichne die zweigestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen }, //37
-            new Exercise { Description = "Bezeichne die dreigestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen }, //38
-            new Exercise { Description = "Bezeichne Noten in allen Oktaven", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienViolinschluessel, ExerciseModus = ExerciseModus.Lesen } //39
-        );
+            new Exercise { Description = "Lies c, d und e", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Lesen }, //40
+            new Exercise { Description = "Schreibe c, d und e", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Schreiben },
+            new Exercise { Description = "Lies e, f und g", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Schreibe e, f und g", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Schreiben },
+            new Exercise { Description = "Lies c bis g", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Schreibe c bis g", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Schreiben },
+            new Exercise { Description = "Lies g, a, h und c", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Schreibe g, a, h und c", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Schreiben },
+            new Exercise { Description = "Lies alle Stammtöne", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Schreibe alle Stammtöne", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.StammtoeneBassschluessel, ExerciseModus = ExerciseModus.Schreiben },
+
+            new Exercise { Description = "Lies Kreuz-Noten (cis, dis, fis)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Lies B-Noten (des, es, ges)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Lies alle Kreuznoten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Lies alle B-Noten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Lies alle Versetzungszeichen mit Oktaven", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+
+            new Exercise { Description = "Bezeichne die kleine Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Bezeichne die eingestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Bezeichne die zweigestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Bezeichne die dreigestrichene Oktave", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Description = "Bezeichne Noten in allen Oktaven", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.HilfslinienBassschluessel, ExerciseModus = ExerciseModus.Lesen },
+
+        };
+
+        // Bestehende Übungen aus DB laden
+        var existingExercises = context.Exercises.ToList();
+        
+        // Nur neue Übungen hinzufügen
+        foreach (var exercise in allExercises)
+        {
+            bool exists = existingExercises.Any(e =>
+                e.Description == exercise.Description &&
+                e.NotationType == exercise.NotationType &&
+                e.ExerciseType == exercise.ExerciseType &&
+                e.ExerciseModus == exercise.ExerciseModus
+            );
+
+            if (!exists)
+            {
+                context.Exercises.Add(exercise);
+                Console.WriteLine($"Neue Übung hinzugefügt: {exercise.Description}");
+            }
+        }
 
         context.SaveChanges();
-        
+
+        // ExerciseContents laden
         var path = configuration["ExerciseContentsPath"];
         Console.WriteLine("ExerciseContentsPath: " + path);
         ImportCsv.ImportExerciseContents(path, context);

@@ -2,6 +2,7 @@ using System.Globalization;
 using backend.DataAccess;
 using backend.Database;
 using CsvHelper;
+using Microsoft.EntityFrameworkCore;
 
 public static class ImportCsv
 {
@@ -13,19 +14,31 @@ public static class ImportCsv
 
         foreach (var record in records)
         {
-            var exercise = context.Exercises.FirstOrDefault(e => e.Id == record.ExerciseId);
+            var exercise = context.Exercises
+                .Include(e => e.ExerciseContents)
+                .FirstOrDefault(e => e.Id == record.ExerciseId);
+                
             if (exercise != null)
             {
-                var content = new ExerciseContent
+                // Prüfe, ob dieser Content bereits existiert
+                bool contentExists = exercise.ExerciseContents.Any(ec => 
+                    ec.CorrectAnswer == record.CorrectAnswer && 
+                    ec.Instruction == record.Instruction
+                );
+
+                if (!contentExists)
                 {
-                    Instruction = record.Instruction,
-                    NotesToRead = record.NotesToRead,
-                    AllAnswers = record.AllAnswers,
-                    PossibleAnswers = record.PossibleAnswers,
-                    CorrectAnswer = record.CorrectAnswer,
-                    Exercise = exercise
-                };
-                exercise.ExerciseContents.Add(content);
+                    var content = new ExerciseContent
+                    {
+                        Instruction = record.Instruction,
+                        NotesToRead = record.NotesToRead,
+                        AllAnswers = record.AllAnswers,
+                        PossibleAnswers = record.PossibleAnswers,
+                        CorrectAnswer = record.CorrectAnswer,
+                        Exercise = exercise
+                    };
+                    exercise.ExerciseContents.Add(content);
+                }
             }
         }
         context.SaveChanges();

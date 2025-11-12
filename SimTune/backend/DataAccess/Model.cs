@@ -88,7 +88,7 @@ namespace backend.DataAccess
         VersetzungszeichenViolinschluessel,
         HilfslinienViolinschluessel,
         StammtoeneBassschluessel,
-        VersetzungszeichenBasschluessel,
+        VersetzungszeichenBassschluessel,
         HilfslinienBassschluessel,
         Intervalle,
         Tonleitern
