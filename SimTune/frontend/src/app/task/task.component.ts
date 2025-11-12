@@ -144,16 +144,24 @@ export class TaskComponent implements OnInit {
     const currentQuestion = this.shuffledContents[this.currentIndex];
     if (!this.abcContainer || !currentQuestion?.notesToRead) return;
 
+    let abc = currentQuestion.notesToRead.trim();
+    const noteCount = (abc.match(/[A-Ga-g]/g) || []).length;
+
+    if (noteCount < 8) {
+      const missing = 8 - noteCount;
+      abc += " " + Array(missing).fill("x4").join(" ");
+    }
+
     abcjs.renderAbc(
       this.abcContainer.nativeElement,
-      currentQuestion.notesToRead,
+      abc,
       {
         add_classes: true,
         staffwidth: 800,
         scale: 3,
         wrap: { minSpacing: 1, maxSpacing: 1, preferredMeasuresPerLine: 1 },
         paddingright: 0,
-        paddingbottom: 0,
+        paddingbottom: 0
       }
     );
   }
