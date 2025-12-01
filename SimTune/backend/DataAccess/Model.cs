@@ -47,9 +47,8 @@ namespace backend.DataAccess
         public int Progress { get; set; } = 0;
 
         public List<UserExercise> UserExercises { get; set; } = new();
+        public List<UserExamSimulation> UserExamSimulations { get; set; } = new();
     }
-
-
 
     public class UserExercise
     {
@@ -66,6 +65,21 @@ namespace backend.DataAccess
 
         public double HighestScore { get; set; }
         public int Attempts { get; set; }
+    }
+
+    public class UserExamSimulation
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User? User { get; set; }
+
+        public int QuestionCount { get; set; }
+        public string ExerciseAllocations { get; set; } = string.Empty; // Komma-separiert: "Töne,Intervalle,Tonleitern"
+        public double AchievedPercentage { get; set; }
+        public DateTime CompletedAt { get; set; }
     }
 
     public enum NotationType

@@ -9,8 +9,8 @@ POST {{backend_HostAddress}}/usermanagement/register
 Content-Type: application/json
 
 {
-  "Username": "john_doe",
-  "Email": "john.doe@example.com1234",
+  "Username": "erik",
+  "Email": "erik.keplinger2@example.com",
   "Password": "yourSecurePassword123"
 }
 
@@ -20,7 +20,7 @@ POST {{backend_HostAddress}}/usermanagement/verify
 Content-Type: application/json
 
 {
-  "Token": "12140ef4fd9043a0b4ecba02903a4bf2"
+  "Token": "b399812dce5644c2915661ff4374606d"
 }
 
 ###
@@ -29,7 +29,7 @@ POST {{backend_HostAddress}}/usermanagement/login
 Content-Type: application/json
 
 {
-  "Email": "john.doe@example.com1111",
+  "Email": "erik.keplinger2@example.com",
   "Password": "yourSecurePassword123"
 }
 
@@ -37,7 +37,7 @@ Content-Type: application/json
 
 POST {{backend_HostAddress}}/usermanagement/completed-exercise
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwianRpIjoiOTk4OTIwNzItZGE1MC00Y2M0LWI3YjQtMTcwMDJlMjBlZWUxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImpvaG5fZG9lIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiam9obi5kb2VAZXhhbXBsZS5jb20xMTExIiwiZXhwIjoxNzQ1OTA5ODM0LCJpc3MiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdC9hcGkiLCJhdWQiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdCJ9.ZkDWcLrEW-TJ68LlgwZQhEY_cOTXifL0O0RyxLZGBXA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiMTczYTcwNjgtYjUwYy00NzRlLWE0OGYtMzk1ZTYwNzg2OTJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImpvaG5fZG9lIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiam9obi5kb2VAZXhhbXBsZS5jb20xMjM0IiwiZXhwIjoxNzY0NjE4MzM4LCJpc3MiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdC9hcGkiLCJhdWQiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdCJ9.j2Jnb3vFW6FGwYa3W1rdiS3KfYwGTmbsKhLTVdxtdQY
 
 {
   "ExerciseId": "1",
@@ -48,8 +48,46 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwianRpI
 
 GET {{backend_HostAddress}}/usermanagement/completed-exercises
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwianRpIjoiOTk4OTIwNzItZGE1MC00Y2M0LWI3YjQtMTcwMDJlMjBlZWUxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImpvaG5fZG9lIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiam9obi5kb2VAZXhhbXBsZS5jb20xMTExIiwiZXhwIjoxNzQ1OTA5ODM0LCJpc3MiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdC9hcGkiLCJhdWQiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdCJ9.ZkDWcLrEW-TJ68LlgwZQhEY_cOTXifL0O0RyxLZGBXA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwianRpIjoiMGRmNDQxYTItM2U3Zi00NTUzLTg5NDMtZDMxODk4NTY2MTlkIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImVyaWsiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJlcmlrLmtlcGxpbmdlcjJAZXhhbXBsZS5jb20iLCJleHAiOjE3NjQ2MTg5MDUsImlzcyI6Imh0dHBzOi8vaWYyMTAwMTkuY2xvdWQuaHRsLWxlb25kaW5nLmFjLmF0L2FwaSIsImF1ZCI6Imh0dHBzOi8vaWYyMTAwMTkuY2xvdWQuaHRsLWxlb25kaW5nLmFjLmF0In0.gBhswd_vMdLf8OVIMd4xyus0jvGhHRYXLc1Av7IM5m4
 
 {
   
 }
+
+###
+
+GET {{backend_HostAddress}}/exam-simulation/exercises?questionCount=3&exerciseAllocations=Töne,Intervalle
+Accept: application/json
+
+###
+
+GET {{backend_HostAddress}}/exam-simulation/exercises?questionCount=5&exerciseAllocations=Töne,Intervalle,Tonleitern
+Accept: application/json
+
+###
+
+GET {{backend_HostAddress}}/exam-simulation/exercises?questionCount=2&exerciseAllocations=Akkorde,Rhythmus,Tonarten
+Accept: application/json
+
+###
+
+GET {{backend_HostAddress}}/exam-simulation/exercises?questionCount=10&exerciseAllocations=Töne,Intervalle,Tonleitern,Rhythmus,Akkorde,Tonarten
+Accept: application/json
+
+###
+
+POST {{backend_HostAddress}}/exam-simulation/completed
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwianRpIjoiMTczYTcwNjgtYjUwYy00NzRlLWE0OGYtMzk1ZTYwNzg2OTJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImpvaG5fZG9lIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiam9obi5kb2VAZXhhbXBsZS5jb20xMjM0IiwiZXhwIjoxNzY0NjE4MzM4LCJpc3MiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdC9hcGkiLCJhdWQiOiJodHRwczovL2lmMjEwMDE5LmNsb3VkLmh0bC1sZW9uZGluZy5hYy5hdCJ9.j2Jnb3vFW6FGwYa3W1rdiS3KfYwGTmbsKhLTVdxtdQY
+
+{
+  "QuestionCount": 10,
+  "ExerciseAllocations": ["Töne", "Intervalle", "Tonleitern"],
+  "AchievedPercentage": 85.5
+}
+
+###
+
+GET {{backend_HostAddress}}/exam-simulation/completed
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwianRpIjoiMGRmNDQxYTItM2U3Zi00NTUzLTg5NDMtZDMxODk4NTY2MTlkIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImVyaWsiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJlcmlrLmtlcGxpbmdlcjJAZXhhbXBsZS5jb20iLCJleHAiOjE3NjQ2MTg5MDUsImlzcyI6Imh0dHBzOi8vaWYyMTAwMTkuY2xvdWQuaHRsLWxlb25kaW5nLmFjLmF0L2FwaSIsImF1ZCI6Imh0dHBzOi8vaWYyMTAwMTkuY2xvdWQuaHRsLWxlb25kaW5nLmFjLmF0In0.gBhswd_vMdLf8OVIMd4xyus0jvGhHRYXLc1Av7IM5m4
+Accept: application/json

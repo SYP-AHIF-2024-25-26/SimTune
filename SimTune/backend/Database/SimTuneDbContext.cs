@@ -17,5 +17,6 @@ public class SimTuneDbContext : DbContext
     public DbSet<UserExercise> UserExercises { get; set; }
     
     public DbSet<ExerciseContent> ExerciseContents { get; set; }
+    public DbSet<UserExamSimulation> UserExamSimulations { get; set; }
     
 }

@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class AddUserExamSimulations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,6 +70,29 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserExamSimulations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    QuestionCount = table.Column<int>(type: "INTEGER", nullable: false),
+                    ExerciseAllocations = table.Column<string>(type: "TEXT", nullable: false),
+                    AchievedPercentage = table.Column<double>(type: "REAL", nullable: false),
+                    CompletedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserExamSimulations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserExamSimulations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserExercises",
                 columns: table => new
                 {
@@ -102,6 +126,11 @@ namespace backend.Migrations
                 column: "ExerciseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserExamSimulations_UserId",
+                table: "UserExamSimulations",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserExercises_ExerciseId",
                 table: "UserExercises",
                 column: "ExerciseId");
@@ -117,6 +146,9 @@ namespace backend.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ExerciseContents");
+
+            migrationBuilder.DropTable(
+                name: "UserExamSimulations");
 
             migrationBuilder.DropTable(
                 name: "UserExercises");

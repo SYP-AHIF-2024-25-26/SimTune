@@ -91,7 +91,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapExercisesApi();
-
 app.MapUserManagementApi();
+app.MapExamSimulationApi();
 
 await app.RunAsync();
