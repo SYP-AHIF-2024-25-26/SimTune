@@ -6,12 +6,9 @@ on:
       - main
 
 env:
-  APP_URL: ${{ secrets.APP_URL }}
-  JWT_KEY: ${{ secrets.JWT_KEY }}
-  JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
-  JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE }}
-  CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-  EXERCISE_CONTENTS: ${{ secrets.EXERCISE_CONTENTS }}
+  # Diese werden nur noch für den Secret-Creation Step gebraucht, 
+  # nicht mehr global für alle Steps (außer du brauchst sie explizit).
+  # Wir referenzieren sie unten direkt via secrets.*
   API_URL: ${{ secrets.API_URL }}
 
 jobs:
@@ -35,6 +32,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build & Push Frontend Image
+        # Frontend braucht die URL beim Build (da statisches HTML/JS)
         run: |
           docker build \
             --no-cache \
@@ -46,25 +44,13 @@ jobs:
           API_URL: ${{ secrets.API_URL}}
 
       - name: Build & Push Backend Image
+        # KEINE SECRETS MEHR HIER! Nur noch der Code.
         run: |
           docker buildx build \
             --no-cache \
-            --build-arg APP_URL="$APP_URL" \
-            --build-arg JWT_KEY="$JWT_KEY" \
-            --build-arg JWT_ISSUER="$JWT_ISSUER" \
-            --build-arg JWT_AUDIENCE="$JWT_AUDIENCE" \
-            --build-arg CONNECTION_STRING="$CONNECTION_STRING" \
-            --build-arg EXERCISE_CONTENTS="$EXERCISE_CONTENTS" \
             -t ghcr.io/syp-ahif-2024-25-26/simtune-backend:latest \
             --push \
             ./SimTune/backend
-        env:
-          APP_URL: ${{ secrets.APP_URL }}
-          JWT_KEY: ${{ secrets.JWT_KEY }}
-          JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
-          JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE }}
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-          EXERCISE_CONTENTS: ${{ secrets.EXERCISE_CONTENTS }}
 
       - name: Build & Push Adminer Image
         run: |
@@ -76,9 +62,23 @@ jobs:
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
 
-      - name: Delete all old resources (LeoCloud)
+      - name: Create Secrets in LeoCloud
+        # HIER werden die Secrets von GitHub in die Cloud übertragen
         run: |
-          kubectl delete deployments,services,ingresses,pods,configmaps --all || true
+          kubectl delete secret simtune-secrets --ignore-not-found
+          kubectl create secret generic simtune-secrets \
+            --from-literal=APP_URL='${{ secrets.APP_URL }}' \
+            --from-literal=JWT_KEY='${{ secrets.JWT_KEY }}' \
+            --from-literal=JWT_ISSUER='${{ secrets.JWT_ISSUER }}' \
+            --from-literal=JWT_AUDIENCE='${{ secrets.JWT_AUDIENCE }}' \
+            --from-literal=CONNECTION_STRING='${{ secrets.CONNECTION_STRING }}' \
+            --from-literal=EXERCISE_CONTENTS='${{ secrets.EXERCISE_CONTENTS }}'
+
+      - name: Delete all old resources (LeoCloud)
+        # Vorsicht: Das löscht auch den PVC wenn er im Deployment File definiert ist! 
+        # Meistens besser nur deployments/services zu löschen oder einfach apply drüber laufen zu lassen.
+        run: |
+          kubectl delete deployments,services,ingresses,configmaps --all || true
 
       - name: Apply new deployment.yaml
         run: |
