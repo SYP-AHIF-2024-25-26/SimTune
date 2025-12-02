@@ -7,18 +7,18 @@
     </a>
 
     <!-- Vertikaler Trennstrich -->
-    <div class="hidden md:block h-8 w-px bg-gray-400 mx-16"></div>
+    <div class="hidden md:block h-8 w-px bg-gray-400 mx-8 lg:mx-16"></div>
 
     <!-- Navigation Links - neben dem Logo (nur Desktop) -->
-    <div class="hidden md:flex items-center space-x-8">
+    <div class="hidden md:flex items-center space-x-4 lg:space-x-8">
       <a routerLink="/uebungen"
         [class.active-link]="isActiveUebungen()"
-         class="text-base relative nav-link font-medium">
+         class="text-sm lg:text-base relative nav-link font-medium whitespace-nowrap">
         Übungen
       </a>
       <a routerLink="/pruefungen"
         [class.active-link]="isActivePruefung()"
-         class="text-base relative nav-link font-medium">
+         class="text-sm lg:text-base relative nav-link font-medium whitespace-nowrap">
         Prüfungssimulationen
       </a>
     </div>
@@ -39,13 +39,13 @@
         <div class="md:hidden absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg border text-sm" style="z-index: 10000;">
           <a routerLink="/uebungen"
              (click)="closeNavDropdown()"
-             routerLinkActive="bg-blue-50"
+             [class.bg-blue-50]="isActiveUebungen()"
              class="block px-3 py-2 text-gray-700 hover:bg-gray-100 border-b">
             Übungen
           </a>
           <a routerLink="/pruefungen"
              (click)="closeNavDropdown()"
-             routerLinkActive="bg-blue-50"
+             [class.bg-blue-50]="isActivePruefung()"
              class="block px-3 py-2 text-gray-700 hover:bg-gray-100">
             Prüfungssimulationen
           </a>

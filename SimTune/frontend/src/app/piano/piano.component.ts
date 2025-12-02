@@ -33,6 +33,7 @@ export class PianoComponent {
   currentColor = signal('gray');
   selectedKey: string | null = null;
   allNotesRead = ['a-2', 'g-2', 'f-2', 'e-2', 'd-2', 'c-2', 'h-1', 'a-1', 'g-1', 'f-1', 'e-1', 'd-1', 'c-1'];
+  isMobile: boolean = typeof window !== 'undefined' ? window.innerWidth < 640 : false;
 
   whiteKeys = [
     { id: 'c-1' }, { id: 'd-1' }, { id: 'e-1' }, { id: 'f-1' },
@@ -163,19 +164,65 @@ export class PianoComponent {
       const base = this.currentQuestion?.correctAnswer;
       if (!base) return false;
 
-      if (!this.currentQuestion!.correctAnswer.includes('-')) {
+      let targetKey = base;
+
+      // Wenn keine Oktave angegeben ist, wähle eine zufällige
+      if (!base.includes('-')) {
         const randomVariant = Math.random() < 0.5 ? 1 : 2;
-        this.currentQuestion!.correctAnswer = `${base}-${randomVariant}`;
+        targetKey = `${base}-${randomVariant}`;
+        // Speichere die gewählte Variante zurück
+        this.currentQuestion!.correctAnswer = targetKey;
       }
 
-      if(this.currentQuestion!.correctAnswer === keyId) {
-        this.currentQuestion!.correctAnswer = base;
-        return true;
-      } else {
-        return false;
+      // Auf Mobile: Konvertiere zweite Oktave zur ersten
+      if (this.isMobile && targetKey.endsWith('-2')) {
+        const noteName = targetKey.split('-')[0];
+        targetKey = `${noteName}-1`;
       }
+
+      return targetKey === keyId;
     }
 
     return this.selectedKey === keyId;
+  }
+
+  isFirstOctave(keyId: string): boolean {
+    return keyId.endsWith('-1');
+  }
+
+  shouldShowMark(keyId: string): boolean {
+    const marked = this.isMarked(keyId);
+    const firstOctave = this.isFirstOctave(keyId);
+
+    // Auf Desktop: Zeige alle Markierungen
+    // Auf Mobile: Zeige nur erste Oktave
+    if (!this.isMobile) {
+      return marked;
+    }
+
+    return marked && firstOctave;
+  }
+
+  ngOnInit() {
+    this.checkScreenSize();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', this.handleResize);
+    }
+  }
+
+  ngOnDestroy() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.handleResize);
+    }
+  }
+
+  private handleResize = () => {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    if (typeof window !== 'undefined') {
+      this.isMobile = window.innerWidth < 640;
+    }
   }
 }

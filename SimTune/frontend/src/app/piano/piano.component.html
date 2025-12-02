@@ -1,65 +1,74 @@
-<div class="flex items-center justify-center my-10">
-  <div class="flex relative">
+<div class="flex items-center justify-center my-3 sm:my-6 md:my-10 px-1 sm:px-2 md:px-4 overflow-x-auto">
+  <div class="flex relative min-w-min scale-90 sm:scale-90 md:scale-100 origin-center">
     @for (whiteKey of whiteKeys; track $index) {
-      <button class="bg-white border border-black h-52 w-16 hover:bg-gray-200 rounded-xl" [id]="whiteKey.id" (click)="onKeyClick(whiteKey.id)">
-        @if (isMarked(whiteKey.id)) {
-          <div #mark class="relative mt-36 left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full" [style.background-color]="currentColor()"></div>
+      <button
+        [ngClass]="{
+          'hidden sm:block': $index >= 7
+        }"
+        class="bg-white border border-black h-32 w-9 sm:h-40 sm:w-12 md:h-52 md:w-16 hover:bg-gray-200 rounded-lg sm:rounded-xl transition-colors"
+        [id]="whiteKey.id"
+        (click)="onKeyClick(whiteKey.id)">
+        @if (shouldShowMark(whiteKey.id)) {
+          <div #mark class="relative mt-20 sm:mt-24 md:mt-36 left-1/2 transform -translate-x-1/2 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full" [style.background-color]="currentColor()"></div>
         }
       </button>
     }
 
-    <div class="absolute top-0 flex">
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-11 rounded-lg" id="cis-1" (click)="onKeyClick('cis-1')">
-        @if (isMarked('cis-1')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+    <div class="absolute top-0 flex pointer-events-none">
+      <!-- Erste Oktave - Markierungen immer sichtbar wenn gesetzt -->
+      <button class="bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-6 sm:ml-8 md:ml-11 rounded-md sm:rounded-lg pointer-events-auto" id="cis-1" (click)="onKeyClick('cis-1')">
+        @if (shouldShowMark('cis-1')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="dis-1" (click)="onKeyClick('dis-1')">
-        @if (isMarked('dis-1')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+      <button class="bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-3 sm:ml-4 md:ml-6 rounded-md sm:rounded-lg pointer-events-auto" id="dis-1" (click)="onKeyClick('dis-1')">
+        @if (shouldShowMark('dis-1')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <div class="w-16"></div>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="fis-1" (click)="onKeyClick('fis-1')">
-        @if (isMarked('fis-1')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+      <div class="w-9 sm:w-12 md:w-16"></div>
+      <button class="bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-3 sm:ml-4 md:ml-6 rounded-md sm:rounded-lg pointer-events-auto" id="fis-1" (click)="onKeyClick('fis-1')">
+        @if (shouldShowMark('fis-1')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="gis-1" (click)="onKeyClick('gis-1')">
-        @if (isMarked('gis-1')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+      <button class="bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-3 sm:ml-4 md:ml-6 rounded-md sm:rounded-lg pointer-events-auto" id="gis-1" (click)="onKeyClick('gis-1')">
+        @if (shouldShowMark('gis-1')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="ais-1" (click)="onKeyClick('ais-1')">
-        @if (isMarked('ais-1')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+      <button class="bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-3 sm:ml-4 md:ml-6 rounded-md sm:rounded-lg pointer-events-auto" id="ais-1" (click)="onKeyClick('ais-1')">
+        @if (shouldShowMark('ais-1')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <div class="w-12"></div>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-10 rounded-lg" id="cis-2" (click)="onKeyClick('cis-2')">
-        @if (isMarked('cis-2')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+
+      <!-- Zweite Oktave - nur auf sm und größer sichtbar -->
+      <div class="hidden sm:block w-7 sm:w-10 md:w-12"></div>
+      <button class="hidden sm:block bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-6 sm:ml-8 md:ml-10 rounded-md sm:rounded-lg pointer-events-auto" id="cis-2" (click)="onKeyClick('cis-2')">
+        @if (shouldShowMark('cis-2')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="dis-2" (click)="onKeyClick('dis-2')">
-        @if (isMarked('dis-2')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+      <button class="hidden sm:block bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-3 sm:ml-4 md:ml-6 rounded-md sm:rounded-lg pointer-events-auto" id="dis-2" (click)="onKeyClick('dis-2')">
+        @if (shouldShowMark('dis-2')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <div class="w-16"></div>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="fis-2" (click)="onKeyClick('fis-2')">
-        @if (isMarked('fis-2')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+      <div class="hidden sm:block w-9 sm:w-12 md:w-16"></div>
+      <button class="hidden sm:block bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-3 sm:ml-4 md:ml-6 rounded-md sm:rounded-lg pointer-events-auto" id="fis-2" (click)="onKeyClick('fis-2')">
+        @if (shouldShowMark('fis-2')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="gis-2" (click)="onKeyClick('gis-2')">
-        @if (isMarked('gis-2')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+      <button class="hidden sm:block bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-3 sm:ml-4 md:ml-6 rounded-md sm:rounded-lg pointer-events-auto" id="gis-2" (click)="onKeyClick('gis-2')">
+        @if (shouldShowMark('gis-2')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
-      <button class="bg-black h-28 w-10 hover:bg-gray-700 ml-6 rounded-lg" id="ais-2" (click)="onKeyClick('ais-2')">
-        @if (isMarked('ais-2')) {
-          <div class="relative mt-16 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-400 rounded-full"></div>
+      <button class="hidden sm:block bg-black h-20 w-6 sm:h-24 sm:w-8 md:h-28 md:w-10 hover:bg-gray-700 ml-3 sm:ml-4 md:ml-6 rounded-md sm:rounded-lg pointer-events-auto" id="ais-2" (click)="onKeyClick('ais-2')">
+        @if (shouldShowMark('ais-2')) {
+          <div class="relative mt-10 sm:mt-12 md:mt-16 left-1/2 transform -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-400 rounded-full"></div>
         }
       </button>
     </div>

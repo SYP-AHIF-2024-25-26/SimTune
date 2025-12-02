@@ -17,7 +17,7 @@
 </div>
 
 @if (taskType() != '') {
-<div id="container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-12 p-6 mt-6 mx-36">
+<div id="container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 sm:gap-y-8 md:gap-y-10 gap-x-6 sm:gap-x-8 md:gap-x-12 p-4 sm:p-6 mt-4 sm:mt-6 mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-36">
 
   <button
     *ngFor="let item of texts"
@@ -26,39 +26,31 @@
       item.done
         ? 'bg-gradient-to-br from-costumMediumGreen to-costumGreen'
         : 'bg-gradient-to-br from-mediumDarkBlue to-costumBlue',
-      'group relative w-full max-w-sm rounded-2xl border border-black/10',
-      'text-center py-5 sm:py-6 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer select-none',
+      'group relative w-full rounded-2xl border border-black/10',
+      'text-center py-4 sm:py-5 md:py-6 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer select-none',
       'backdrop-blur-sm hover:-translate-y-0.5 flex flex-col'
     ]"
   >
-    <div class="flex-1 flex items-center justify-center">
-      <p class="text-center font-bold text-base md:text-2xl leading-snug text-white/95 drop-shadow text-balance sm:px-6">
+    <div class="flex-1 flex items-center justify-center px-3 sm:px-4 md:px-6">
+      <p class="text-center font-bold text-lg sm:text-xl md:text-2xl leading-snug text-white/95 drop-shadow text-balance">
         {{ item.description }}
       </p>
     </div>
 
-    <div class="mt-auto pt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-white/95">
-      <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
+    <div class="mt-auto pt-2 sm:pt-3 flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1.5 sm:gap-y-2 text-white/95 px-2">
+      <span class="rounded-full px-2 sm:px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
         {{ item.exerciseModus }}
       </span>
-      <span class="opacity-60">•</span>
-      <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
+      <span class="opacity-60 hidden sm:inline">•</span>
+      <span class="rounded-full px-2 sm:px-2.5 py-0.5 text-xs bg-black/15 backdrop-blur-sm">
         {{ item.exerciseContents?.length * 2 || 0 }} Aufgaben
       </span>
-      <span class="opacity-60">•</span>
-      <span class="rounded-full px-2.5 py-0.5 text-xs bg-black/10 backdrop-blur-sm">
+      <span class="opacity-60 hidden sm:inline">•</span>
+      <span class="rounded-full px-2 sm:px-2.5 py-0.5 text-xs bg-black/10 backdrop-blur-sm">
         {{ item.notationType }}
       </span>
     </div>
-
-    <!--
-      <div
-        *ngIf="item.done"
-        class="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 rounded-full px-2 py-0.5 text-xs font-medium bg-black/10 text-white/95 backdrop-blur-sm"
-      >
-        ✔ Fertig
-      </div>-->
-    </button>
+  </button>
   </div>
   }
   @else {

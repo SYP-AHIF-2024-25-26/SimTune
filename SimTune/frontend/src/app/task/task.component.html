@@ -1,24 +1,24 @@
-<div class="p-4">
+<div class="p-2 sm:p-4">
   <!--  Header  -->
-  <div class="flex justify-center items-center ml-52 mr-52 mt-12 mb-8">
-    <div (click)="goBack()" class="text-4xl cursor-pointer transition-transform hover:scale-110 text-gray-500 hover:text-gray-700 ml-8 select-none">
+  <div class="flex justify-center items-center mx-2 sm:mx-8 md:mx-16 lg:mx-32 xl:mx-52 mt-6 sm:mt-8 md:mt-12 mb-4 sm:mb-6 md:mb-8">
+    <div (click)="goBack()" class="text-2xl sm:text-3xl md:text-4xl cursor-pointer transition-transform hover:scale-110 text-gray-500 hover:text-gray-700 ml-2 sm:ml-4 md:ml-8 select-none">
       ←
     </div>
 
-    <div class="h-6 w-3/4 bg-costumGray rounded-2xl shadow-lg mx-12 relative">
+    <div class="h-5 sm:h-6 w-full sm:w-3/4 bg-costumGray rounded-2xl shadow-lg mx-3 sm:mx-6 md:mx-12 relative">
       <div class="absolute h-full bg-blue-500 rounded-2xl transition-all duration-300" [style.width.%]="(progress / totalSegments) * 100"></div>
     </div>
 
-    <span class="text-sm text-gray-600 font-medium h-6 w-auto">
+    <span class="text-xs sm:text-sm text-gray-600 font-medium h-5 sm:h-6 w-auto whitespace-nowrap">
       {{ progress }}/{{ totalSegments }}
     </span>
   </div>
 
-  <div *ngIf="progress < totalSegments" class="justify-center items-center flex font-semibold text-4xl">
+  <div *ngIf="progress < totalSegments" class="justify-center items-center flex font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl px-2 sm:px-4 text-center">
     {{ instruction() }}
   </div>
 
-  <div *ngIf="progress < totalSegments" class="flex items-center justify-center mt-12 flex-col">
+  <div *ngIf="progress < totalSegments" class="flex items-center justify-center mt-6 sm:mt-8 md:mt-12 flex-col px-2 sm:px-4">
     <ng-container *ngIf="this.notationType=='Klavier' || this.exerciseModus=='Schreiben'; else abcNotationTemplate">
       <ng-container *ngIf="exerciseType == 'StammtoeneKlavier' || exerciseType == 'Tonleitern'; else notensystemTemplate">
         <app-piano [action]="this.exerciseModus" [currentQuestion]="this.shuffledContents[this.currentIndex]" [toneType]="this.notationType" (enableButton)="onSelectedKeyChanged($event)"></app-piano>
@@ -28,12 +28,12 @@
       </ng-template>
     </ng-container>
     <ng-template #abcNotationTemplate>
-      <div class="w-full flex items-center flex-col mb-20">
-        <div #abcContainer id="abc-container"></div>
+      <div class="w-full flex items-center justify-center flex-col mb-12 sm:mb-16 md:mb-20">
+        <div #abcContainer id="abc-container" class="transform scale-[0.7] sm:scale-90 md:scale-100 origin-center w-full flex justify-center"></div>
       </div>
     </ng-template>
 
-    <div>
+    <div class="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mt-4 sm:mt-6">
       <button
         *ngFor="let answers of allAnswers()"
         #button
@@ -43,60 +43,60 @@
           'enabled-button': possibleAnswers?.includes(answers),
           'disabled-button': !possibleAnswers?.includes(answers)
         }"
-        class="mr-4 p-2 rounded"
+        class="p-2 sm:p-3 md:p-3 rounded text-lg sm:text-xl md:text-2xl font-semibold min-w-[70px] sm:min-w-[80px] md:min-w-[90px]"
         (click)="checkIfRightButton(answers, button)">
         {{ answers }}
       </button>
     </div>
 
-    <div class="relative flex flex-col items-center justify-center mt-12 h-6" *ngIf="exerciseModus !== 'Schreiben'">
+    <div class="relative flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-12 h-6" *ngIf="exerciseModus !== 'Schreiben'">
       <h1
           *ngIf="showStatusText"
           [ngClass]="{
             'text-green-500': isCorrect,
             'text-red-500': !isCorrect
           }"
-          class="text-3xl font-bold fade-in-up z-20 transition-all duration-700"
+          class="text-xl sm:text-2xl md:text-3xl font-bold fade-in-up z-20 transition-all duration-700"
         >
           {{ isCorrect ? 'Richtig!' : 'Falsch!' }}
       </h1>
 
-      <canvas #confettiCanvas class="absolute -top-12 left-1/2 -translate-x-1/2 w-40 h-40 pointer-events-none z-[9999]"></canvas>
+      <canvas #confettiCanvas class="absolute -top-8 sm:-top-12 left-1/2 -translate-x-1/2 w-32 sm:w-40 h-32 sm:h-40 pointer-events-none z-[9999]"></canvas>
     </div>
 
-    <div class="flex justify-center z-1" *ngIf="exerciseModus == 'Schreiben'">
+    <div class="flex justify-center z-1 mt-4 sm:mt-6" *ngIf="exerciseModus == 'Schreiben'">
       <div class="flex-1 flex justify-center z-1"   [ngStyle]="{
         'margin-top': exerciseType === 'StammtoeneKlavier' ? '-10px' : '-45px'
       }">
         <button
           (click)="checkRightWriting()"
-          class="text-white bg-costumBlue p-1 px-4 py-2 rounded-3xl hover:bg-blue-600">
+          class="text-white bg-costumBlue p-2 sm:p-3 px-4 sm:px-6 py-2 rounded-3xl hover:bg-blue-600 text-sm sm:text-base">
           Antworten
         </button>
       </div>
     </div>
 
-    <div class="relative flex flex-col items-center justify-center mt-12 h-6" *ngIf="exerciseModus === 'Schreiben'">
+    <div class="relative flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-12 h-6" *ngIf="exerciseModus === 'Schreiben'">
       <h1
           *ngIf="showStatusText"
           [ngClass]="{
             'text-green-500': isCorrect,
             'text-red-500': !isCorrect
           }"
-          class="text-3xl font-bold fade-in-up z-20 transition-all duration-700"
+          class="text-xl sm:text-2xl md:text-3xl font-bold fade-in-up z-20 transition-all duration-700"
         >
           {{ isCorrect ? 'Richtig!' : 'Falsch!' }}
       </h1>
 
-      <canvas #confettiCanvas class="absolute -top-12 left-1/2 -translate-x-1/2 w-40 h-40 pointer-events-none z-[9999]"></canvas>
+      <canvas #confettiCanvas class="absolute -top-8 sm:-top-12 left-1/2 -translate-x-1/2 w-32 sm:w-40 h-32 sm:h-40 pointer-events-none z-[9999]"></canvas>
     </div>
   </div>
   <!-- Progressbar -->
-  <div *ngIf="progress == totalSegments" class="flex flex-col justify-center items-center p-6">
-    <p class="-mt-4 text-4xl font-semibold">Du hast die Übung erfolgreich abgeschlossen!</p>
+  <div *ngIf="progress == totalSegments" class="flex flex-col justify-center items-center p-3 sm:p-4 md:p-6 px-2 sm:px-4">
+    <p class="-mt-2 sm:-mt-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-center">Du hast die Übung erfolgreich abgeschlossen!</p>
 
-    <div class="relative my-4">
-      <svg width="200" height="200" viewBox="0 0 100 100" class="mx-auto">
+    <div class="relative my-3 sm:my-4">
+      <svg width="150" height="150" viewBox="0 0 100 100" class="mx-auto sm:w-[200px] sm:h-[200px]">
         <circle
             cx="50"
             cy="50"
@@ -117,17 +117,17 @@
             [attr.stroke-dashoffset]="dashOffset"
             transform="rotate(-90 50 50)"
         />
-        <text x="50%" y="50%" text-anchor="middle" dy=".3em" class="text-xl font-bold">Super!</text>
+        <text x="50%" y="50%" text-anchor="middle" dy=".3em" class="text-lg sm:text-xl font-bold">Super!</text>
       </svg>
     </div>
-    <p class="text-2xl font-semibold">Bewertung</p>
-    <span class="font-bold text-xl text-green-600">{{ evaluation }}</span>
-    <p class="text-lg">
+    <p class="text-xl sm:text-2xl font-semibold">Bewertung</p>
+    <span class="font-bold text-lg sm:text-xl text-green-600">{{ evaluation }}</span>
+    <p class="text-base sm:text-lg text-center">
         <span class="font-bold">{{ firstAttemptCorrectCount }}</span>/{{ totalSegments }} Fragen richtig
     </p>
-    <div class="mt-8 flex gap-10">
-      <button (click)="goBack()" class="bg-costumBlue py-2 px-3 text-lg rounded-2xl font-medium w-40 hover:bg-blue-500 hover:shadow-lg transition duration-200">Zurück</button>
-      <button (click)="nextTask()" class="bg-costumBlue py-2 px-3 text-lg rounded-2xl font-medium w-40 hover:bg-blue-500 hover:shadow-lg transition duration-200">Nächste Übung</button>
+    <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-10 w-full sm:w-auto px-4 sm:px-0">
+      <button (click)="goBack()" class="bg-costumBlue py-2 px-3 text-base sm:text-lg rounded-2xl font-medium w-full sm:w-40 hover:bg-blue-500 hover:shadow-lg transition duration-200">Zurück</button>
+      <button (click)="nextTask()" class="bg-costumBlue py-2 px-3 text-base sm:text-lg rounded-2xl font-medium w-full sm:w-40 hover:bg-blue-500 hover:shadow-lg transition duration-200">Nächste Übung</button>
     </div>
   </div>
 </div>
