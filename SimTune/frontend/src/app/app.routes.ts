@@ -10,7 +10,6 @@ import { NotesystemComponent } from './notesystem/notesystem.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
-import { Verify } from 'crypto';
 import { VerifyComponent } from './verify/verify.component';
 import { SchuelerDashboardComponent } from './schueler-dashboard/schueler-dashboard.component';
 import { LehrerDashboardComponent } from './lehrer-dashboard/lehrer-dashboard.component';
