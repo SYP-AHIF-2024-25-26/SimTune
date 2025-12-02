@@ -4,7 +4,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-uebungen-subpage',
   standalone: true,
-  imports: [RouterOutlet, RouterModule],
+  imports: [RouterModule],
   templateUrl: './uebungen-subpage.component.html',
   styleUrl: './uebungen-subpage.component.css'
 })
