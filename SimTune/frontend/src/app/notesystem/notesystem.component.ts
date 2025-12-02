@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import e from 'express';
 
 @Component({
   selector: 'app-notesystem',
