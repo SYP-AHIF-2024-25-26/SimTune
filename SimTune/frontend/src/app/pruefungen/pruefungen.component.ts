@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, NgZone, signal, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { API_URL, fetchRestEndpoint } from '../api-calls/fetch-rest-endpoint';
 import { PianoComponent } from '../piano/piano.component';
+import Plotly from 'plotly.js-basic-dist';
 
 @Component({
   selector: 'app-pruefungen',
@@ -13,39 +14,66 @@ import { PianoComponent } from '../piano/piano.component';
 })
 export class PruefungenComponent {
   maxValue: number = 0;
-  selectedNumber = signal<number>(1);
+  selectedNumber = signal<number | null>(5);
   isSimulationRunning = signal<boolean>(false);
-  selectedTypes = signal<string[]>(['Stammtoene', 'Notensystem', 'Intervalle', 'Tonleitern', 'Lies', 'Schreib']);
-  texts: { description: string; values: string, exerciseType: string}[] = [];
+  selectedTypes = signal<string[]>(['Töne', 'Rythmus', 'Intervalle', 'Tonleitern', 'Tonarten', 'Akkorde']);
+  texts: { totalQuestions: number; questions: { exerciseId: number; contentId: number; description: string; exerciseType: string; exerciseAllocation: string;}[] } | null = null;
+  errorMessage = '';
+  constructor(private router: Router, private ngZone: NgZone) {}
 
-  constructor(private router: Router) {}
+    ngAfterViewInit() {
+      const xLabels = ["03.12.2025", "02.12.2025", "01.12.2025", "30.11.2025", "29.11.2025", "28.11.2025"];
+      const values  = [12, 18, 7, 15, 9, 30];
 
-  async ngOnInit(): Promise<void> {
-    const stammtoene = await fetchRestEndpoint(API_URL + 'exercises/Stammtoene', 'GET');
-    const notensystem = await fetchRestEndpoint(API_URL + 'exercises/Notensystem', 'GET');
-    const intervalle = await fetchRestEndpoint(API_URL + 'exercises/Intervalle', 'GET');
-    const tonleitern = await fetchRestEndpoint(API_URL + 'exercises/Tonleitern', 'GET');
+      const data = [{
+        x: xLabels,
+        y: values,
+        type: "bar" as const,
+        hovertemplate: "für mehr Infos klicken<extra></extra>",
+        marker: { color: "#5a8dee" }
+      }];
 
-    this.texts = [
-      ...stammtoene.map((item: any) => ({ description: item.description, values: item.values, exerciseType: 'Stammtoene' })),
-      ...notensystem.map((item: any) => ({ description: item.description, values: item.values, exerciseType: 'Notensystem' })),
-      ...intervalle.map((item: any) => ({ description: item.description, values: item.values, exerciseType: 'Intervalle' })),
-      ...tonleitern.map((item: any) => ({ description: item.description, values: item.values, exerciseType: 'Tonleitern' })),
-    ];
+      const layout = {
+        title: { text: "Simulationsergebnisse" },
+        margin: { t: 100, l: 0, r: 10, b: 100 },
+        paper_bgcolor: "#f3f4f6",
+        plot_bgcolor: "#f3f4f6",
+      };
 
-    this.maxValue = this.texts.length;
-  }
+      // 1) Plot zeichnen und das Graph-Div zurückbekommen
+      Plotly.newPlot("plot", data, layout, {
+        displayModeBar: false,
+        responsive: true
+      }).then((gd: any) => {
+
+        // 2) Plotly-Event richtig anbinden
+        gd.on("plotly_click", (event: any) => {
+          console.log("plotly_click event:", event);   // zum Testen
+
+          // 3) In Angular-Zone wechseln + Router benutzen
+          this.ngZone.run(() => {
+            this.router.navigateByUrl("/profile-page");
+            // alternativ:
+            // this.router.navigate(["/profile-page"]);
+          });
+        });
+
+      });
+    }
+
 
   onInput(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
-    const value = Number(inputValue);
-
-    if (!isNaN(value) && value >= 1 && value <= this.maxValue && Number.isInteger(value)) {
-      this.selectedNumber.set(value);
-    } else if (inputValue === '') {
-      this.selectedNumber.set(1);
+    if (inputValue === '') {
+      this.selectedNumber.set(null);
+      return;
     }
+    const value = Number(inputValue);
+    if (isNaN(value)) return;
+
+    this.selectedNumber.set(value);
   }
+
 
   toggleType(type: string) {
     this.selectedTypes.update((types) =>
@@ -54,60 +82,47 @@ export class PruefungenComponent {
         : [...types, type]
     );
   }
-  startSimulation() {
-    this.isSimulationRunning.set(true);
-    const selectedTypes = this.selectedTypes();
-    const filteredTexts = this.texts.filter(text => {
-      if (['Stammtoene', 'Notensystem', 'Intervalle', 'Tonleitern'].includes(text.exerciseType)) {
-        return selectedTypes.includes(text.exerciseType);
-      }
-      return false;
-    }).filter(text => {
-      const isLiesSelected = selectedTypes.includes('Lies');
-      const isSchreibSelected = selectedTypes.includes('Schreib');
 
-      if(text.exerciseType == 'Tonleitern') {
-        if(isLiesSelected) {
-          return text.description.startsWith('Bestimme');
-        }
-      } else {
-        if (isLiesSelected && isSchreibSelected) {
-          return true;
-        }
-        if (isSchreibSelected && !isLiesSelected) {
-          return !text.description.startsWith('Lies');
-        }
-        if (isLiesSelected && !isSchreibSelected) {
-          return text.description.startsWith('Lies');
-        }
-      }
+  checkErrors(): boolean {
+    this.errorMessage = '';
 
-      return false;
-    });
-
-    const shuffledTexts = filteredTexts.sort(() => Math.random() - 0.5);
-    const selectedTexts = shuffledTexts.slice(0, Math.min(this.selectedNumber(), shuffledTexts.length));
-
-    sessionStorage.setItem('texts from pruefung', JSON.stringify(selectedTexts));
-    sessionStorage.setItem('toneType', selectedTexts[0].exerciseType.trim());
-    sessionStorage.setItem('previousUrl', this.router.url);
-
-    let action = '';
-    switch (true) {
-      case selectedTexts[0].description.startsWith('Lies'):
-        action = 'lies';
-        break;
-      case selectedTexts[0].description.startsWith('Markiere'):
-        action = 'markiere';
-        break;
-      case selectedTexts[0].description.startsWith('Schreibe'):
-        action = 'schreibe';
-        break;
-      case selectedTexts[0].description.startsWith('Bestimme'):
-        action = 'bestimme';
-        break;
+    if (this.selectedTypes().length === 0) {
+      this.errorMessage = 'Bitte wählen Sie mindestens eine Übungsart aus.';
+      return true;
     }
 
-    this.router.navigate(['/task'], { queryParams: { action } });
+    const num = this.selectedNumber();
+    if (!num || num < 1) {
+      this.errorMessage = 'Bitte geben Sie eine gültige Fragenanzahl ein.';
+      return true;
+    }
+
+    return false;
+  }
+
+  async startSimulation() {
+    if(this.checkErrors()) { return; }
+
+    this.isSimulationRunning.set(true);
+    const selectedTypes = this.selectedTypes();
+    const selectedTypesString = selectedTypes.join(',');
+
+    const url = new URL(API_URL + 'exam-simulation/exercises');
+    url.searchParams.append('questionCount', this.selectedNumber()!.toString());
+    url.searchParams.append('exerciseAllocations', selectedTypesString);
+
+    this.texts = await fetchRestEndpoint(url.toString(), 'GET');
+
+    const allIds = this.texts!.questions.map(q => q.exerciseId);
+    //const uniqueIds = Array.from(new Set(allIds));
+    const uniqueIds = 1;
+
+    const path = this.router.url;
+    localStorage.setItem("previousUrl", path);
+
+    localStorage.setItem("isPruefung", "yes");
+    localStorage.setItem("exerciseAllocation", JSON.stringify(selectedTypes));
+
+    this.router.navigate(['/task'], { queryParams: { id: uniqueIds } });
   }
 }

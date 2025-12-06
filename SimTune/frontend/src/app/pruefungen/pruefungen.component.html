@@ -1,60 +1,71 @@
-<p>Pruefungssimulationen works!</p>
-<!--
-<div class="flex flex-col items-center justify-center min-h-screen space-y-6 w-full">
-  <h1 class="text-costumDarkGray text-2xl font-bold text-center">Willkommen bei den Prüfungssimulationen von SimTune</h1>
+<div class="flex w-full min-h-screen p-8 overflow-hidden gap-2">
 
-  <div class="bg-costumLightGray p-8 rounded-2xl shadow-md w-full max-w-xl">
-    <h2 class="text-costumDarkGray text-xl font-semibold mb-4 text-center">Filter</h2>
+  <div class="flex flex-col items-center justify-center space-y-6 w-96 ml-24">
 
-    <div class="mb-4 flex items-center justify-center bg-white p-4 rounded-lg shadow-sm">
-      <label for="number-selector" class="mr-4 text-costumDarkGray font-medium whitespace-nowrap">
-        Wie viele Fragen wollen Sie bei Ihrer Prüfungssimulation?
-      </label>
-      <input
-        class="w-20 text-center outline-none appearance-none focus:ring-0 border-2 border-gray-300 rounded-3xl"
-        type="number" id="number-selector"
-        [value]="selectedNumber()" (input)="onInput($event)"
-        min="1" [max]="maxValue"
-      />
+    <div class="bg-costumLightGray p-6 rounded-2xl shadow-md w-full">
+      <h2 class="text-costumDarkGray text-xl font-semibold mb-4 text-center">
+        Prüfungssimulation
+      </h2>
+
+      <div class="mb-4 flex items-center justify-center bg-white p-4 rounded-lg shadow-sm max-w-xs mx-auto">
+        <label for="number-selector" class="mr-4 text-costumDarkGray font-medium whitespace-nowrap">
+          Fragenanzahl:
+        </label>
+        <input
+          class="w-20 text-center outline-none appearance-none focus:ring-0 border-2 border-gray-300 rounded-3xl"
+          type="number"
+          id="number-selector"
+          [value]="selectedNumber() === null ? '' : selectedNumber()"
+          (input)="onInput($event)"
+          min="1"
+          [max]="maxValue"
+        />
+      </div>
+
+      <h3 class="text-costumBlue font-medium mb-2">Übungsart</h3>
+
+      <div class="space-y-2 mb-4">
+        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
+          <input type="checkbox" [checked]="selectedTypes().includes('Töne')" (click)="toggleType('Töne')" class="mr-2"/>
+          Töne
+        </label>
+        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
+          <input type="checkbox" [checked]="selectedTypes().includes('Rythmus')" (click)="toggleType('Rythmus')" class="mr-2"/>
+          Rythmus
+        </label>
+        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
+          <input type="checkbox" [checked]="selectedTypes().includes('Intervalle')" (click)="toggleType('Intervalle')" class="mr-2"/>
+          Intervalle
+        </label>
+        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
+          <input type="checkbox" [checked]="selectedTypes().includes('Tonleitern')" (click)="toggleType('Tonleitern')" class="mr-2"/>
+          Tonleitern
+        </label>
+        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
+          <input type="checkbox" [checked]="selectedTypes().includes('Tonarten')" (click)="toggleType('Tonarten')" class="mr-2"/>
+          Tonarten
+        </label>
+        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
+          <input type="checkbox" [checked]="selectedTypes().includes('Akkorde')" (click)="toggleType('Akkorde')" class="mr-2"/>
+          Akkorde
+        </label>
+      </div>
+
+      <div class="text-red-600 font-medium text-center mt-2" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
     </div>
 
-    <h3 class="text-costumBlue font-medium mb-2">Übungsart</h3>
-    <div class="space-y-2 mb-4">
-      <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
-        <input type="checkbox" [checked]="selectedTypes().includes('Stammtoene')" (click)="toggleType('Stammtoene')" class="mr-2"/>
-        Stammtöne
-      </label>
-      <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
-        <input type="checkbox" [checked]="selectedTypes().includes('Notensystem')" (click)="toggleType('Notensystem')" class="mr-2"/>
-        Notensystem
-      </label>
-      <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
-        <input type="checkbox" [checked]="selectedTypes().includes('Intervalle')" (click)="toggleType('Intervalle')" class="mr-2"/>
-        Intervalle
-      </label>
-      <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
-        <input type="checkbox" [checked]="selectedTypes().includes('Tonleitern')" (click)="toggleType('Tonleitern')" class="mr-2"/>
-        Tonleitern
-      </label>
-    </div>
+    <button
+      class="bg-costumBlue text-white p-2 px-6 rounded-3xl text-lg hover:bg-blue-600 mt-4"
+      (click)="startSimulation()">
+      starten
+    </button>
 
-    <h3 class="text-costumBlue font-medium mb-2">Verarbeitungsaktionen</h3>
-    <div class="space-y-2">
-      <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
-        <input type="checkbox" [checked]="selectedTypes().includes('Lies')" (click)="toggleType('Lies')" class="mr-2"/>
-        Lies
-      </label>
-      <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
-        <input type="checkbox" [checked]="selectedTypes().includes('Schreib')" (click)="toggleType('Schreib')" class="mr-2"/>
-        Schreib
-      </label>
-    </div>
   </div>
 
-  <button
-    class="bg-costumBlue text-white p-2 px-6 rounded-3xl text-lg hover:bg-blue-600 mt-4"
-    (click)="startSimulation()">
-    Prüfungssimulation starten
-  </button>
+  <div class="flex-1 flex items-center justify-center">
+    <div id="plot" class="w-full max-w-5xl h-3/4"></div>
+  </div>
+
 </div>
--->

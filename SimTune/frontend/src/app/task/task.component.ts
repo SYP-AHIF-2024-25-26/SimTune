@@ -65,15 +65,35 @@ export class TaskComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.route.queryParamMap.subscribe(async params => {
-      const id = params.get('id');
+      const ids = params.getAll('id');
+      if (!ids) return;
+
+      const numericIds = ids.map(id => Number(id));
+      await this.loadAllExercises(numericIds);
+
+      /*
+      const id = params.get('ids');
       if (!id) return;
+      console.log('Received ID:', id);
 
       this.parsed = await fetchRestEndpoint(API_URL + `exercises/${id}`, 'GET');
+      console.log(this.parsed);
       this.previousUrl = sessionStorage.getItem('previousUrl') || null;
 
-      this.renderAbcSafely();
+      this.renderAbcSafely();*/
+
     });
   }
+
+  async loadAllExercises(exerciseIds: number[]) {
+    if (!exerciseIds.length) return;
+    console.log(exerciseIds);
+    const fetchPromises = exerciseIds.map(id => fetchRestEndpoint(API_URL + `exercises/${id}`, 'GET'));
+    this.parsed = await Promise.all(fetchPromises);
+    this.previousUrl = sessionStorage.getItem('previousUrl') || null;
+    this.renderAbcSafely();
+  }
+
 
   renderAbcSafely(): void {
     this.currentIndex = 0;
@@ -86,23 +106,29 @@ export class TaskComponent implements OnInit {
     this.firstAttemptSuccess = true;
 
     if (this.parsed) {
-      let exerciseContents = this.parsed.exerciseContents;
-      this.exerciseModus = this.parsed.exerciseModus;
-      this.notationType = this.parsed.notationType;
-      this.exerciseType = this.parsed.exerciseType;
+      let allContents: any[] = [];
+      console.log(this.parsed);
+      for (const ex of this.parsed) {
+        if (!ex.exerciseContents) continue; // absichern
+        const mappedContents = ex.exerciseContents.map((item: any) => ({
+          ...item,
+          notesToRead: item.notesToRead ? item.notesToRead.replace(/%/g, '\n') : item.notesToRead
+        }));
+        allContents.push(...mappedContents);
+      }
 
-      exerciseContents = exerciseContents.map((item: any) => ({
-        ...item,
-        notesToRead: item.notesToRead
-          ? item.notesToRead.replace(/%/g, '\n')
-          : item.notesToRead
-      }));
+      const duplicated = [...allContents, ...allContents];
 
-      const duplicated = [...exerciseContents, ...exerciseContents];
-      this.totalSegments = Number(duplicated.length);
       this.shuffledContents = this.shuffleArray(duplicated);
 
+      this.totalSegments = duplicated.length;
+      const firstExercise = this.parsed[0];
+      this.exerciseModus = firstExercise.exerciseModus;
+      this.notationType = firstExercise.notationType;
+      this.exerciseType = firstExercise.exerciseType;
+
       this.setUpForUI();
+
       switch (this.exerciseModus) {
         case 'Schreiben':
           return;
@@ -110,8 +136,47 @@ export class TaskComponent implements OnInit {
           this.renderCurrentNote();
           return;
       }
+/*
+      const exercises = Array.isArray(this.parsed) ? this.parsed : [this.parsed];
+
+      for (const parsedExercise of exercises) {
+        console.log(parsedExercise);
+        let exerciseContents = parsedExercise.exerciseContents;
+        const exerciseModus = parsedExercise.exerciseModus;
+        const notationType = parsedExercise.notationType;
+        const exerciseType = parsedExercise.exerciseType;
+
+        exerciseContents = exerciseContents.map((item: any) => ({
+          ...item,
+          notesToRead: item.notesToRead
+            ? item.notesToRead.replace(/%/g, '\n')
+            : item.notesToRead
+        }));
+
+        const duplicated = [...exerciseContents, ...exerciseContents];
+        const totalSegments = Number(duplicated.length);
+        const shuffledContents = this.shuffleArray(duplicated);
+
+        // Setze die UI-Variablen pro Übung
+        this.totalSegments = totalSegments;
+        this.shuffledContents = shuffledContents;
+        this.exerciseModus = exerciseModus;
+        this.notationType = notationType;
+        this.exerciseType = exerciseType;
+
+        this.setUpForUI();
+
+        switch (exerciseModus) {
+          case 'Schreiben':
+            continue; // weiter zur nächsten Übung
+          case 'Lesen':
+            this.renderCurrentNote();
+            continue;
+        }
+      }*/
     }
   }
+
 
   shuffleArray<T>(array: T[]): T[] {
     return array
@@ -325,14 +390,32 @@ export class TaskComponent implements OnInit {
 
   async saveExcercise() {
     var jwt = sessionStorage.getItem('jwt');
+    console.log(jwt);
 
     if(jwt != undefined) {
       const decoded = jwtDecode<MyJwtPayload>(jwt);
+      const isPruefung = localStorage.getItem("isPruefung");
 
-      await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
-        exerciseId: this.parsed.id,
-        score: parseFloat(this.evaluation)
-      });
+      if(isPruefung == "yes") {
+        const exerciseAllocation = JSON.parse(localStorage.getItem("exerciseAllocation") || "[]");
+        const percentString = this.evaluation;
+        const value = parseFloat(percentString.replace("%", "")).toFixed(2);
+
+        localStorage.removeItem("isPruefung");
+        localStorage.removeItem("exerciseAllocation");
+
+        await fetchRestEndpointWithAuthorization(API_URL + 'exam-simulation/completed', 'POST', {
+          questionCount: this.totalSegments,
+          exerciseAllocations: exerciseAllocation,
+          achievedPercentage: value
+        });
+      } else {
+        console.log(this.parsed[0].id);
+        await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
+          exerciseId: this.parsed[0].id,
+          score: parseFloat(this.evaluation)
+        });
+      }
     }
   }
 

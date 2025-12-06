@@ -126,7 +126,8 @@ export class ProfilePageComponent {
 
   async getProgress() {
     const results = await Promise.all(
-      ['Intervalle', 'Tonleitern', 'StammtoeneKlavier', 'VersetzungszeichenKlavier', 'StammtoeneViolinschluessel', 'VersetzungszeichenViolinschluessel', 'HilfslinienViolinschluessel', 'HilfslinienBassschluessel', 'VersetzungszeichenBasschluessel', 'StammtoeneBassschluessel']
+      //['Intervalle', 'Tonleitern', 'StammtoeneKlavier', 'VersetzungszeichenKlavier', 'StammtoeneViolinschluessel', 'VersetzungszeichenViolinschluessel', 'HilfslinienViolinschluessel', 'HilfslinienBassschluessel', 'VersetzungszeichenBasschluessel', 'StammtoeneBassschluessel']
+      ['Intervalle', 'Tonleitern']
         .map(type => fetchRestEndpoint(API_URL + 'exercises/' + type, 'GET'))
     );
     const allExercises = results.flat();
