@@ -88,7 +88,6 @@ export class ProfilePageComponent {
 
       this.test.push(...mapped);
     }
-    debugger;
   }
 
   async getExercises() {
@@ -152,13 +151,11 @@ export class ProfilePageComponent {
     ? [...this.testTypes]
     : [...this.exerciseTypes];
 
-    debugger;
     this.filteredExercise;
   }
 
   get filteredExercise() {
     const source = this.selected === "simulation" ? this.test : this.exercise;
-    debugger;
     let filtered: {[key: string]: string}[];
 
     if(this.selected === "simulation") {
@@ -175,10 +172,6 @@ export class ProfilePageComponent {
       filtered = source.filter(ex =>
         this.selectedTypes.includes(ex['Exercise Allocation'])
       );
-    }
-
-    if(filtered.length > 0) {
-      debugger;
     }
 
     return filtered.sort((a, b) => {
