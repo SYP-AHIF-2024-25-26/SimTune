@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgZone, signal, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { API_URL, fetchRestEndpoint } from '../api-calls/fetch-rest-endpoint';
+import { API_URL, fetchRestEndpoint, fetchRestEndpointWithAuthorization } from '../api-calls/fetch-rest-endpoint';
 import { PianoComponent } from '../piano/piano.component';
 import Plotly from 'plotly.js-basic-dist';
+import { ExamStatsResponse } from '../profile-page/profile-page.component';
 
 @Component({
   selector: 'app-pruefungen',
@@ -19,48 +20,72 @@ export class PruefungenComponent {
   selectedTypes = signal<string[]>(['Töne', 'Rythmus', 'Intervalle', 'Tonleitern', 'Tonarten', 'Akkorde']);
   texts: { totalQuestions: number; questions: { exerciseId: number; contentId: number; description: string; exerciseType: string; exerciseAllocation: string;}[] } | null = null;
   errorMessage = '';
+  last5: any[] = [];
   constructor(private router: Router, private ngZone: NgZone) {}
 
-    ngAfterViewInit() {
-      const xLabels = ["03.12.2025", "02.12.2025", "01.12.2025", "30.11.2025", "29.11.2025", "28.11.2025"];
-      const values  = [12, 18, 7, 15, 9, 30];
+  async ngAfterViewInit() {
+    var userTests: ExamStatsResponse = await fetchRestEndpointWithAuthorization(API_URL + 'exam-simulation/completed', 'GET', );
+    if (userTests && userTests.allExams.length > 0) {
+      const mapped = userTests.allExams.map(ex => ({
+        achievedPercentageValue: ex.achievedPercentage,
+        completedAtRaw: ex.completedAt.toString(),
+        completedAtFormatted: new Date(ex.completedAt).toLocaleDateString('de-DE') + ' ' + new Date(ex.completedAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+      }));
 
-      const data = [{
-        x: xLabels,
-        y: values,
-        type: "bar" as const,
-        hovertemplate: "für mehr Infos klicken<extra></extra>",
-        marker: { color: "#5a8dee" }
-      }];
+      const sorted = mapped.sort((a, b) =>
+        new Date(b.completedAtRaw).getTime() - new Date(a.completedAtRaw).getTime()
+      );
 
-      const layout = {
-        title: { text: "Simulationsergebnisse" },
-        margin: { t: 100, l: 0, r: 10, b: 100 },
-        paper_bgcolor: "#f3f4f6",
-        plot_bgcolor: "#f3f4f6",
-      };
-
-      // 1) Plot zeichnen und das Graph-Div zurückbekommen
-      Plotly.newPlot("plot", data, layout, {
-        displayModeBar: false,
-        responsive: true
-      }).then((gd: any) => {
-
-        // 2) Plotly-Event richtig anbinden
-        gd.on("plotly_click", (event: any) => {
-          console.log("plotly_click event:", event);   // zum Testen
-
-          // 3) In Angular-Zone wechseln + Router benutzen
-          this.ngZone.run(() => {
-            this.router.navigateByUrl("/profile-page");
-            // alternativ:
-            // this.router.navigate(["/profile-page"]);
-          });
-        });
-
-      });
+      this.last5 = sorted.slice(0, 5).reverse();
     }
 
+    const xLabels = this.last5.map(x => x.completedAtFormatted);
+    const values  = this.last5.map(x => x.achievedPercentageValue);
+
+    while (xLabels.length < 5) {
+      xLabels.unshift("");
+      values.unshift(null);
+    }
+
+    const data = [{
+      x: xLabels,
+      y: values,
+      type: "bar" as const,
+      hovertemplate: "für mehr Infos klicken<extra></extra>",
+      marker: { color: "#5a8dee" },
+    }];
+
+    const layout: Partial<Plotly.Layout> = {
+      title: { text: "Simulationsergebnisse" },
+      margin: { t: 100, l: 0, r: 10, b: 100 },
+      paper_bgcolor: "#f3f4f6",
+      plot_bgcolor: "#f3f4f6",
+      xaxis: {
+        title: { text: "Datum" },
+        tickangle: -45,
+        automargin: true
+      },
+      yaxis: {
+        title: { text: "Erreichte Prozent", standoff: 30},
+        dtick: 10,
+        range: [0, 101],
+        automargin: true
+      },
+    bargap: 0.25
+    };
+
+    Plotly.newPlot("plot", data, layout, {
+      displayModeBar: false,
+      responsive: true
+    }).then((gd: any) => {
+      gd.on("plotly_click", (event: any) => {
+        this.ngZone.run(() => {
+          this.router.navigateByUrl("/profile-page");
+        });
+      });
+
+    });
+  }
 
   onInput(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
@@ -114,8 +139,7 @@ export class PruefungenComponent {
     this.texts = await fetchRestEndpoint(url.toString(), 'GET');
 
     const allIds = this.texts!.questions.map(q => q.exerciseId);
-    //const uniqueIds = Array.from(new Set(allIds));
-    const uniqueIds = 1;
+    const uniqueIds = Array.from(new Set(allIds));
 
     const path = this.router.url;
     localStorage.setItem("previousUrl", path);
