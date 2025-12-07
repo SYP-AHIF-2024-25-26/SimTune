@@ -56,6 +56,7 @@ export class TaskComponent implements OnInit {
   showStatusText = false;
   isCorrect = false;
   blockAnswer = false;
+  lastQuestion: any;
 
   // signal
   allAnswers = signal<string[]>([]);
@@ -87,13 +88,11 @@ export class TaskComponent implements OnInit {
 
   async loadAllExercises(exerciseIds: number[]) {
     if (!exerciseIds.length) return;
-    console.log(exerciseIds);
     const fetchPromises = exerciseIds.map(id => fetchRestEndpoint(API_URL + `exercises/${id}`, 'GET'));
     this.parsed = await Promise.all(fetchPromises);
     this.previousUrl = sessionStorage.getItem('previousUrl') || null;
     this.renderAbcSafely();
   }
-
 
   renderAbcSafely(): void {
     this.currentIndex = 0;
@@ -112,7 +111,10 @@ export class TaskComponent implements OnInit {
         if (!ex.exerciseContents) continue; // absichern
         const mappedContents = ex.exerciseContents.map((item: any) => ({
           ...item,
-          notesToRead: item.notesToRead ? item.notesToRead.replace(/%/g, '\n') : item.notesToRead
+          notesToRead: item.notesToRead ? item.notesToRead.replace(/%/g, '\n') : item.notesToRead,
+          notationType: ex.notationType,
+          exerciseModus: ex.exerciseModus,
+          exerciseType: ex.exerciseType
         }));
         allContents.push(...mappedContents);
       }
@@ -122,10 +124,10 @@ export class TaskComponent implements OnInit {
       this.shuffledContents = this.shuffleArray(duplicated);
 
       this.totalSegments = duplicated.length;
-      const firstExercise = this.parsed[0];
-      this.exerciseModus = firstExercise.exerciseModus;
-      this.notationType = firstExercise.notationType;
-      this.exerciseType = firstExercise.exerciseType;
+
+      this.exerciseModus = this.shuffledContents[0].exerciseModus;
+      this.notationType = this.shuffledContents[0].notationType;
+      this.exerciseType = this.shuffledContents[0].exerciseType;
 
       this.setUpForUI();
 
@@ -197,8 +199,18 @@ export class TaskComponent implements OnInit {
   setUpForUI(): void {
     const currentQuestion = this.shuffledContents[this.currentIndex];
 
+    if(this.lastQuestion !== undefined) {
+      if(currentQuestion.notationType !== this.lastQuestion.notationType) {
+          this.firstAttemptSuccess = true;
+          this.exerciseModus = currentQuestion.exerciseModus;
+          this.notationType = currentQuestion.notationType;
+          this.exerciseType = currentQuestion.exerciseType;
+      }
+    }
+
     this.correctAnswers = currentQuestion.correctAnswer;
     this.instruction.set(currentQuestion.instruction);
+    this.lastQuestion = currentQuestion;
   }
 
   ngAfterViewInit(): void {
