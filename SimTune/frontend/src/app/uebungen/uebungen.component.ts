@@ -42,7 +42,7 @@ export class UebungenComponent implements OnInit {
   }
 
   async markDoneExercises() {
-    var userExercises;
+    var userExercises: { exerciseId: number | string; highestScore: number;}[];
     if(sessionStorage.getItem('jwt') !== null) {
       userExercises = await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercises', 'GET', );
     } else {
@@ -50,10 +50,17 @@ export class UebungenComponent implements OnInit {
     }
     const completedDescriptions = userExercises.map((ex: { exerciseId: any; }) => ex.exerciseId);
 
-    this.texts = this.texts.map(t => ({
-      ...t,
-      done: completedDescriptions.includes(t.id)
-    }));
+    this.texts = this.texts.map(t => {
+      const done = completedDescriptions.includes(t.id);
+
+      const match = userExercises.find(ex => ex.exerciseId === t.id);
+
+      return {
+        ...t,
+        done,
+        highestScore: done ? match?.highestScore + "%" : undefined
+      };
+    });
   }
 
   goToTask(text: string): void {

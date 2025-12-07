@@ -49,6 +49,12 @@
       <span class="rounded-full px-2 sm:px-2.5 py-0.5 text-xs bg-black/10 backdrop-blur-sm">
         {{ item.notationType }}
       </span>
+        @if(item.done) {
+          <span class="opacity-60 hidden sm:inline">•</span>
+          <span class="rounded-full px-2 sm:px-2.5 py-0.5 text-xs bg-black/10 backdrop-blur-sm">
+            {{ item.highestScore }}
+          </span>
+      }
     </div>
   </button>
   </div>
