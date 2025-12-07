@@ -254,7 +254,7 @@ ExerciseId,ContentId,Instruction,NotesToRead,AllAnswers,PossibleAnswers,CorrectA
 52,3,"Bezeichne die Note","X:1 % L:4/4 % K:C bass % ^E,","cis,dis,eis,fis,gis,ais,his","cis,dis,eis,fis,gis,ais,his","eis"
 52,4,"Bezeichne die Note","X:1 % L:4/4 % K:C bass % ^F,","cis,dis,eis,fis,gis,ais,his","cis,dis,eis,fis,gis,ais,his","fis"
 52,5,"Bezeichne die Note","X:1 % L:4/4 % K:C bass % ^G,","cis,dis,eis,fis,gis,ais,his","cis,dis,eis,fis,gis,ais,his","gis"
-52,6,"Bezeichne die Note","X:1 % L:4/4 % K:C bass % ^A,","cis,dis,eis,fis,gis,ais,his","cis,dis,eis,fis,gis,his","ais"
+52,6,"Bezeichne die Note","X:1 % L:4/4 % K:C bass % ^A,","cis,dis,eis,fis,gis,ais,his","cis,dis,eis,fis,gis,ais,his","ais"
 52,7,"Bezeichne die Note","X:1 % L:4/4 % K:C bass % ^B,","cis,dis,eis,fis,gis,ais,his","cis,dis,eis,fis,gis,ais,his","his"
 53,1,"Bezeichne die Note","X:1 % L:4/4 % K:C bass % _C,","ces,des,es,fes,ges,as,b","ces,des,es,fes,ges,as,b","ces"
 53,2,"Bezeichne die Note","X:1 % L:4/4 % K:C bass % _D,","ces,des,es,fes,ges,as,b","ces,des,es,fes,ges,as,b","des"
