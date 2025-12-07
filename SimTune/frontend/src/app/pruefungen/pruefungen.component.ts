@@ -142,7 +142,7 @@ export class PruefungenComponent {
     const uniqueIds = Array.from(new Set(allIds));
 
     const path = this.router.url;
-    localStorage.setItem("previousUrl", path);
+    sessionStorage.setItem("previousUrl", path);
 
     localStorage.setItem("isPruefung", "yes");
     localStorage.setItem("exerciseAllocation", JSON.stringify(selectedTypes));
