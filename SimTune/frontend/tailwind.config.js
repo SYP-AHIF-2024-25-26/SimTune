@@ -5,6 +5,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        '18': '4.5rem',
+      },
+      translate: {
+        '0.5': '0.125rem',
+        '19.5': '4.875rem',
+      },
       keyframes: {
         flyIn: {
           '0%': { opacity: '0', transform: 'translateY(30px)' },

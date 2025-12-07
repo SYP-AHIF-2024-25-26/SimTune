@@ -14,6 +14,24 @@ interface MyJwtPayload {
   "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": string;
 }
 
+export interface ExamStatsResponse {
+  bestExamPercentage: number;
+  worstExamPercentage: number;
+  averagePercentage: number;
+  totalExamsCompleted: number;
+  last5Exams: ExamResult[];
+  allExams: ExamResult[];
+}
+
+export interface ExamResult {
+  id: number;
+  questionCount: number;
+  exerciseAllocations: string[];
+  achievedPercentage: number;
+  completedAt: string;
+}
+
+
 @Component({
   selector: 'app-profile-page',
   standalone: true,
@@ -32,14 +50,17 @@ export class ProfilePageComponent {
   constructor(private router: Router) {}
 
   exercise: { [key: string]: string }[] = [];
+  test: { [key: string]: string }[] = [];
   sortDirection: { [key: string]: 'asc' | 'desc' } = {};
   exerciseTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten'];
-  selectedTypes: string[] = [...this.exerciseTypes];
+  testTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten'];
+  selectedTypes: string[] = [...this.testTypes];
   showSortOptions = false;
   progress = signal<number>(0);
   activeSort = signal<string | null>(null);
   currentSortCol: string | null = null;
   selectedExerciseTypes = signal<string[]>([]);
+  selected: "simulation" | "exercise" = "simulation";
 
   async ngOnInit() {
     var jwt = sessionStorage.getItem("jwt")!;
@@ -50,7 +71,24 @@ export class ProfilePageComponent {
     this.rolle.set('not defined');
 
     await this.getExercises();
+    await this.getTests();
     this.progress.set(await this.getProgress());
+  }
+
+  async getTests() {
+    var userTests: ExamStatsResponse = await fetchRestEndpointWithAuthorization(API_URL + 'exam-simulation/completed', 'GET', );
+    if (userTests && userTests.allExams.length > 0) {
+      const mapped = userTests.allExams.map(ex => ({
+        'Id': ex.id.toString(),
+        'Question Count': ex.questionCount.toString(),
+        'Exercise Allocation': ex.exerciseAllocations.join(', '),
+        'Achieved Percentage': ex.achievedPercentage.toString() + '%',
+        'Completed At': ex.completedAt.toString()
+      }));
+
+      this.test.push(...mapped);
+    }
+    debugger;
   }
 
   async getExercises() {
@@ -107,22 +145,56 @@ export class ProfilePageComponent {
     return parseFloat(score.replace('%', ''));
   }
 
-  get filteredExercise() {
-    const test = this.exercise
-      .filter(ex => this.selectedTypes.includes(ex['Exercise Allocation']))
-      .sort((a, b) => {
-        const col = this.currentSortCol;
-        if (!col) return 0;
-        const dir = this.sortDirection[col];
-        const aVal = a[col];
-        const bVal = b[col];
-        if (aVal < bVal) return dir === 'asc' ? -1 : 1;
-        if (aVal > bVal) return dir === 'asc' ? 1 : -1;
-        return 0;
-      });
+  toggle() {
+    this.selected = this.selected === "simulation" ? "exercise" : "simulation";
 
-      return test;
+    this.selectedTypes = this.selected === "simulation"
+    ? [...this.testTypes]
+    : [...this.exerciseTypes];
+
+    debugger;
+    this.filteredExercise;
   }
+
+  get filteredExercise() {
+    const source = this.selected === "simulation" ? this.test : this.exercise;
+    debugger;
+    let filtered: {[key: string]: string}[];
+
+    if(this.selected === "simulation") {
+      filtered = source.filter(ex => {
+        const allocationArray = ex['Exercise Allocation']
+          .split(',')
+          .map(x => x.trim());
+
+        return this.selectedTypes.every(type =>
+          allocationArray.includes(type)
+        );
+      });
+    } else {
+      filtered = source.filter(ex =>
+        this.selectedTypes.includes(ex['Exercise Allocation'])
+      );
+    }
+
+    if(filtered.length > 0) {
+      debugger;
+    }
+
+    return filtered.sort((a, b) => {
+      const col = this.currentSortCol;
+      if (!col) return 0;
+
+      const dir = this.sortDirection[col];
+      const aVal = a[col];
+      const bVal = b[col];
+
+      if (aVal < bVal) return dir === 'asc' ? -1 :  1;
+      if (aVal > bVal) return dir === 'asc' ?  1 : -1;
+      return 0;
+    });
+  }
+
 
   async getProgress() {
     const results = await Promise.all(
@@ -133,7 +205,7 @@ export class ProfilePageComponent {
     const allExercises = results.flat();
 
     if (allExercises.length === 0) return 0;
-    const completedCount = this.exercise.length;
+    const completedCount = (this.selected === "simulation") ? this.test.length : this.exercise.length;
     return Math.round((completedCount / allExercises.length) * 100);
   }
 
