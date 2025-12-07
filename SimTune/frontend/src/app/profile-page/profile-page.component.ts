@@ -164,9 +164,7 @@ export class ProfilePageComponent {
           .split(',')
           .map(x => x.trim());
 
-        return this.selectedTypes.every(type =>
-          allocationArray.includes(type)
-        );
+        return allocationArray.some(a => this.selectedTypes.includes(a));
       });
     } else {
       filtered = source.filter(ex =>
