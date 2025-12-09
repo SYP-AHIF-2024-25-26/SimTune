@@ -19,6 +19,12 @@ public static partial class ExercisesApi
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
             .Produces<int>(StatusCodes.Status200OK);
 
+        app.MapGet("/exercises/count-by-allocation", ExerciseAllocationCounter.GetExerciseCountsByAllocation)
+            .WithName(nameof(ExerciseAllocationCounter.GetExerciseCountsByAllocation))
+            .WithDescription("Gets the count of exercises by allocation types")
+            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
+            .Produces<ExerciseAllocationCountResponseDto>(StatusCodes.Status200OK);
+
         return app;
     }
 }
