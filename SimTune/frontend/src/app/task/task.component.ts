@@ -402,7 +402,6 @@ export class TaskComponent implements OnInit {
 
   async saveExcercise() {
     var jwt = sessionStorage.getItem('jwt');
-    console.log(jwt);
 
     if(jwt != undefined) {
       const decoded = jwtDecode<MyJwtPayload>(jwt);
@@ -417,12 +416,11 @@ export class TaskComponent implements OnInit {
         localStorage.removeItem("exerciseAllocation");
 
         await fetchRestEndpointWithAuthorization(API_URL + 'exam-simulation/completed', 'POST', {
-          questionCount: this.totalSegments,
+          questionCount: this.parsed.length,
           exerciseAllocations: exerciseAllocation,
           achievedPercentage: value
         });
       } else {
-        console.log(this.parsed[0].id);
         await fetchRestEndpointWithAuthorization(API_URL + 'usermanagement/completed-exercise', 'POST', {
           exerciseId: this.parsed[0].id,
           score: parseFloat(this.evaluation)

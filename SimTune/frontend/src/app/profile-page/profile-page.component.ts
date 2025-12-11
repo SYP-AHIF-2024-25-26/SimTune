@@ -55,12 +55,12 @@ export class ProfilePageComponent {
   exerciseTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten'];
   testTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten'];
   selectedTypes: string[] = [...this.testTypes];
+  selectedExerciseTypes: string[] = [...this.exerciseTypes];
   showSortOptions = false;
   progress = signal<number>(0);
   activeSort = signal<string | null>(null);
   currentSortCol: string | null = null;
-  selectedExerciseTypes = signal<string[]>([]);
-  selected: "simulation" | "exercise" = "simulation";
+  selected: "simulation" | "exercise" = "exercise";
 
   async ngOnInit() {
     var jwt = sessionStorage.getItem("jwt")!;
@@ -70,8 +70,11 @@ export class ProfilePageComponent {
     this.benutzername.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
     this.rolle.set('not defined');
 
-    await this.getExercises();
-    await this.getTests();
+    await Promise.all([
+      this.getExercises(),
+      this.getTests()
+    ]);
+
     this.progress.set(await this.getProgress());
   }
 
@@ -144,7 +147,7 @@ export class ProfilePageComponent {
     return parseFloat(score.replace('%', ''));
   }
 
-  toggle() {
+  async toggle() {
     this.selected = this.selected === "simulation" ? "exercise" : "simulation";
 
     this.selectedTypes = this.selected === "simulation"
@@ -152,6 +155,12 @@ export class ProfilePageComponent {
     : [...this.exerciseTypes];
 
     this.filteredExercise;
+  }
+
+  get activeList(): string[] {
+    return this.selected === 'simulation'
+      ? this.selectedTypes
+      : this.selectedExerciseTypes;
   }
 
   get filteredExercise() {
@@ -168,7 +177,7 @@ export class ProfilePageComponent {
       });
     } else {
       filtered = source.filter(ex =>
-        this.selectedTypes.includes(ex['Exercise Allocation'])
+        this.selectedExerciseTypes.includes(ex['Exercise Allocation'])
       );
     }
 
@@ -188,16 +197,14 @@ export class ProfilePageComponent {
 
 
   async getProgress() {
-    const results = await Promise.all(
-      //['Intervalle', 'Tonleitern', 'StammtoeneKlavier', 'VersetzungszeichenKlavier', 'StammtoeneViolinschluessel', 'VersetzungszeichenViolinschluessel', 'HilfslinienViolinschluessel', 'HilfslinienBassschluessel', 'VersetzungszeichenBasschluessel', 'StammtoeneBassschluessel']
-      ['Intervalle', 'Tonleitern']
-        .map(type => fetchRestEndpoint(API_URL + 'exercises/' + type, 'GET'))
-    );
-    const allExercises = results.flat();
+    const queryValue = this.selectedExerciseTypes.join(',');
 
-    if (allExercises.length === 0) return 0;
-    const completedCount = (this.selected === "simulation") ? this.test.length : this.exercise.length;
-    return Math.round((completedCount / allExercises.length) * 100);
+    const url = `${API_URL}exercises/count-by-allocation?exerciseAllocations=${encodeURIComponent(queryValue)}`;
+
+    const allExercises = await fetchRestEndpoint(url, 'GET');
+
+    if (allExercises.exerciseCount === undefined) return 0;
+    return Math.round((this.filteredExercise.length / allExercises.exerciseCount) * 100);
   }
 
   sortData(column: string) {
@@ -206,11 +213,24 @@ export class ProfilePageComponent {
     this.currentSortCol = column;
   }
 
-  toggleType(type: string) {
-    if (this.selectedTypes.includes(type)) {
-      this.selectedTypes = this.selectedTypes.filter(t => t !== type);
+  async toggleType(type: string) {
+    const list = this.selected === "exercise"
+      ? this.selectedExerciseTypes
+      : this.selectedTypes;
+
+    this.toggleSelection(type, list);
+
+    this.filteredExercise;
+    this.progress.set(await this.getProgress());
+  }
+
+  toggleSelection(type: string, list: string[]) {
+    const index = list.indexOf(type);
+
+    if (index > -1) {
+      list.splice(index, 1);
     } else {
-      this.selectedTypes.push(type);
+      list.push(type);
     }
   }
 }
