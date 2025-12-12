@@ -133,14 +133,14 @@
         </button>
       </div>
 
-      <table class="min-w-full table-auto bg-white shadow-lg rounded-xl overflow-hidden">
+      <table class="min-w-full table-fixed bg-white shadow-lg rounded-xl overflow-hidden">
         <thead>
           <tr class="bg-gray-100 text-gray-700 text-left text-sm uppercase tracking-wide">
             @if(selected === 'exercise') {
-              <th class="p-3 cursor-pointer" (click)="sortData('Description')">Beschreibung</th>
-              <th class="p-3 cursor-pointer" (click)="sortData('Score')">Highest score</th>
-              <th class="p-3 cursor-pointer" (click)="sortData('Attempts')">Versuche</th>
-              <th class="p-3 cursor-pointer" (click)="sortData('ExerciseAllocation')">Übungsart</th>
+              <th class="p-3 w-1/2 cursor-pointer" (click)="sortData('Description')">Beschreibung</th>
+              <th class="p-3 w-1/6 cursor-pointer" (click)="sortData('Score')">Highest score</th>
+              <th class="p-3 w-1/6 cursor-pointer" (click)="sortData('Attempts')">Versuche</th>
+              <th class="p-3 w-1/6 cursor-pointer" (click)="sortData('Exercise Allocation')">Übungsart</th>
             } @else {
               <th class="p-3 cursor-pointer" (click)="sortData('Question Count')">Fragenanzahl</th>
               <th class="p-3 cursor-pointer" (click)="sortData('Exercise Allocation')">Übungsarten</th>
@@ -151,41 +151,38 @@
         </thead>
         <tbody>
           <tr *ngFor="let ex of filteredExercise" class="border-t hover:bg-gray-50">
-
-  @if (selected === 'exercise') {
-    <ng-container>
-      <td class="p-3">{{ ex['Description'] }}</td>
-      <td class="p-3 font-semibold"
-          [ngClass]="{
-            'text-green-700': parseFloat(ex['Score']) >= 80,
-            'text-yellow-500': parseFloat(ex['Score']) >= 50 && parseFloat(ex['Score']) < 80,
-            'text-red-500': parseFloat(ex['Score']) < 50
-          }"
-      >
-        {{ ex['Score'] }}
-      </td>
-      <td class="p-3">{{ ex['Attempts'] }}</td>
-      <td class="p-3">{{ ex['ExerciseAllocation'] }}</td>
-    </ng-container>
-  } @else {
-    <ng-container>
-      <td class="p-3">{{ ex['Question Count'] }}</td>
-      <td class="p-3">{{ ex['Exercise Allocation'] }}</td>
-      <td class="p-3 font-semibold"
-          [ngClass]="{
-            'text-green-700': parseFloat(ex['Achieved Percentage']) >= 80,
-            'text-yellow-500': parseFloat(ex['Achieved Percentage']) >= 50 && parseFloat(ex['Achieved Percentage']) < 80,
-            'text-red-500': parseFloat(ex['Achieved Percentage']) < 50
-          }"
-      >
-        {{ ex['Achieved Percentage'] }}
-      </td>
-      <td class="p-3">{{ ex['Completed At'] | date:'dd/MM/yyyy HH:mm' }}</td>
-    </ng-container>
-  }
-
-</tr>
-
+            @if (selected === 'exercise') {
+              <ng-container>
+                <td class="p-3">{{ ex['Description'] }}</td>
+                <td class="p-3 font-semibold"
+                    [ngClass]="{
+                      'text-green-700': parseFloat(ex['Score']) >= 80,
+                      'text-yellow-500': parseFloat(ex['Score']) >= 50 && parseFloat(ex['Score']) < 80,
+                      'text-red-500': parseFloat(ex['Score']) < 50
+                    }"
+                >
+                  {{ ex['Score'] }}
+                </td>
+                <td class="p-3">{{ ex['Attempts'] }}</td>
+                <td class="p-3">{{ ex['Exercise Allocation'] }}</td>
+              </ng-container>
+            } @else {
+              <ng-container>
+                <td class="p-3">{{ ex['Question Count'] }}</td>
+                <td class="p-3">{{ ex['Exercise Allocation'] }}</td>
+                <td class="p-3 font-semibold"
+                    [ngClass]="{
+                      'text-green-700': parseFloat(ex['Achieved Percentage']) >= 80,
+                      'text-yellow-500': parseFloat(ex['Achieved Percentage']) >= 50 && parseFloat(ex['Achieved Percentage']) < 80,
+                      'text-red-500': parseFloat(ex['Achieved Percentage']) < 50
+                    }"
+                >
+                  {{ ex['Achieved Percentage'] }}
+                </td>
+                <td class="p-3">{{ ex['Completed At'] | date:'dd/MM/yyyy HH:mm' }}</td>
+              </ng-container>
+            }
+          </tr>
         </tbody>
       </table>
     </div>
