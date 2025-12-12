@@ -71,18 +71,6 @@ export class TaskComponent implements OnInit {
 
       const numericIds = ids.map(id => Number(id));
       await this.loadAllExercises(numericIds);
-
-      /*
-      const id = params.get('ids');
-      if (!id) return;
-      console.log('Received ID:', id);
-
-      this.parsed = await fetchRestEndpoint(API_URL + `exercises/${id}`, 'GET');
-      console.log(this.parsed);
-      this.previousUrl = sessionStorage.getItem('previousUrl') || null;
-
-      this.renderAbcSafely();*/
-
     });
   }
 
@@ -106,9 +94,8 @@ export class TaskComponent implements OnInit {
 
     if (this.parsed) {
       let allContents: any[] = [];
-      console.log(this.parsed);
       for (const ex of this.parsed) {
-        if (!ex.exerciseContents) continue; // absichern
+        if (!ex.exerciseContents) continue;
         const mappedContents = ex.exerciseContents.map((item: any) => ({
           ...item,
           notesToRead: item.notesToRead ? item.notesToRead.replace(/%/g, '\n') : item.notesToRead,
@@ -200,7 +187,14 @@ export class TaskComponent implements OnInit {
     const currentQuestion = this.shuffledContents[this.currentIndex];
 
     if(this.lastQuestion !== undefined) {
-      if(currentQuestion.notationType !== this.lastQuestion.notationType) {
+      if(currentQuestion.notationType !== this.lastQuestion.notationType
+        || currentQuestion.exerciseModus !== this.lastQuestion.exerciseModus) {
+          if(currentQuestion.exerciseModus === "Lesen") {
+            this.renderCurrentNote()
+          } else {
+            this.allAnswers.set([]);
+          }
+
           this.firstAttemptSuccess = true;
           this.exerciseModus = currentQuestion.exerciseModus;
           this.notationType = currentQuestion.notationType;
@@ -538,7 +532,7 @@ export class TaskComponent implements OnInit {
 
   async checkIfRightAnswer(answer: string) {
     answer = answer.split('-')[0];
-    if(answer === this.correctAnswers) {
+    if(answer === this.correctAnswers.split('-')[0]) {
 
       this.firstAttemptCorrectCount += this.firstAttemptSuccess ? 1 : 0;
       this.firstAttemptSuccess = true;
