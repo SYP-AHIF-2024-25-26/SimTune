@@ -74,7 +74,6 @@ export class PianoComponent {
 
   frequency: number = 440;
 
-
   onKeyClick(keyId: string) {
     if (!this.isClickable) { return; }
 
