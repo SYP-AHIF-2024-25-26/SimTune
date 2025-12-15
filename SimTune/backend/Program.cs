@@ -52,6 +52,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
@@ -67,13 +68,13 @@ var app = builder.Build();
 
 app.UsePathBase("/api");
 
+app.UseCors("default");
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
-
-app.UseCors("default");
 
 
 if (app.Environment.IsDevelopment())

@@ -46,6 +46,13 @@ export { fetchRestEndpoint, API_URL, fetchRestEndpointWithAuthorization };
     const res = await fetch(route, options);
 
     if (!res.ok) {
+      if (res.status === 401) {
+        sessionStorage.removeItem("jwt");
+        alert("Session abgelaufen. Bitte erneut einloggen.");
+        window.location.href = "/login";
+        return;
+      }
+
       const error = new Error(`${method} ${res.url} ${res.status} (${res.statusText})`);
       throw error;
     }
