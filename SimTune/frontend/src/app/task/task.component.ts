@@ -57,6 +57,7 @@ export class TaskComponent implements OnInit {
   isCorrect = false;
   blockAnswer = false;
   lastQuestion: any;
+  isPruefung: string | null = null;
 
   // signal
   allAnswers = signal<string[]>([]);
@@ -70,6 +71,7 @@ export class TaskComponent implements OnInit {
       if (!ids) return;
 
       const numericIds = ids.map(id => Number(id));
+      this.isPruefung = localStorage.getItem("isPruefung");
       await this.loadAllExercises(numericIds);
     });
   }
@@ -399,9 +401,8 @@ export class TaskComponent implements OnInit {
 
     if(jwt != undefined) {
       const decoded = jwtDecode<MyJwtPayload>(jwt);
-      const isPruefung = localStorage.getItem("isPruefung");
 
-      if(isPruefung == "yes") {
+      if(this.isPruefung == "yes") {
         const exerciseAllocation = JSON.parse(localStorage.getItem("exerciseAllocation") || "[]");
         const percentString = this.evaluation;
         const value = parseFloat(percentString.replace("%", "")).toFixed(2);
@@ -459,6 +460,10 @@ export class TaskComponent implements OnInit {
     } catch (error) {
       console.warn('ABC audio failed:', error);
     }
+  }
+
+  async goToProfilePage(): Promise<void> {
+    this.router.navigate(['/profile-page']);
   }
 
   async nextTask(): Promise<void> {
