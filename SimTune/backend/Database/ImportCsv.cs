@@ -12,13 +12,14 @@ public static class ImportCsv
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         var records = csv.GetRecords<ExerciseContentCsv>().ToList();
 
+        // Lade alle Exercises in ein Dictionary basierend auf dem Key
+        var exercisesByKey = context.Exercises
+            .Include(e => e.ExerciseContents)
+            .ToDictionary(e => e.Key, e => e);
+
         foreach (var record in records)
         {
-            var exercise = context.Exercises
-                .Include(e => e.ExerciseContents)
-                .FirstOrDefault(e => e.Id == record.ExerciseId);
-                
-            if (exercise != null)
+            if (exercisesByKey.TryGetValue(record.ExerciseKey, out var exercise))
             {
                 // Prüfe, ob dieser Content bereits existiert
                 bool contentExists = exercise.ExerciseContents.Any(ec => 
@@ -40,6 +41,10 @@ public static class ImportCsv
                     exercise.ExerciseContents.Add(content);
                 }
             }
+            else
+            {
+                Console.WriteLine($"Warnung: Exercise mit Key '{record.ExerciseKey}' nicht gefunden.");
+            }
         }
         context.SaveChanges();
     }
@@ -47,11 +52,11 @@ public static class ImportCsv
 
 public class ExerciseContentCsv
 {
-    public int ExerciseId { get; set; }
+    public string ExerciseKey { get; set; } = string.Empty;
     public int ContentId { get; set; }
-    public string Instruction { get; set; }
-    public string NotesToRead { get; set; }
-    public string AllAnswers { get; set; }
-    public string PossibleAnswers { get; set; }
-    public string CorrectAnswer { get; set; }
+    public string Instruction { get; set; } = string.Empty;
+    public string NotesToRead { get; set; } = string.Empty;
+    public string AllAnswers { get; set; } = string.Empty;
+    public string PossibleAnswers { get; set; } = string.Empty;
+    public string CorrectAnswer { get; set; } = string.Empty;
 }

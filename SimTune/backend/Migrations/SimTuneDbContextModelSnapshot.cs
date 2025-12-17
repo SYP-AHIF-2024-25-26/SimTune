@@ -33,6 +33,10 @@ namespace backend.Migrations
                     b.Property<int>("ExerciseType")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("NotationType")
                         .HasColumnType("INTEGER");
 

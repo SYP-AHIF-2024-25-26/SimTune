@@ -11,8 +11,8 @@ using backend.Database;
 namespace backend.Migrations
 {
     [DbContext(typeof(SimTuneDbContext))]
-    [Migration("20251201184304_AddUserExamSimulations")]
-    partial class AddUserExamSimulations
+    [Migration("20251217194021_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,10 @@ namespace backend.Migrations
 
                     b.Property<int>("ExerciseType")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("NotationType")
                         .HasColumnType("INTEGER");

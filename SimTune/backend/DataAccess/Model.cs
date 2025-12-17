@@ -8,6 +8,8 @@ namespace backend.DataAccess
     public class Exercise
     {
         public int Id { get; set; }
+        [Required]
+        public string Key { get; set; } = string.Empty; // Eindeutiger String-Key für externe Referenzen
         public string Description { get; set; } = string.Empty; // Was BEI der Übung zu tun ist
         public NotationType NotationType { get; set; }  // Klavier oder Notensystem
         public ExerciseType ExerciseType { get; set; }  // Intervalle, Tonleitern
@@ -104,7 +106,10 @@ namespace backend.DataAccess
         StammtoeneBassschluessel,
         VersetzungszeichenBassschluessel,
         HilfslinienBassschluessel,
-        Intervalle,
+        IntervalleBasis,
+        IntervalleRein,
+        IntervalleGrossKlein,
+        IntervalleVermindertUebermaessig,
         Tonleitern
     }
 }

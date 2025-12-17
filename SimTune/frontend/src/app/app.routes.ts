@@ -194,7 +194,70 @@ export const routes: Routes = [
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Intervalle', url: '/intervalle' },
       ],
-      taskType: 'Intervalle'
+      taskType: ''
+    },
+  },
+  {
+    path: 'intervalle-basis',
+    component: UebungenComponent,
+    data: {
+      content: intervalleData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Intervalle', url: '/intervalle' },
+        { label: 'Basis', url: '/intervalle-basis'},
+      ],
+      taskType: 'IntervalleBasis'
+    },
+  },
+  {
+    path: 'intervalle-rein',
+    component: UebungenComponent,
+    data: {
+      content: intervalleData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Intervalle', url: '/intervalle' },
+        { label: 'Feinbestimmung', url: '/intervalle'},
+        { label: 'Reine Intervalle', url: '/intervalle-rein'}
+      ],
+      taskType: 'IntervalleRein'
+    },
+  },
+  {
+    path: 'intervalle-grossklein',
+    component: UebungenComponent,
+    data: {
+      content: intervalleData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Intervalle', url: '/intervalle' },
+        { label: 'Feinbestimmung', url: '/intervalle'},
+        { label: 'gr/kl Intervalle', url: '/intervalle-grossklein'}
+      ],
+      taskType: 'IntervalleGrossKlein'
+    },
+  },
+  {
+    path: 'intervalle-vermindertuebermaessig',
+    component: UebungenComponent,
+    data: {
+      content: intervalleData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Intervalle', url: '/intervalle' },
+        { label: 'Feinbestimmung', url: '/intervalle'},
+        { label: 'verminderte Intervalle', url: '/intervalle-intervalle-vermindertuebermaessig'}
+      ],
+      taskType: 'IntervalleVermindertUebermaessig'
     },
   },
   {

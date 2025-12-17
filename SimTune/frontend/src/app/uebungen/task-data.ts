@@ -199,23 +199,40 @@ export const intervalleData: TaskData = {
   "header": "Intervalle",
   "groups": [
     {
-      "group-header": "Einführung",
+      "group-header": "Basis",
       "cards": [
         {
-          "card-header": "Noten",
+          "card-header": "Intervalle",
           "card-header-image-url": "",
-          "card-image-url": "",
-          "card-url": "/stammtoene"
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/intervalle-basis"
+        }
+      ]
+    },
+    {
+      "group-header": "Feinbestimmung",
+      "cards": [
+        {
+          "card-header": "Reine Intervalle",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/intervalle-rein"
         },
         {
-          "card-header": "Gehörbildung",
+          "card-header": "Große & kleine Intervalle",
           "card-header-image-url": "",
-          "card-image-url": "",
-          "card-url": "/rhythmus"
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/intervalle-grossklein"
+        },
+        {
+          "card-header": "Vermindert & Übermäßige Intervalle",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/intervalle-vermindertuebermaessig"
         }
       ]
     }
   ],
-  "task-type": "intervalle",
+  "task-type": "",
   "task-url": ""
 }
