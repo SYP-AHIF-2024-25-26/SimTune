@@ -56,7 +56,7 @@ export class PruefungenComponent {
     }];
 
     const layout: Partial<Plotly.Layout> = {
-      title: { text: "Simulationsergebnisse" },
+      title: { text: "Deine letzten Prüfungssimulationen" },
       margin: { t: 100, l: 0, r: 10, b: 100 },
       paper_bgcolor: "#f3f4f6",
       plot_bgcolor: "#f3f4f6",
@@ -80,7 +80,9 @@ export class PruefungenComponent {
     }).then((gd: any) => {
       gd.on("plotly_click", (event: any) => {
         this.ngZone.run(() => {
-          this.router.navigateByUrl("/profile-page");
+          this.router.navigateByUrl("/profile-page", {
+            state: { isPruefung: true }
+          });
         });
       });
 
