@@ -463,7 +463,9 @@ export class TaskComponent implements OnInit {
   }
 
   async goToProfilePage(): Promise<void> {
-    this.router.navigate(['/profile-page']);
+    this.router.navigateByUrl("/profile-page", {
+      state: { isPruefung: true }
+    });
   }
 
   async nextTask(): Promise<void> {

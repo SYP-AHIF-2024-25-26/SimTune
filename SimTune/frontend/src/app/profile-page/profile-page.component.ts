@@ -68,6 +68,9 @@ export class ProfilePageComponent {
     this.email.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]);
     this.benutzername.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
 
+    const isSimulation = history.state?.isPruefung === true;
+    this.selected = isSimulation ? "simulation" : "exercise";
+
     await Promise.all([
       this.getExercises(),
       this.getTests()
@@ -84,7 +87,7 @@ export class ProfilePageComponent {
         'Question Count': ex.questionCount.toString(),
         'Exercise Allocation': ex.exerciseAllocations.join(', '),
         'Achieved Percentage': ex.achievedPercentage.toString() + '%',
-        'Completed At': ex.completedAt.toString()
+        'Completed At': new Date(ex.completedAt + 'Z').toString()
       }));
 
       this.test.push(...mapped);
