@@ -288,7 +288,7 @@ export class TaskComponent implements OnInit {
       color: string; size: number; life: number;
     }[] = [];
 
-    const count = 30;
+    const count = 60; //anzahl
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * 2 * Math.PI;
       const speed = Math.random() * 5 + 2;
@@ -298,8 +298,8 @@ export class TaskComponent implements OnInit {
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
         color: colors[Math.floor(Math.random() * colors.length)],
-        size: Math.random() * 2 + 1.5,
-        life: 70 + Math.random() * 40
+        size: Math.random() * 4 + 3, //größer
+        life: 100 + Math.random() * 60 //länger
       });
     }
 
@@ -310,8 +310,9 @@ export class TaskComponent implements OnInit {
         p.x += p.vx;
         p.y += p.vy;
         p.vy += 0.1;
-        p.vx *= 0.99;
-        p.vy *= 0.99;
+        p.vx *= 0.995;
+        p.vy *= 0.995;
+        p.vy += 0.12; //schwerlosigkeit
         p.life--;
 
         ctx.fillStyle = p.color;
@@ -361,7 +362,7 @@ export class TaskComponent implements OnInit {
 
       if(this.progress < this.totalSegments) {
         await this.launchConfetti();
-        await this.delay(500);
+        await this.delay(1000);
       }
       this.blockAnswer = false;
       this.showStatusText = false;

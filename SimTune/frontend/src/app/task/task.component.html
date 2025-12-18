@@ -1,3 +1,41 @@
+<div
+  *ngIf="showStatusText"
+  class="fixed inset-0 z-50 backdrop-blur-sm flex items-center justify-center"
+  [ngClass]="{
+    'bg-red-900/40': !isCorrect,
+    'bg-green-900/40': isCorrect
+  }"
+>
+  <div class="relative text-center px-6"
+    [ngClass]="{
+      'shake': !isCorrect,
+      'slide-in': isCorrect
+    }">
+    <h1
+      [ngClass]="{
+        'text-green-400': isCorrect,
+        'text-red-400': !isCorrect
+      }"
+      class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4"
+    >
+      {{ isCorrect ? 'Richtig!' : 'Falsch!' }}
+    </h1>
+
+    <p class="text-white text-lg sm:text-xl opacity-90">
+      {{ isCorrect
+        ? 'Auf zur nächsten Aufgabe …'
+        : 'Versuche es noch einmal' }}
+    </p>
+
+    <canvas
+      *ngIf="isCorrect"
+      #confettiCanvas
+      class="absolute -top-24 left-1/2 -translate-x-1/2
+             w-64 h-64 pointer-events-none"
+    ></canvas>
+  </div>
+</div>
+
 <div class="p-2 sm:p-4">
   <!--  Header  -->
   <div class="flex justify-center items-center mx-2 sm:mx-8 md:mx-16 lg:mx-32 xl:mx-52 mt-6 sm:mt-8 md:mt-12 mb-4 sm:mb-6 md:mb-8">
@@ -47,21 +85,6 @@
         (click)="checkIfRightButton(answers, button)">
         {{ answers }}
       </button>
-    </div>
-
-    <div class="relative flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-12 h-6" *ngIf="exerciseModus !== 'Schreiben'">
-      <h1
-          *ngIf="showStatusText"
-          [ngClass]="{
-            'text-green-500': isCorrect,
-            'text-red-500': !isCorrect
-          }"
-          class="text-xl sm:text-2xl md:text-3xl font-bold fade-in-up z-20 transition-all duration-700"
-        >
-          {{ isCorrect ? 'Richtig!' : 'Falsch!' }}
-      </h1>
-
-      <canvas #confettiCanvas class="absolute -top-8 sm:-top-12 left-1/2 -translate-x-1/2 w-32 sm:w-40 h-32 sm:h-40 pointer-events-none z-[9999]"></canvas>
     </div>
 
     <div class="flex justify-center z-1 mt-4 sm:mt-6" *ngIf="exerciseModus == 'Schreiben'">
