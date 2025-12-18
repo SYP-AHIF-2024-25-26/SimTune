@@ -27,17 +27,6 @@
         class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         [(ngModel)]="confirmPassword"
       >
-
-      <div class="flex items-center justify-center space-x-6 mt-4">
-        <label class="input-wrapper flex items-center space-x-4 cursor-pointer border-2 border-black p-3 rounded-lg checked:border-blue-600">
-          <input type="radio" name="role" value="student" class="form-radio text-blue-600 h-6 w-6 border-2 border-black" [(ngModel)]="selectedRole">
-          <span class="text-lg text-gray-800">Schüler</span>
-        </label>
-        <label class="input-wrapper flex items-center space-x-4 cursor-pointer border-2 border-black p-3 rounded-lg peer-checked:border-blue-600">
-          <input type="radio" name="role" value="teacher" class="form-radio text-blue-600 h-6 w-6 border-2 border-black"  [(ngModel)]="selectedRole">
-          <span class="text-lg text-gray-800">Lehrer</span>
-        </label>
-      </div>
     </div>
 
     <div *ngIf="errorMessage()" class="transform bg-red-500 text-white py-2 px-6 rounded-lg shadow-lg flex items-center justify-between w-96" [class.error-highlight]="errorHighlighted()">

@@ -17,7 +17,6 @@ export class RegisterComponent {
   password = signal<string | "">("");
   confirmPassword = signal<string | "">("");
   errorMessage = signal<string>("");
-  selectedRole = signal<'student' | 'teacher' | null>(null);
   errorHighlighted = signal<boolean>(false);
   showModal = signal<boolean>(false);
 
@@ -35,7 +34,6 @@ export class RegisterComponent {
       [this.password() == "", "Passwort darf nicht leer sein."],
       [this.confirmPassword() == "", "Passwortbestätigung darf nicht leer sein."],
       [this.password() !== this.confirmPassword(), "Passwörter stimmen nicht überein."],
-      [this.selectedRole() == null, "Bitte wählen Sie eine Rolle aus."],
     ].find(([condition]) => condition)?.[1];
 
 
