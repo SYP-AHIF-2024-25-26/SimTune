@@ -45,7 +45,6 @@ export class ProfilePageComponent {
 
   email = signal('');
   benutzername = signal('');
-  rolle = signal('');
 
   constructor(private router: Router) {}
 
@@ -68,7 +67,6 @@ export class ProfilePageComponent {
 
     this.email.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]);
     this.benutzername.set(decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
-    this.rolle.set('not defined');
 
     await Promise.all([
       this.getExercises(),

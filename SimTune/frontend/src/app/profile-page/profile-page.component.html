@@ -15,64 +15,65 @@
     ←
   </div>
 
-  <div class="flex flex-col justify-between items-start p-6 lg:p-8 bg-gray-100 shadow-lg w-full lg:max-w-md rounded-2xl lg:-ml-8 mt-0 lg:mt-12 mb-6 lg:mb-0">
-    <div class="text-2xl lg:text-3xl font-bold mb-6 text-center w-full text-gray-800 tracking-tight">
-      Profil Übersicht
+<div
+  class="flex flex-col p-6 lg:p-8 bg-gray-100 shadow-lg w-full lg:max-w-md rounded-2xl lg:-ml-8 mt-0 lg:mt-12 mb-6 lg:mb-0"
+>
+  <!-- Header -->
+  <div class="text-center mb-6">
+    <div class="text-lg text-gray-500 tracking-wide mb-2">
+      Profil
     </div>
 
-    <div class="text-base lg:text-lg font-semibold mb-4 text-gray-700 w-full">
-      E-Mail:
-      <span class="text-sm lg:text-base italic font-normal underline text-blue-500 break-all">{{ email() }}</span>
+    <!-- Benutzername = Fokus -->
+    <div class="text-3xl lg:text-2xl font-extrabold text-gray-900 mt-1">
+      {{ benutzername() }}
     </div>
 
-    <div class="text-base lg:text-lg font-semibold mb-4 text-gray-700 w-full">
-      Benutzername:
-      <span class="text-sm lg:text-base italic font-normal">{{ benutzername() }}</span>
-    </div>
-
-    <div class="text-base lg:text-lg font-semibold mb-6 lg:mb-8 text-gray-700 w-full">
-      Rolle:
-      <span class="text-sm lg:text-base italic font-normal">{{ rolle() }}</span>
-    </div>
-
-    <!-- Desktop: Text-only buttons -->
-    <div class="hidden lg:block w-full">
-      <div
-        class="text-left text-red-600 hover:text-red-700 font-medium cursor-pointer transition underline"
-        (click)="confirmDelete()"
-      >
-        Konto löschen
-      </div>
-
-      <div
-        class="text-left mt-3 text-blue-600 hover:text-blue-700 cursor-pointer transition underline"
-        (click)="logout()"
-      >
-        Abmelden
-      </div>
-    </div>
-
-    <!-- Mobile: Button style -->
-    <div class="lg:hidden w-full">
-      <div
-        class="w-full text-center py-3 rounded-lg text-white font-semibold cursor-pointer transition duration-300 ease-in-out"
-        [ngClass]="{
-          'bg-red-600 hover:bg-red-500': !isClicked,
-          'bg-red-700 hover:bg-red-600': isClicked
-        }"
-        (click)="confirmDelete()"
-      >
-        Konto löschen
-      </div>
-
-      <div
-        class="w-full text-center mt-4 py-3 rounded-lg bg-gray-200 text-gray-700 font-medium cursor-pointer hover:bg-gray-300 transition"
-        (click)="logout()"
-      >
-        Abmelden
-      </div>
+    <!-- E-Mail sekundär -->
+    <div class="mt-2 text-sm lg:text-base text-blue-600 underline italic break-all hover:text-blue-400 transition-colors duration-150 cursor-default">
+      {{ email() }}
     </div>
   </div>
+
+  <!-- Divider -->
+  <div class="border-t border-gray-300 my-6"></div>
+
+  <!-- Desktop Actions -->
+  <div class="hidden lg:flex flex-row justify-between w-full">
+    <button
+      class="text-left text-blue-600 hover:text-blue-700 underline transition"
+      (click)="logout()"
+    >
+      Abmelden
+    </button>
+
+    <button
+      class="text-right text-red-600 hover:text-red-700 underline transition"
+      (click)="confirmDelete()"
+    >
+      Konto löschen
+    </button>
+  </div>
+
+
+  <!-- Mobile Actions -->
+  <div class="lg:hidden flex flex-col gap-4">
+    <button
+      class="w-full py-3 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition"
+      (click)="logout()"
+    >
+      Abmelden
+    </button>
+
+    <button
+      class="w-full py-3 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition"
+      (click)="confirmDelete()"
+    >
+      Konto löschen
+    </button>
+  </div>
+</div>
+
 
   <div *ngIf="showDialog" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
     <div class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-sm text-center">
