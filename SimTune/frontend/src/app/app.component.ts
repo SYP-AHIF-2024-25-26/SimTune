@@ -44,6 +44,12 @@ export class AppComponent {
   }
 
   isActiveUebungen(): boolean {
+    const isPruefung = localStorage.getItem("isPruefung");
+
+    if(isPruefung === "yes") {
+      return false;
+    }
+
     const currentUrl = this.router.url;
 
     return !(
@@ -56,6 +62,12 @@ export class AppComponent {
   }
 
   isActivePruefung(): boolean {
+    const isPruefung = localStorage.getItem("isPruefung");
+
+    if(isPruefung === "yes") {
+      return true;
+    }
+
     const currentUrl = this.router.url;
 
     return currentUrl.startsWith('/pruefungen');
