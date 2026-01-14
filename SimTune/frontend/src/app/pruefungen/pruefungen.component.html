@@ -1,71 +1,79 @@
-<div class="flex w-full min-h-screen p-8 overflow-hidden gap-2">
+<div class="flex flex-col lg:flex-row w-full min-h-screen p-4 md:p-6 lg:p-8 gap-6 overflow-y-auto lg:items-center">
 
-  <div class="flex flex-col items-center justify-center space-y-6 w-96 ml-24">
+  <div class="flex justify-center lg:justify-start lg:pl-32 w-full lg:w-auto">
 
-    <div class="bg-costumLightGray p-6 rounded-2xl shadow-md w-full">
-      <h2 class="text-costumDarkGray text-xl font-semibold mb-4 text-center">
-        Prüfungssimulation
-      </h2>
+    <div class="flex flex-col items-center justify-start space-y-6
+                w-full max-w-xl
+                lg:w-96 lg:max-w-none">
 
-      <div class="mb-4 flex items-center justify-center bg-white p-4 rounded-lg shadow-sm max-w-xs mx-auto">
-        <label for="number-selector" class="mr-4 text-costumDarkGray font-medium whitespace-nowrap">
-          Übungsanzahl:
-        </label>
-        <input
-          class="w-20 text-center outline-none appearance-none focus:ring-0 border-2 border-gray-300 rounded-3xl"
-          type="number"
-          id="number-selector"
-          [value]="selectedNumber() === null ? '' : selectedNumber()"
-          (input)="onInput($event)"
-          min="1"
-          [max]="maxValue"
-        />
+      <div class="bg-costumLightGray p-6 rounded-2xl shadow-md w-full">
+        <h2 class="text-costumDarkGray text-xl font-semibold mb-4 text-center">
+          Prüfungssimulation
+        </h2>
+
+        <div class="mb-4 flex items-center justify-center bg-white p-4 rounded-lg shadow-sm max-w-xs mx-auto">
+          <label class="mr-4 text-costumDarkGray font-medium whitespace-nowrap">
+            Übungsanzahl:
+          </label>
+          <input
+            class="w-20 text-center outline-none appearance-none focus:ring-0 border-2 border-gray-300 rounded-3xl"
+            type="number"
+            [value]="selectedNumber() === null ? '' : selectedNumber()"
+            (input)="onInput($event)"
+            min="1"
+            [max]="maxValue"
+          />
+        </div>
+
+        <h3 class="text-costumBlue font-medium mb-2">Übungsart</h3>
+
+        <div class="space-y-2 mb-4">
+          <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
+            <input type="checkbox" [checked]="selectedTypes().includes('Töne')" (click)="toggleType('Töne')" class="mr-2"/> Töne
+          </label>
+          <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
+            <input type="checkbox" [checked]="selectedTypes().includes('Rythmus')" (click)="toggleType('Rythmus')" class="mr-2"/> Rythmus
+          </label>
+          <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
+            <input type="checkbox" [checked]="selectedTypes().includes('Intervalle')" (click)="toggleType('Intervalle')" class="mr-2"/> Intervalle
+          </label>
+          <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
+            <input type="checkbox" [checked]="selectedTypes().includes('Tonleitern')" (click)="toggleType('Tonleitern')" class="mr-2"/> Tonleitern
+          </label>
+          <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
+            <input type="checkbox" [checked]="selectedTypes().includes('Tonarten')" (click)="toggleType('Tonarten')" class="mr-2"/> Tonarten
+          </label>
+          <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
+            <input type="checkbox" [checked]="selectedTypes().includes('Akkorde')" (click)="toggleType('Akkorde')" class="mr-2"/> Akkorde
+          </label>
+        </div>
+
+        <div class="text-red-600 font-medium text-center mt-2" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
       </div>
 
-      <h3 class="text-costumBlue font-medium mb-2">Übungsart</h3>
+      <button
+        class="bg-costumBlue text-white p-2 px-6 rounded-3xl text-lg hover:bg-blue-600 w-full max-w-xs"
+        (click)="startSimulation()">
+        starten
+      </button>
 
-      <div class="space-y-2 mb-4">
-        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
-          <input type="checkbox" [checked]="selectedTypes().includes('Töne')" (click)="toggleType('Töne')" class="mr-2"/>
-          Töne
-        </label>
-        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
-          <input type="checkbox" [checked]="selectedTypes().includes('Rythmus')" (click)="toggleType('Rythmus')" class="mr-2"/>
-          Rythmus
-        </label>
-        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
-          <input type="checkbox" [checked]="selectedTypes().includes('Intervalle')" (click)="toggleType('Intervalle')" class="mr-2"/>
-          Intervalle
-        </label>
-        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
-          <input type="checkbox" [checked]="selectedTypes().includes('Tonleitern')" (click)="toggleType('Tonleitern')" class="mr-2"/>
-          Tonleitern
-        </label>
-        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
-          <input type="checkbox" [checked]="selectedTypes().includes('Tonarten')" (click)="toggleType('Tonarten')" class="mr-2"/>
-          Tonarten
-        </label>
-        <label class="flex items-center bg-white p-2 rounded-lg shadow-sm max-w-xs">
-          <input type="checkbox" [checked]="selectedTypes().includes('Akkorde')" (click)="toggleType('Akkorde')" class="mr-2"/>
-          Akkorde
-        </label>
+      <div class="md:hidden w-full max-w-xs bg-white p-4 rounded-xl shadow-md text-center">
+        <p class="text-sm text-gray-600 mb-2">
+          Grafische Auswertung ist auf dem Handy nicht verfügbar.
+        </p>
+        <button
+          class="text-costumBlue underline font-medium hover:text-blue-600 transition"
+          (click)="goToResults()">
+          Letzte Prüfungen ansehen →
+        </button>
       </div>
 
-      <div class="text-red-600 font-medium text-center mt-2" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
     </div>
-
-    <button
-      class="bg-costumBlue text-white p-2 px-6 rounded-3xl text-lg hover:bg-blue-600 mt-4"
-      (click)="startSimulation()">
-      starten
-    </button>
-
   </div>
 
-  <div class="flex-1 flex items-center justify-center">
-    <div id="plot" class="w-full max-w-5xl h-3/4"></div>
+  <div class="hidden md:flex flex-1 h-[calc(100vh-6rem)] items-center justify-center">
+    <div id="plot" class="w-full max-w-5xl h-[70vh]"></div>
   </div>
-
 </div>

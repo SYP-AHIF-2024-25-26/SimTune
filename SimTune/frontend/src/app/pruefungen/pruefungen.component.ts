@@ -127,6 +127,11 @@ export class PruefungenComponent {
     return false;
   }
 
+  goToResults() {
+    this.router.navigate(['/results']);
+  }
+
+
   async startSimulation() {
     if(this.checkErrors()) { return; }
 
