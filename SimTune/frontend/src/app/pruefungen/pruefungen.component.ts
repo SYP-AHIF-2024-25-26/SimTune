@@ -128,7 +128,9 @@ export class PruefungenComponent {
   }
 
   goToResults() {
-    this.router.navigate(['/results']);
+    this.router.navigateByUrl("/profile-page", {
+            state: { isPruefung: true }
+    });
   }
 
 
