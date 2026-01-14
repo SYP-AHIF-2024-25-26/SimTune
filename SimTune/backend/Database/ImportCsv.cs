@@ -21,14 +21,55 @@ public static class ImportCsv
         {
             if (exercisesByKey.TryGetValue(record.ExerciseKey, out var exercise))
             {
-                // Prüfe, ob dieser Content bereits existiert
-                bool contentExists = exercise.ExerciseContents.Any(ec => 
+                // Prüfe, ob dieser Content bereits existiert (basierend auf ContentId oder CorrectAnswer + Instruction)
+                var existingContent = exercise.ExerciseContents.FirstOrDefault(ec => 
                     ec.CorrectAnswer == record.CorrectAnswer && 
                     ec.Instruction == record.Instruction
                 );
 
-                if (!contentExists)
+                if (existingContent != null)
                 {
+                    // Update existing content - prüfe ALLE Eigenschaften
+                    bool hasChanged = false;
+                    
+                    if (existingContent.Instruction != record.Instruction)
+                    {
+                        existingContent.Instruction = record.Instruction;
+                        hasChanged = true;
+                    }
+                    
+                    if (existingContent.NotesToRead != record.NotesToRead)
+                    {
+                        existingContent.NotesToRead = record.NotesToRead;
+                        hasChanged = true;
+                    }
+                    
+                    if (existingContent.AllAnswers != record.AllAnswers)
+                    {
+                        existingContent.AllAnswers = record.AllAnswers;
+                        hasChanged = true;
+                    }
+                    
+                    if (existingContent.PossibleAnswers != record.PossibleAnswers)
+                    {
+                        existingContent.PossibleAnswers = record.PossibleAnswers;
+                        hasChanged = true;
+                    }
+                    
+                    if (existingContent.CorrectAnswer != record.CorrectAnswer)
+                    {
+                        existingContent.CorrectAnswer = record.CorrectAnswer;
+                        hasChanged = true;
+                    }
+                    
+                    if (hasChanged)
+                    {
+                        Console.WriteLine($"ExerciseContent aktualisiert: {record.ExerciseKey} - {record.Instruction}");
+                    }
+                }
+                else
+                {
+                    // Content existiert noch nicht, neu anlegen
                     var content = new ExerciseContent
                     {
                         Instruction = record.Instruction,
@@ -39,6 +80,7 @@ public static class ImportCsv
                         Exercise = exercise
                     };
                     exercise.ExerciseContents.Add(content);
+                    Console.WriteLine($"ExerciseContent neu angelegt: {record.ExerciseKey} - {record.Instruction}");
                 }
             }
             else

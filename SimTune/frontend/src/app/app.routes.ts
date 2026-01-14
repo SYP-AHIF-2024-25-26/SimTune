@@ -284,7 +284,97 @@ export const routes: Routes = [
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Tonleitern', url: '/tonleitern' },
       ],
-      taskType: 'Tonleitern'
+      taskType: ''
+    },
+  },
+  {
+    path: 'tonleitern-dur',
+    component: UebungenComponent,
+    data: {
+      content: tonleiternData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonleitern', url: '/tonleitern' },
+        { label: 'Dur', url: '/tonleitern-dur' },
+      ],
+      taskType: 'TonleiternDur'
+    },
+  },
+  {
+    path: 'tonleitern-moll-natuerlich',
+    component: UebungenComponent,
+    data: {
+      content: tonleiternData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonleitern', url: '/tonleitern' },
+        { label: 'Moll Natürlich', url: '/tonleitern-moll-natuerlich' },
+      ],
+      taskType: 'TonleiternMollNatuerlich'
+    },
+  },
+  {
+    path: 'tonleitern-moll-harmonisch',
+    component: UebungenComponent,
+    data: {
+      content: tonleiternData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonleitern', url: '/tonleitern' },
+        { label: 'Moll Harmonisch', url: '/tonleitern-moll-harmonisch' },
+      ],
+      taskType: 'TonleiternMollHarmonisch'
+    },
+  },
+  {
+    path: 'tonleitern-moll-melodisch',
+    component: UebungenComponent,
+    data: {
+      content: tonleiternData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonleitern', url: '/tonleitern' },
+        { label: 'Moll Melodisch', url: '/tonleitern-moll-melodisch' },
+      ],
+      taskType: 'TonleiternMollMelodisch'
+    },
+  },
+  {
+    path: 'tonleitern-vorzeichen',
+    component: UebungenComponent,
+    data: {
+      content: tonleiternData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonleitern', url: '/tonleitern' },
+        { label: 'Vorzeichen & Quintenzirkel', url: '/tonleitern-vorzeichen' },
+      ],
+      taskType: 'TonleiternVorzeichen'
+    },
+  },
+  {
+    path: 'tonleitern-mix',
+    component: UebungenComponent,
+    data: {
+      content: tonleiternData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonleitern', url: '/tonleitern' },
+        { label: 'Dur vs. Moll', url: '/tonleitern-mix' },
+      ],
+      taskType: 'TonleiternMix'
     },
   },
   {

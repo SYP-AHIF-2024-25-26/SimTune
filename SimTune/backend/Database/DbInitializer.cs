@@ -42,11 +42,6 @@ public static class DbInitializer
             new Exercise { Key = "intervalle_basis_alle_lesen", Description = "Lies alle Intervalle", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.IntervalleBasis, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Key = "intervalle_basis_alle_schreiben", Description = "Schreibe alle Intervalle", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.IntervalleBasis, ExerciseModus = ExerciseModus.Schreiben },
 
-            // Tonleitern (IDs 27-29)
-            new Exercise { Key = "tonleitern_dur_natuerlich_moll", Description = "Bestimme die Tonleiter, dur und natürliches moll", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.Tonleitern, ExerciseModus = ExerciseModus.Lesen },
-            new Exercise { Key = "tonleitern_dur_moll", Description = "Bestimme die Tonleiter, dur und moll", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.Tonleitern, ExerciseModus = ExerciseModus.Lesen },
-            new Exercise { Key = "tonleitern_dur_moll_natuerlich_moll", Description = "Bestimme die Tonleiter, dur, moll und natürliches moll", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.Tonleitern, ExerciseModus = ExerciseModus.Lesen },
-
             // Versetzungszeichen Violin (IDs 30-34)
             new Exercise { Key = "versetzungszeichen_violin_kreuz_cis_dis_fis", Description = "Lies Kreuz-Noten (cis, dis, fis)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Key = "versetzungszeichen_violin_b_des_es_ges", Description = "Lies B-Noten (des, es, ges)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.VersetzungszeichenViolinschluessel, ExerciseModus = ExerciseModus.Lesen },
@@ -93,6 +88,23 @@ public static class DbInitializer
             new Exercise { Key = "intervalle_gross_klein_sexte_septime", Description = "Lies Sexten und Septimen (groß/klein)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.IntervalleGrossKlein, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Key = "intervalle_gross_klein_alle", Description = "Lies alle großen/kleinen Intervalle", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.IntervalleGrossKlein, ExerciseModus = ExerciseModus.Lesen },
             new Exercise { Key = "intervalle_vermindert_uebermaessig", Description = "Lies übermäßige/verminderte Intervalle", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.IntervalleVermindertUebermaessig, ExerciseModus = ExerciseModus.Lesen },
+
+            // --- NEUE TONLEITER ÜBUNGEN (LESEN) ---
+
+            // 1. Dur Tonleitern (IDs 100-109)
+            new Exercise { Key = "tonleitern_dur_lesen", Description = "Bestimme die Dur-Tonleiter", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonleiternDur, ExerciseModus = ExerciseModus.Lesen },
+
+            // 2. Moll Tonleitern (IDs 110-129)
+            new Exercise { Key = "tonleitern_moll_natuerlich_lesen", Description = "Bestimme die natürliche Moll-Tonleiter", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonleiternMollNatuerlich, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "tonleitern_moll_harmonisch_lesen", Description = "Bestimme die harmonische Moll-Tonleiter", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonleiternMollHarmonisch, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "tonleitern_moll_melodisch_lesen", Description = "Bestimme die melodische Moll-Tonleiter", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonleiternMollMelodisch, ExerciseModus = ExerciseModus.Lesen },
+
+            // 3. Vorzeichen / Quintenzirkel (IDs 130-139)
+            new Exercise { Key = "tonleitern_vorzeichen_dur_lesen", Description = "Welche Dur-Tonart hat diese Vorzeichen?", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonleiternVorzeichen, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "tonleitern_vorzeichen_moll_lesen", Description = "Welche Moll-Tonart hat diese Vorzeichen?", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonleiternVorzeichen, ExerciseModus = ExerciseModus.Lesen },
+
+            // 4. Mix / Unterscheidung (IDs 140-149)
+            new Exercise { Key = "tonleitern_mix_dur_moll_lesen", Description = "Ist das Dur, Moll (nat.), (harm.) oder (mel.)?", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonleiternMix, ExerciseModus = ExerciseModus.Lesen },
         };
 
         // Bestehende Übungen aus DB laden

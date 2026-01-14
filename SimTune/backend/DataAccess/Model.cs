@@ -110,7 +110,14 @@ namespace backend.DataAccess
         IntervalleRein,
         IntervalleGrossKlein,
         IntervalleVermindertUebermaessig,
-        Tonleitern
+        Tonleitern,
+        TonleiternDur,
+        TonleiternMollNatuerlich,
+        TonleiternMollHarmonisch,
+        TonleiternMollMelodisch,
+        TonleiternVorzeichen,
+        TonleiternMix
+
     }
 }
 

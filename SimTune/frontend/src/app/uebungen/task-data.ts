@@ -176,24 +176,6 @@ export const notenSystemData: TaskData = {
   "task-url": ""
 }
 
-export const tonleiternData: TaskData = {
-  "header": "",
-  "groups": [
-    {
-      "group-header": "",
-      "cards": [
-        {
-          "card-header": "",
-          "card-header-image-url": "",
-          "card-image-url": "",
-          "card-url": ""
-        }
-      ]
-    }
-  ],
-  "task-type": "tonleitern",
-  "task-url": ""
-}
 
 export const intervalleData: TaskData = {
   "header": "Intervalle",
@@ -234,5 +216,64 @@ export const intervalleData: TaskData = {
     }
   ],
   "task-type": "",
+  "task-url": ""
+}
+
+export const tonleiternData: TaskData = {
+  "header": "Tonleitern",
+  "groups": [
+    {
+      "group-header": "Dur (Major)",
+      "cards": [
+        {
+          "card-header": "Dur-Tonleitern",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/Tonleitern-Notes.png",
+          "card-url": "/tonleitern-dur"
+        }
+      ]
+    },
+    {
+      "group-header": "Moll (Minor)",
+      "cards": [
+        {
+          "card-header": "Natürliches Moll",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/Tonleitern-Notes.png",
+          "card-url": "/tonleitern-moll-natuerlich"
+        },
+        {
+          "card-header": "Harmonisches Moll",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/Tonleitern-Notes.png",
+          "card-url": "/tonleitern-moll-harmonisch"
+        },
+        {
+          "card-header": "Melodisches Moll",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/Tonleitern-Notes.png",
+          "card-url": "/tonleitern-moll-melodisch"
+        }
+      ]
+    },
+    {
+      "group-header": "Tonart & System",
+      "cards": [
+        {
+          "card-header": "Vorzeichen / Quintenzirkel",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/Tonarten-Notes.png",
+          "card-url": "/tonleitern-vorzeichen"
+        },
+        {
+          "card-header": "Dur vs. Moll",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/Tonleitern-Notes.png",
+          "card-url": "/tonleitern-mix"
+        }
+      ]
+    }
+  ],
+  "task-type": "tonleitern",
   "task-url": ""
 }
