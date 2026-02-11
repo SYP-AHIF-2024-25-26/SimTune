@@ -44,6 +44,7 @@ export class TaskComponent implements OnInit {
   exerciseModus: string = '';
   notationType: string = '';
   exerciseType: string = '';
+  showCancelDialog = false;
 
   // Notensystem
   allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
@@ -80,6 +81,7 @@ export class TaskComponent implements OnInit {
     if (!exerciseIds.length) return;
     const fetchPromises = exerciseIds.map(id => fetchRestEndpoint(API_URL + `exercises/${id}`, 'GET'));
     this.parsed = await Promise.all(fetchPromises);
+    console.log(this.parsed);
     this.previousUrl = sessionStorage.getItem('previousUrl') || null;
     this.renderAbcSafely();
   }

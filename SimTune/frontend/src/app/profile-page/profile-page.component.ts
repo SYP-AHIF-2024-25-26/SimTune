@@ -57,6 +57,7 @@ export class ProfilePageComponent {
   selectedExerciseTypes: string[] = [...this.exerciseTypes];
   showSortOptions = false;
   progress = signal<number>(0);
+  averagePercent = signal<number>(0);
   activeSort = signal<string | null>(null);
   currentSortCol: string | null = null;
   selected: "simulation" | "exercise" = "exercise";
@@ -77,6 +78,26 @@ export class ProfilePageComponent {
     ]);
 
     this.progress.set(await this.getProgress());
+    const result = await this.getAveragePercent();
+
+    this.averagePercent.set(
+      typeof result === 'string'
+        ? Number(result.replace('%', ''))
+        : result
+    );
+  }
+
+  async getAveragePercent() {
+    if (this.test.length > 0) {
+      const avg =
+        this.test.reduce((sum, t) => {
+          const value = Number(t['Achieved Percentage'].replace('%', ''));
+          return sum + value;
+        }, 0) / this.test.length;
+
+      return avg.toFixed(2);
+    }
+    return 0;
   }
 
   async getTests() {

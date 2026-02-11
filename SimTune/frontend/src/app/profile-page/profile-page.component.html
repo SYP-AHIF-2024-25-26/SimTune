@@ -104,10 +104,11 @@
           <div class="flex justify-between items-center mb-1 opacity-100 transition-opacity duration-300"
               [class.opacity-0]="selected !== 'exercise'">
             <span class="text-xs lg:text-sm font-medium text-gray-700 tracking-wide uppercase">
-              Fortschritt
+              {{ selected === 'exercise' ? 'Fortschritt' : 'Durchschnittliche Prozent' }}
             </span>
             <span class="text-xs lg:text-sm font-semibold text-gray-800">
               {{ selected === 'exercise' ? (progress() + '%') : '' }}
+              {{ selected === 'simulation' ? (averagePercent() + '%') : ''}}
             </span>
           </div>
 
@@ -115,16 +116,16 @@
               [class.opacity-0]="selected !== 'exercise'">
             <div
               class="bg-gradient-to-r from-green-400 to-green-600 h-3 lg:h-4 rounded-full transition-all duration-500"
-              [style.width.%]="selected === 'exercise' ? progress() : 0"
+              [style.width.%]="selected === 'exercise' ? progress() : averagePercent()"
             ></div>
           </div>
         </div>
       </div>
 
       <div class="inline-block select-none cursor-pointer mb-2" (click)="toggle()">
-        <div class="relative flex items-center w-40 h-8 bg-costumBlue rounded-full p-1">
+        <div class="relative flex items-center w-40 h-8 bg-white rounded-full p-1">
           <div
-            class="absolute top-1 left-1 h-6 w-18 bg-white rounded-full shadow-md transition-transform duration-300 z-0"
+            class="absolute top-1 left-1 h-6 w-18 bg-costumBlue rounded-full shadow-md transition-transform duration-300 z-0"
             [ngClass]="{
               'translate-x-0.5': selected === 'exercise',
               'translate-x-19.5': selected === 'simulation'
@@ -133,16 +134,16 @@
           <div
             class="w-1/2 text-center text-xs z-10 transition-all duration-300"
             [ngClass]="{
-              'text-costumBlue font-semibold': selected === 'exercise',
-              'text-white opacity-80 font-medium': selected !== 'exercise'
+              'text-white font-semibold': selected === 'exercise',
+              'text-costumBlue opacity-80 font-medium': selected !== 'exercise'
             }">
             Übungen
           </div>
           <div
             class="w-1/2 text-center text-xs z-10 transition-all duration-300"
             [ngClass]="{
-              'text-costumBlue font-semibold': selected === 'simulation',
-              'text-white opacity-80 font-medium': selected !== 'simulation'
+              'text-white font-semibold': selected === 'simulation',
+              'text-costumBlue opacity-80 font-medium': selected !== 'simulation'
             }">
             Prüfungen
           </div>
@@ -174,7 +175,7 @@
                 <th class="p-3 w-1/6 cursor-pointer" (click)="sortData('Attempts')">Versuche</th>
                 <th class="p-3 w-1/6 cursor-pointer" (click)="sortData('Exercise Allocation')">Übungsart</th>
               } @else {
-                <th class="p-3 cursor-pointer" (click)="sortData('Question Count')">Übungsanzahl</th>
+                <th class="p-3 w-12 cursor-pointer" (click)="sortData('Question Count')">Übungen</th>
                 <th class="p-3 cursor-pointer" (click)="sortData('Exercise Allocation')">Übungsarten</th>
                 <th class="p-3 cursor-pointer" (click)="sortData('Achieved Percentage')">Erreichte Prozente</th>
                 <th class="p-3 cursor-pointer" (click)="sortData('Completed At')">Abgeschlossem am</th>
@@ -200,7 +201,7 @@
                 </ng-container>
               } @else {
                 <ng-container>
-                  <td class="p-3">{{ ex['Question Count'] }}</td>
+                  <td class="p-3 w-12">{{ ex['Question Count'] }}</td>
                   <td class="p-3">{{ ex['Exercise Allocation'] }}</td>
                   <td class="p-3 font-semibold"
                       [ngClass]="{

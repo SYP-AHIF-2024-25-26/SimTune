@@ -36,11 +36,46 @@
   </div>
 </div>
 
+@if (showCancelDialog) {
+  <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-80">
+      <div class="text-lg font-semibold mb-2">Vorgang abbrechen?</div>
+      <div class="text-sm text-gray-600 mb-4">
+        Nicht gespeicherte Änderungen gehen verloren.
+      </div>
+
+      <div class="flex justify-end gap-3">
+        <button
+          class="px-4 py-2 text-sm text-gray-500 hover:text-gray-700"
+          (click)="showCancelDialog = false"
+        >
+          Weiterarbeiten
+        </button>
+
+        <button
+          class="px-4 py-2 text-sm text-red-600 hover:text-red-700"
+          (click)="goBack()"
+        >
+          Abbrechen
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+
 <div class="p-2 sm:p-4">
+  <div *ngIf="parsed?.length"
+      class="text-center text-sm sm:text-base text-gray-500 font-medium mt-10 mb-1">
+    {{ isPruefung === 'yes' ? 'Prüfungssimulation' : parsed[0].description }}
+  </div>
   <!--  Header  -->
-  <div class="flex justify-center items-center mx-2 sm:mx-8 md:mx-16 lg:mx-32 xl:mx-52 mt-6 sm:mt-8 md:mt-12 mb-4 sm:mb-6 md:mb-8">
-    <div (click)="goBack()" class="text-2xl sm:text-3xl md:text-4xl cursor-pointer transition-transform hover:scale-110 text-gray-500 hover:text-gray-700 ml-2 sm:ml-4 md:ml-8 select-none">
-      ←
+  <div class="flex justify-center items-center mx-2 sm:mx-8 md:mx-16 lg:mx-32 xl:mx-52 mt-1 mb-4">
+    <div
+      (click)="showCancelDialog = true"
+      class="text-sm italic underline cursor-pointer text-gray-500 hover:text-gray-700 ml-2 sm:ml-4 md:ml-8 select-none"
+    >
+      Abbrechen
     </div>
 
     <div class="h-5 sm:h-6 w-full sm:w-3/4 bg-costumGray rounded-2xl shadow-lg mx-3 sm:mx-6 md:mx-12 relative">
