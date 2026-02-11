@@ -3,7 +3,7 @@ import { UebungenComponent } from './uebungen/uebungen.component';
 import { PruefungenComponent } from './pruefungen/pruefungen.component';
 import { UnterlagenComponent } from './unterlagen/unterlagen.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { intervalleData, notenSystemData, stammtoeneData, toeneData, tonleiternData, uebungenData } from './uebungen/task-data';
+import { akkordeData, intervalleData, notenSystemData, rhythmusData, stammtoeneData, toeneData, tonartenData, tonleiternData, uebungenData } from './uebungen/task-data';
 import { TaskComponent } from './task/task.component';
 import { PianoComponent } from './piano/piano.component';
 import { NotesystemComponent } from './notesystem/notesystem.component';
@@ -174,13 +174,254 @@ export const routes: Routes = [
     path: 'rhythmus',
     component: UebungenComponent,
     data: {
-      content: toeneData,
+      content: rhythmusData,
       breadcrumbElements: [
         { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Grundlagen', url: '/uebungen' },
         { label: 'Rhythmus', url: '/rhythmus' },
       ],
+      taskType: ''
+    },
+  },
+  {
+    path: 'rhythmus-notenwerte-ganze-halbe',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Notenwerte', url: '/rhythmus' },
+        { label: 'Ganze & Halbe Noten', url: '/rhythmus-notenwerte-ganze-halbe' },
+      ],
+      taskType: 'RhythmusNotenwerte'
+    },
+  },
+  {
+    path: 'rhythmus-notenwerte-viertel-achtel',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Notenwerte', url: '/rhythmus' },
+        { label: 'Viertel & Achtel Noten', url: '/rhythmus-notenwerte-viertel-achtel' },
+      ],
+      taskType: 'RhythmusNotenwerte'
+    },
+  },
+  {
+    path: 'rhythmus-notenwerte-16tel-32stel',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Notenwerte', url: '/rhythmus' },
+        { label: '16tel & 32stel Noten', url: '/rhythmus-notenwerte-16tel-32stel' },
+      ],
+      taskType: 'RhythmusNotenwerte'
+    },
+  },
+  {
+    path: 'rhythmus-notenwerte-alle',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Notenwerte', url: '/rhythmus' },
+        { label: 'Alle Notenwerte', url: '/rhythmus-notenwerte-alle' },
+      ],
+      taskType: 'RhythmusNotenwerte'
+    },
+  },
+  {
+    path: 'rhythmus-pausen-ganze-halbe',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Pausenwerte', url: '/rhythmus' },
+        { label: 'Ganze & Halbe Pausen', url: '/rhythmus-pausen-ganze-halbe' },
+      ],
+      taskType: 'RhythmusPausen'
+    },
+  },
+  {
+    path: 'rhythmus-pausen-viertel-achtel',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Pausenwerte', url: '/rhythmus' },
+        { label: 'Viertel & Achtel Pausen', url: '/rhythmus-pausen-viertel-achtel' },
+      ],
+      taskType: 'RhythmusPausen'
+    },
+  },
+  {
+    path: 'rhythmus-pausen-16tel-32stel',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Pausenwerte', url: '/rhythmus' },
+        { label: '16tel & 32stel Pausen', url: '/rhythmus-pausen-16tel-32stel' },
+      ],
+      taskType: 'RhythmusPausen'
+    },
+  },
+  {
+    path: 'rhythmus-pausen-alle',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Pausenwerte', url: '/rhythmus' },
+        { label: 'Alle Pausenwerte', url: '/rhythmus-pausen-alle' },
+      ],
+      taskType: 'RhythmusPausen'
+    },
+  },
+  {
+    path: 'rhythmus-punktiert-noten-lang',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Verlängerungspunkte', url: '/rhythmus' },
+        { label: 'Punktierte Noten (lang)', url: '/rhythmus-punktiert-noten-lang' },
+      ],
+      taskType: 'RhythmusPunktiertNoten'
+    },
+  },
+  {
+    path: 'rhythmus-punktiert-noten-kurz',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Verlängerungspunkte', url: '/rhythmus' },
+        { label: 'Punktierte Noten (kurz)', url: '/rhythmus-punktiert-noten-kurz' },
+      ],
+      taskType: 'RhythmusPunktiertNoten'
+    },
+  },
+  {
+    path: 'rhythmus-punktiert-noten-alle',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Verlängerungspunkte', url: '/rhythmus' },
+        { label: 'Alle punktierten Noten', url: '/rhythmus-punktiert-noten-alle' },
+      ],
+      taskType: 'RhythmusPunktiertNoten'
+    },
+  },
+  {
+    path: 'rhythmus-punktiert-pausen-lang',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Verlängerungspunkte', url: '/rhythmus' },
+        { label: 'Punktierte Pausen (lang)', url: '/rhythmus-punktiert-pausen-lang' },
+      ],
+      taskType: 'RhythmusPunktiertPausen'
+    },
+  },
+  {
+    path: 'rhythmus-punktiert-pausen-kurz',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Verlängerungspunkte', url: '/rhythmus' },
+        { label: 'Punktierte Pausen (kurz)', url: '/rhythmus-punktiert-pausen-kurz' },
+      ],
+      taskType: 'RhythmusPunktiertPausen'
+    },
+  },
+  {
+    path: 'rhythmus-punktiert-pausen-alle',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Verlängerungspunkte', url: '/rhythmus' },
+        { label: 'Alle punktierten Pausen', url: '/rhythmus-punktiert-pausen-alle' },
+      ],
+      taskType: 'RhythmusPunktiertPausen'
+    },
+  },
+  {
+    path: 'rhythmus-mix-alle',
+    component: UebungenComponent,
+    data: {
+      content: rhythmusData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Rhythmus', url: '/rhythmus' },
+        { label: 'Gemischt', url: '/rhythmus' },
+        { label: 'Alles gemischt', url: '/rhythmus-mix-alle' },
+      ],
+      taskType: 'RhythmusMix'
     },
   },
   {
@@ -264,13 +505,126 @@ export const routes: Routes = [
     path: 'akkorde',
     component: UebungenComponent,
     data: {
-      content: intervalleData,
+      content: akkordeData,
       breadcrumbElements: [
         { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Akkorde', url: '/akkorde' },
       ],
+      taskType: ''
+    },
+  },
+  {
+    path: 'akkorde-dur',
+    component: UebungenComponent,
+    data: {
+      content: akkordeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Akkorde', url: '/akkorde' },
+        { label: 'Dreiklänge Grundlagen', url: '/akkorde' },
+        { label: 'Dur-Dreiklänge', url: '/akkorde-dur' },
+      ],
+      taskType: 'AkkordeDurDreiklang'
+    },
+  },
+  {
+    path: 'akkorde-moll',
+    component: UebungenComponent,
+    data: {
+      content: akkordeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Akkorde', url: '/akkorde' },
+        { label: 'Dreiklänge Grundlagen', url: '/akkorde' },
+        { label: 'Moll-Dreiklänge', url: '/akkorde-moll' },
+      ],
+      taskType: 'AkkordeMollDreiklang'
+    },
+  },
+  {
+    path: 'akkorde-dur-moll',
+    component: UebungenComponent,
+    data: {
+      content: akkordeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Akkorde', url: '/akkorde' },
+        { label: 'Dreiklänge Grundlagen', url: '/akkorde' },
+        { label: 'Dur oder Moll?', url: '/akkorde-dur-moll' },
+      ],
+      taskType: 'AkkordeDurMoll'
+    },
+  },
+  {
+    path: 'akkorde-vermindert',
+    component: UebungenComponent,
+    data: {
+      content: akkordeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Akkorde', url: '/akkorde' },
+        { label: 'Erweiterte Dreiklänge', url: '/akkorde' },
+        { label: 'Verminderte Dreiklänge', url: '/akkorde-vermindert' },
+      ],
+      taskType: 'AkkordeVermindertUebermaessig'
+    },
+  },
+  {
+    path: 'akkorde-uebermaessig',
+    component: UebungenComponent,
+    data: {
+      content: akkordeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Akkorde', url: '/akkorde' },
+        { label: 'Erweiterte Dreiklänge', url: '/akkorde' },
+        { label: 'Übermäßige Dreiklänge', url: '/akkorde-uebermaessig' },
+      ],
+      taskType: 'AkkordeVermindertUebermaessig'
+    },
+  },
+  {
+    path: 'akkorde-alle',
+    component: UebungenComponent,
+    data: {
+      content: akkordeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Akkorde', url: '/akkorde' },
+        { label: 'Erweiterte Dreiklänge', url: '/akkorde' },
+        { label: 'Alle Dreiklangsarten', url: '/akkorde-alle' },
+      ],
+      taskType: 'AkkordeAlleDreiklaenge'
+    },
+  },
+  {
+    path: 'akkorde-umkehrungen',
+    component: UebungenComponent,
+    data: {
+      content: akkordeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Akkorde', url: '/akkorde' },
+        { label: 'Umkehrungen', url: '/akkorde' },
+        { label: 'Dreiklangsumkehrungen', url: '/akkorde-umkehrungen' },
+      ],
+      taskType: 'AkkordeUmkehrungen'
     },
   },
   {
@@ -381,14 +735,94 @@ export const routes: Routes = [
     path: 'tonarten',
     component: UebungenComponent,
     data: {
-      content: intervalleData,
+      content: tonartenData,
       breadcrumbElements: [
         { label: 'Home', url: '/homepage' },
         { label: 'Übungen', url: '/uebungen' },
         { label: 'Struktur', url: '/uebungen' },
         { label: 'Tonarten', url: '/tonarten' },
       ],
-      taskType: 'Tonarten'
+      taskType: ''
+    },
+  },
+  {
+    path: 'tonarten-kreuz',
+    component: UebungenComponent,
+    data: {
+      content: tonartenData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonarten', url: '/tonarten' },
+        { label: 'Kreuz & B', url: '/tonarten' },
+        { label: 'Kreuztonarten', url: '/tonarten-kreuz' },
+      ],
+      taskType: 'TonartenKreuz'
+    },
+  },
+  {
+    path: 'tonarten-b',
+    component: UebungenComponent,
+    data: {
+      content: tonartenData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonarten', url: '/tonarten' },
+        { label: 'Kreuz & B', url: '/tonarten' },
+        { label: 'B-Tonarten', url: '/tonarten-b' },
+      ],
+      taskType: 'TonartenB'
+    },
+  },
+  {
+    path: 'tonarten-vorzeichen',
+    component: UebungenComponent,
+    data: {
+      content: tonartenData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonarten', url: '/tonarten' },
+        { label: 'Versetzungszeichen', url: '/tonarten' },
+        { label: 'Kreuz, B & Auflösung', url: '/tonarten-vorzeichen' },
+      ],
+      taskType: 'TonartenVorzeichen'
+    },
+  },
+  {
+    path: 'tonarten-alle',
+    component: UebungenComponent,
+    data: {
+      content: tonartenData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonarten', url: '/tonarten' },
+        { label: 'Kreuz & B', url: '/tonarten' },
+        { label: 'Alle Tonarten', url: '/tonarten-alle' },
+      ],
+      taskType: 'TonartenAlle'
+    },
+  },
+  {
+    path: 'tonarten-paralleltonarten',
+    component: UebungenComponent,
+    data: {
+      content: tonartenData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Struktur', url: '/uebungen' },
+        { label: 'Tonarten', url: '/tonarten' },
+        { label: 'Paralleltonarten', url: '/tonarten' },
+        { label: 'Dur ↔ Moll', url: '/tonarten-paralleltonarten' },
+      ],
+      taskType: 'TonartenParalleltonarten'
     },
   },
   { path: 'pruefungen', component: PruefungenComponent },

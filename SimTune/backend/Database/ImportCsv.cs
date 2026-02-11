@@ -17,15 +17,18 @@ public static class ImportCsv
             .Include(e => e.ExerciseContents)
             .ToDictionary(e => e.Key, e => e);
 
+        // Gruppiere CSV-Records nach ExerciseKey, um ContentId-basiertes Matching zu ermöglichen
+        var recordsByKey = records.GroupBy(r => r.ExerciseKey).ToDictionary(g => g.Key, g => g.ToList());
+
         foreach (var record in records)
         {
             if (exercisesByKey.TryGetValue(record.ExerciseKey, out var exercise))
             {
-                // Prüfe, ob dieser Content bereits existiert (basierend auf ContentId oder CorrectAnswer + Instruction)
-                var existingContent = exercise.ExerciseContents.FirstOrDefault(ec => 
-                    ec.CorrectAnswer == record.CorrectAnswer && 
-                    ec.Instruction == record.Instruction
-                );
+                // Sortiere existierende Contents nach Id, um sie per ContentId (1-basiert) zu matchen
+                var sortedContents = exercise.ExerciseContents.OrderBy(ec => ec.Id).ToList();
+                var existingContent = record.ContentId >= 1 && record.ContentId <= sortedContents.Count
+                    ? sortedContents[record.ContentId - 1]
+                    : null;
 
                 if (existingContent != null)
                 {

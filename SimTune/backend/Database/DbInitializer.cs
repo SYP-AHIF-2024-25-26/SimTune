@@ -105,6 +105,68 @@ public static class DbInitializer
 
             // 4. Mix / Unterscheidung (IDs 140-149)
             new Exercise { Key = "tonleitern_mix_dur_moll_lesen", Description = "Ist das Dur, Moll (nat.), (harm.) oder (mel.)?", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonleiternMix, ExerciseModus = ExerciseModus.Lesen },
+
+            // --- RHYTHMUS ÜBUNGEN (NUR LESEN) ---
+
+            // 1. Notenwerte
+            new Exercise { Key = "rhythmus_notenwerte_ganze_halbe_lesen", Description = "Lies ganze und halbe Noten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusNotenwerte, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_notenwerte_viertel_achtel_lesen", Description = "Lies Viertel- und Achtelnoten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusNotenwerte, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_notenwerte_16tel_32stel_lesen", Description = "Lies Sechzehntel- und Zweiunddreißigstelnoten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusNotenwerte, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_notenwerte_alle_lesen", Description = "Lies alle Notenwerte", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusNotenwerte, ExerciseModus = ExerciseModus.Lesen },
+
+            // 2. Pausenwerte
+            new Exercise { Key = "rhythmus_pausen_ganze_halbe_lesen", Description = "Lies ganze und halbe Pausen", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPausen, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_pausen_viertel_achtel_lesen", Description = "Lies Viertel- und Achtelpausen", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPausen, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_pausen_16tel_32stel_lesen", Description = "Lies Sechzehntel- und Zweiunddreißigstelpausen", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPausen, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_pausen_alle_lesen", Description = "Lies alle Pausenwerte", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPausen, ExerciseModus = ExerciseModus.Lesen },
+
+            // 3. Punktierte Noten
+            new Exercise { Key = "rhythmus_punktiert_noten_lang_lesen", Description = "Lies punktierte lange Noten (ganze/halbe/viertel)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPunktiertNoten, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_punktiert_noten_kurz_lesen", Description = "Lies punktierte kurze Noten (achtel/sechzehntel)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPunktiertNoten, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_punktiert_noten_alle_lesen", Description = "Lies alle punktierten Noten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPunktiertNoten, ExerciseModus = ExerciseModus.Lesen },
+
+            // 4. Punktierte Pausen
+            new Exercise { Key = "rhythmus_punktiert_pausen_lang_lesen", Description = "Lies punktierte lange Pausen (ganze/halbe/viertel)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPunktiertPausen, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_punktiert_pausen_kurz_lesen", Description = "Lies punktierte kurze Pausen (achtel/sechzehntel)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPunktiertPausen, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "rhythmus_punktiert_pausen_alle_lesen", Description = "Lies alle punktierten Pausen", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusPunktiertPausen, ExerciseModus = ExerciseModus.Lesen },
+
+            // 5. Rhythmus Mix
+            new Exercise { Key = "rhythmus_mix_alle_lesen", Description = "Lies alle Noten- und Pausenwerte gemischt", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.RhythmusMix, ExerciseModus = ExerciseModus.Lesen },
+
+            // --- AKKORD ÜBUNGEN (NUR LESEN) ---
+
+            // 1. Dur-Dreiklänge
+            new Exercise { Key = "akkorde_dur_dreiklang_lesen", Description = "Bestimme den Dur-Dreiklang", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.AkkordeDurDreiklang, ExerciseModus = ExerciseModus.Lesen },
+
+            // 2. Moll-Dreiklänge
+            new Exercise { Key = "akkorde_moll_dreiklang_lesen", Description = "Bestimme den Moll-Dreiklang", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.AkkordeMollDreiklang, ExerciseModus = ExerciseModus.Lesen },
+
+            // 3. Dur oder Moll?
+            new Exercise { Key = "akkorde_dur_moll_lesen", Description = "Ist dieser Dreiklang Dur oder Moll?", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.AkkordeDurMoll, ExerciseModus = ExerciseModus.Lesen },
+
+            // 4. Verminderte Dreiklänge
+            new Exercise { Key = "akkorde_vermindert_lesen", Description = "Bestimme den verminderten Dreiklang", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.AkkordeVermindertUebermaessig, ExerciseModus = ExerciseModus.Lesen },
+
+            // 5. Übermäßige Dreiklänge
+            new Exercise { Key = "akkorde_uebermaessig_lesen", Description = "Bestimme den übermäßigen Dreiklang", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.AkkordeVermindertUebermaessig, ExerciseModus = ExerciseModus.Lesen },
+
+            // 6. Alle Dreiklangsarten
+            new Exercise { Key = "akkorde_alle_dreiklaenge_lesen", Description = "Bestimme die Dreiklangsart", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.AkkordeAlleDreiklaenge, ExerciseModus = ExerciseModus.Lesen },
+
+            // 7. Umkehrungen
+            new Exercise { Key = "akkorde_umkehrungen_lesen", Description = "Bestimme die Umkehrung des Dreiklangs", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.AkkordeUmkehrungen, ExerciseModus = ExerciseModus.Lesen },
+
+            // Tonarten
+            // 1. Kreuztonarten
+            new Exercise { Key = "tonarten_kreuz_lesen", Description = "Erkenne Kreuztonarten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonartenKreuz, ExerciseModus = ExerciseModus.Lesen },
+            // 2. B-Tonarten
+            new Exercise { Key = "tonarten_b_lesen", Description = "Erkenne B-Tonarten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonartenB, ExerciseModus = ExerciseModus.Lesen },
+            // 3. Versetzungszeichen erkennen
+            new Exercise { Key = "tonarten_vorzeichen_lesen", Description = "Erkenne Versetzungszeichen (Kreuz, B, Auflösung)", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonartenVorzeichen, ExerciseModus = ExerciseModus.Lesen },
+            // 4. Alle Tonarten
+            new Exercise { Key = "tonarten_alle_lesen", Description = "Erkenne alle Tonarten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonartenAlle, ExerciseModus = ExerciseModus.Lesen },
+            // 5. Paralleltonarten
+            new Exercise { Key = "tonarten_paralleltonarten_lesen", Description = "Bestimme die Paralleltonart", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonartenParalleltonarten, ExerciseModus = ExerciseModus.Lesen },
         };
 
         // Bestehende Übungen aus DB laden

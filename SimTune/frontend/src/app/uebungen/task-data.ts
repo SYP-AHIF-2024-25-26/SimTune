@@ -66,7 +66,70 @@ export const uebungenData: TaskData = {
   "task-type": "",
   "task-url": ""
 }
-
+export const akkordeData: TaskData = {
+  "header": "Akkorde",
+  "groups": [
+    {
+      "group-header": "Dreiklänge Grundlagen",
+      "cards": [
+        {
+          "card-header": "Dur-Dreiklänge",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/akkorde-dur"
+        },
+        {
+          "card-header": "Moll-Dreiklänge",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/akkorde-moll"
+        },
+        {
+          "card-header": "Dur oder Moll?",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/akkorde-dur-moll"
+        }
+      ]
+    },
+    {
+      "group-header": "Erweiterte Dreiklänge",
+      "cards": [
+        {
+          "card-header": "Verminderte Dreiklänge",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/akkorde-vermindert"
+        },
+        {
+          "card-header": "Übermäßige Dreiklänge",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/akkorde-uebermaessig"
+        },
+        {
+          "card-header": "Alle Dreiklangsarten",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/akkorde-alle"
+        }
+      ]
+    },
+    {
+      "group-header": "Umkehrungen",
+      "cards": [
+        {
+          "card-header": "Dreiklangsumkehrungen",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/akkorde-umkehrungen"
+        }
+      ]
+    }
+  ],
+  "task-type": "",
+  "task-url": ""
+}
 export const toeneData: TaskData = {
   "header": "Töne",
   "groups": [
@@ -275,5 +338,176 @@ export const tonleiternData: TaskData = {
     }
   ],
   "task-type": "tonleitern",
+  "task-url": ""
+}
+
+export const tonartenData: TaskData = {
+  "header": "Tonarten",
+  "groups": [
+    {
+      "group-header": "Kreuz & B",
+      "cards": [
+        {
+          "card-header": "Kreuztonarten",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/tonarten-kreuz"
+        },
+        {
+          "card-header": "B-Tonarten",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/tonarten-b"
+        },
+        {
+          "card-header": "Alle Tonarten",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/tonarten-alle"
+        }
+      ]
+    },
+    {
+      "group-header": "Versetzungszeichen",
+      "cards": [
+        {
+          "card-header": "Kreuz, B & Auflösung",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/tonarten-vorzeichen"
+        }
+      ]
+    },
+    {
+      "group-header": "Paralleltonarten",
+      "cards": [
+        {
+          "card-header": "Dur ↔ Moll",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/tonarten-paralleltonarten"
+        }
+      ]
+    }
+  ],
+  "task-type": "",
+  "task-url": ""
+}
+
+export const rhythmusData: TaskData = {
+  "header": "Rhythmus",
+  "groups": [
+    {
+      "group-header": "Notenwerte",
+      "cards": [
+        {
+          "card-header": "Ganze & Halbe Noten",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-notenwerte-ganze-halbe"
+        },
+        {
+          "card-header": "Viertel & Achtel Noten",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-notenwerte-viertel-achtel"
+        },
+        {
+          "card-header": "16tel & 32stel Noten",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-notenwerte-16tel-32stel"
+        },
+        {
+          "card-header": "Alle Notenwerte",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-notenwerte-alle"
+        }
+      ]
+    },
+    {
+      "group-header": "Pausenwerte",
+      "cards": [
+        {
+          "card-header": "Ganze & Halbe Pausen",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-pausen-ganze-halbe"
+        },
+        {
+          "card-header": "Viertel & Achtel Pausen",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-pausen-viertel-achtel"
+        },
+        {
+          "card-header": "16tel & 32stel Pausen",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-pausen-16tel-32stel"
+        },
+        {
+          "card-header": "Alle Pausenwerte",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-pausen-alle"
+        }
+      ]
+    },
+    {
+      "group-header": "Verlängerungspunkte",
+      "cards": [
+        {
+          "card-header": "Punktierte Noten (lang)",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-punktiert-noten-lang"
+        },
+        {
+          "card-header": "Punktierte Noten (kurz)",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-punktiert-noten-kurz"
+        },
+        {
+          "card-header": "Alle punktierten Noten",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-punktiert-noten-alle"
+        },
+        {
+          "card-header": "Punktierte Pausen (lang)",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-punktiert-pausen-lang"
+        },
+        {
+          "card-header": "Punktierte Pausen (kurz)",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-punktiert-pausen-kurz"
+        },
+        {
+          "card-header": "Alle punktierten Pausen",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-punktiert-pausen-alle"
+        }
+      ]
+    },
+    {
+      "group-header": "Gemischt",
+      "cards": [
+        {
+          "card-header": "Alles gemischt",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/rhythmus-mix-alle"
+        }
+      ]
+    }
+  ],
+  "task-type": "",
   "task-url": ""
 }

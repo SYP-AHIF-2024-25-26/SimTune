@@ -116,7 +116,23 @@ namespace backend.DataAccess
         TonleiternMollHarmonisch,
         TonleiternMollMelodisch,
         TonleiternVorzeichen,
-        TonleiternMix
+        TonleiternMix,
+        RhythmusNotenwerte,
+        RhythmusPausen,
+        RhythmusPunktiertNoten,
+        RhythmusPunktiertPausen,
+        RhythmusMix,
+        AkkordeDurDreiklang,
+        AkkordeMollDreiklang,
+        AkkordeDurMoll,
+        AkkordeVermindertUebermaessig,
+        AkkordeAlleDreiklaenge,
+        AkkordeUmkehrungen,
+        TonartenKreuz,
+        TonartenB,
+        TonartenVorzeichen,
+        TonartenAlle,
+        TonartenParalleltonarten
 
     }
 }
