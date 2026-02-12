@@ -268,6 +268,7 @@ export class TaskComponent implements OnInit {
   }
 
   goBack(): void {
+    localStorage.removeItem("isPruefung");
     if (this.previousUrl) {
       sessionStorage.removeItem('texts from pruefung');
       if(this.audio !== null) {
