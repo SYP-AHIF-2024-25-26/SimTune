@@ -65,8 +65,16 @@
 
 
 <div class="p-2 sm:p-4">
+  <div *ngIf="breadcrumbs.length" class="hidden sm:block text-sm text-gray-400 ml-1 sm:ml-2 md:ml-4 lg:ml-8 mt-4 mb-0">
+    <ng-container *ngFor="let bc of breadcrumbs; let last = last">
+      <a *ngIf="!last" [routerLink]="bc.url" class="hover:text-gray-600 transition-colors">{{ bc.label }}</a>
+      <span *ngIf="!last" class="mx-1">→</span>
+      <span *ngIf="last" class="font-semibold text-gray-600">{{ bc.label }}</span>
+    </ng-container>
+  </div>
+
   <div *ngIf="parsed?.length"
-      class="text-center text-sm sm:text-base text-gray-500 font-medium mt-10 mb-1">
+      class="text-center text-sm sm:text-base text-gray-500 font-medium mt-6 mb-1">
     {{ isPruefung === 'yes' ? 'Prüfungssimulation' : parsed[0].description }}
   </div>
   <!--  Header  -->

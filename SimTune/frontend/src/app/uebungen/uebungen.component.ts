@@ -81,6 +81,7 @@ export class UebungenComponent implements OnInit {
     const foundItem = this.texts.find(item => item.description === text);
 
     sessionStorage.setItem('previousUrl', this.router.url);
+    sessionStorage.setItem('breadcrumb', JSON.stringify(this.breadcrumb_elements()));
 
     this.router.navigate(['/task'], { queryParams: { id: foundItem?.id } });
   }

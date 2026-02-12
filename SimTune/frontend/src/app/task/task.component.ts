@@ -45,6 +45,7 @@ export class TaskComponent implements OnInit {
   notationType: string = '';
   exerciseType: string = '';
   showCancelDialog = false;
+  breadcrumbs: { label: string; url: string }[] = [];
 
   // Notensystem
   allNotesNotensystem = ['', 'a', 'g', 'f', 'e', 'd', 'c', 'h', 'a', 'g', 'f', 'e', 'd', 'c'];
@@ -67,6 +68,11 @@ export class TaskComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   async ngOnInit(): Promise<void> {
+    const stored = sessionStorage.getItem('breadcrumb');
+    if (stored) {
+      this.breadcrumbs = JSON.parse(stored);
+    }
+
     this.route.queryParamMap.subscribe(async params => {
       const ids = params.getAll('id');
       if (!ids) return;
