@@ -44,16 +44,16 @@
         Nicht gespeicherte Änderungen gehen verloren.
       </div>
 
-      <div class="flex justify-end gap-3">
+      <div class="flex justify-center gap-3">
         <button
-          class="px-4 py-2 text-sm text-gray-500 hover:text-gray-700"
+          class="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 bg-gray-100 hover:bg-gray-200 transition"
           (click)="showCancelDialog = false"
         >
           Weiterarbeiten
         </button>
 
         <button
-          class="px-4 py-2 text-sm text-red-600 hover:text-red-700"
+          class="px-4 py-2 text-sm font-medium rounded-lg text-white bg-red-500 hover:bg-red-600 transition"
           (click)="goBack()"
         >
           Abbrechen
@@ -73,9 +73,10 @@
   <div class="flex justify-center items-center mx-2 sm:mx-8 md:mx-16 lg:mx-32 xl:mx-52 mt-1 mb-4">
     <div
       (click)="showCancelDialog = true"
-      class="text-sm italic underline cursor-pointer text-gray-500 hover:text-gray-700 ml-2 sm:ml-4 md:ml-8 select-none"
+      class="text-sm italic cursor-pointer text-gray-500 hover:text-gray-700 ml-2 sm:ml-4 md:ml-8 select-none sm:underline"
     >
-      Abbrechen
+      <span class="hidden sm:inline">Abbrechen</span>
+      <span class="sm:hidden text-3xl font-bold">&#8592;</span>
     </div>
 
     <div class="h-5 sm:h-6 w-full sm:w-3/4 bg-costumGray rounded-2xl shadow-lg mx-3 sm:mx-6 md:mx-12 relative">
