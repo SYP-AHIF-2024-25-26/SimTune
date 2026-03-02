@@ -92,7 +92,10 @@
     </div>
 
     <span class="text-xs sm:text-sm text-gray-600 font-medium h-5 sm:h-6 w-auto whitespace-nowrap">
-      {{ progress+1 }}/{{ totalSegments }}
+      {{ progress !== totalSegments
+          ? (progress + 1) + ' / ' + totalSegments
+          : 'Abgeschlossen'
+      }}
     </span>
   </div>
 
