@@ -113,7 +113,7 @@
       </ng-template>
     </ng-container>
     <ng-template #abcNotationTemplate>
-      <div class="w-full flex items-center justify-center flex-col mb-12 sm:mb-16 md:mb-20">
+      <div *ngIf="shuffledContents[currentIndex]?.notesToRead" class="w-full flex items-center justify-center flex-col mb-12 sm:mb-16 md:mb-20">
         <div #abcContainer id="abc-container" class="transform scale-[0.7] sm:scale-90 md:scale-100 origin-center w-full flex justify-center"></div>
       </div>
     </ng-template>

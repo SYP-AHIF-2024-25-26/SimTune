@@ -47,6 +47,8 @@ public static class ExerciseAllocationCounter
             return "Akkorde";
         if (exerciseType.Contains("Tonart", StringComparison.OrdinalIgnoreCase))
             return "Tonarten";
+        if (exerciseType.Contains("Fachbegriffe", StringComparison.OrdinalIgnoreCase))
+            return "Fachbegriffe";
         
         return "Sonstiges";
     }

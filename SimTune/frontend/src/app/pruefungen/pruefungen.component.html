@@ -46,6 +46,9 @@
           <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
             <input type="checkbox" [checked]="selectedTypes().includes('Akkorde')" (click)="toggleType('Akkorde')" class="mr-2"/> Akkorde
           </label>
+          <label class="flex items-center bg-white p-2 rounded-lg shadow-sm">
+            <input type="checkbox" [checked]="selectedTypes().includes('Fachbegriffe')" (click)="toggleType('Fachbegriffe')" class="mr-2"/> Fachbegriffe
+          </label>
         </div>
 
         <div class="text-red-600 font-medium text-center mt-2" *ngIf="errorMessage">

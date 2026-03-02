@@ -250,8 +250,7 @@ export class TaskComponent implements OnInit {
   async renderCurrentNote(): Promise<void> {
     if (
       this.shuffledContents &&
-      this.shuffledContents.length > 0 &&
-      this.shuffledContents[this.currentIndex].notesToRead
+      this.shuffledContents.length > 0
     ) {
       const currentQuestion = this.shuffledContents[this.currentIndex];
 
@@ -263,7 +262,9 @@ export class TaskComponent implements OnInit {
       splitted = raw.split(',').map((s: string) => s.trim());
       this.possibleAnswers = splitted;
 
-     requestAnimationFrame(() => this.tryRenderAbc());
+      if (currentQuestion.notesToRead) {
+        requestAnimationFrame(() => this.tryRenderAbc());
+      }
     }
   }
 

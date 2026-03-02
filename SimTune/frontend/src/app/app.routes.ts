@@ -3,7 +3,7 @@ import { UebungenComponent } from './uebungen/uebungen.component';
 import { PruefungenComponent } from './pruefungen/pruefungen.component';
 import { UnterlagenComponent } from './unterlagen/unterlagen.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { akkordeData, intervalleData, notenSystemData, rhythmusData, stammtoeneData, toeneData, tonartenData, tonleiternData, uebungenData } from './uebungen/task-data';
+import { akkordeData, fachbegriffeData, intervalleData, notenSystemData, rhythmusData, stammtoeneData, toeneData, tonartenData, tonleiternData, uebungenData } from './uebungen/task-data';
 import { TaskComponent } from './task/task.component';
 import { PianoComponent } from './piano/piano.component';
 import { NotesystemComponent } from './notesystem/notesystem.component';
@@ -823,6 +823,84 @@ export const routes: Routes = [
         { label: 'Dur ↔ Moll', url: '/tonarten-paralleltonarten' },
       ],
       taskType: 'TonartenParalleltonarten'
+    },
+  },
+  {
+    path: 'fachbegriffe',
+    component: UebungenComponent,
+    data: {
+      content: fachbegriffeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Fachbegriffe', url: '/fachbegriffe' },
+      ],
+      taskType: ''
+    },
+  },
+  {
+    path: 'fachbegriffe-dynamik',
+    component: UebungenComponent,
+    data: {
+      content: fachbegriffeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Fachbegriffe', url: '/fachbegriffe' },
+        { label: 'Lautstärke', url: '/fachbegriffe' },
+        { label: 'Dynamik', url: '/fachbegriffe-dynamik' },
+      ],
+      taskType: 'FachbegriffeDynamik'
+    },
+  },
+  {
+    path: 'fachbegriffe-tempo',
+    component: UebungenComponent,
+    data: {
+      content: fachbegriffeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Fachbegriffe', url: '/fachbegriffe' },
+        { label: 'Geschwindigkeit', url: '/fachbegriffe' },
+        { label: 'Tempo', url: '/fachbegriffe-tempo' },
+      ],
+      taskType: 'FachbegriffeTempo'
+    },
+  },
+  {
+    path: 'fachbegriffe-artikulation',
+    component: UebungenComponent,
+    data: {
+      content: fachbegriffeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Fachbegriffe', url: '/fachbegriffe' },
+        { label: 'Spielweise', url: '/fachbegriffe' },
+        { label: 'Artikulation', url: '/fachbegriffe-artikulation' },
+      ],
+      taskType: 'FachbegriffeArtikulation'
+    },
+  },
+  {
+    path: 'fachbegriffe-ablauf',
+    component: UebungenComponent,
+    data: {
+      content: fachbegriffeData,
+      breadcrumbElements: [
+        { label: 'Home', url: '/homepage' },
+        { label: 'Übungen', url: '/uebungen' },
+        { label: 'Grundlagen', url: '/uebungen' },
+        { label: 'Fachbegriffe', url: '/fachbegriffe' },
+        { label: 'Sonstiges', url: '/fachbegriffe' },
+        { label: 'Ablauf & Zeichen', url: '/fachbegriffe-ablauf' },
+      ],
+      taskType: 'FachbegriffeAblauf'
     },
   },
   { path: 'pruefungen', component: PruefungenComponent },

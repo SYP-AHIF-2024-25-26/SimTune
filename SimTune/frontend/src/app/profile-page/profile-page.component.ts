@@ -51,8 +51,8 @@ export class ProfilePageComponent {
   exercise: { [key: string]: string }[] = [];
   test: { [key: string]: string }[] = [];
   sortDirection: { [key: string]: 'asc' | 'desc' } = {};
-  exerciseTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten'];
-  testTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten'];
+  exerciseTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten', 'Fachbegriffe'];
+  testTypes: string[] = ['Töne', 'Rythmus', 'Intervalle', 'Akkorde', 'Tonleitern', 'Tonarten', 'Fachbegriffe'];
   selectedTypes: string[] = [...this.testTypes];
   selectedExerciseTypes: string[] = [...this.exerciseTypes];
   showSortOptions = false;

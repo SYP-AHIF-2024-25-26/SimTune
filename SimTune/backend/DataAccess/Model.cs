@@ -132,7 +132,11 @@ namespace backend.DataAccess
         TonartenB,
         TonartenVorzeichen,
         TonartenAlle,
-        TonartenParalleltonarten
+        TonartenParalleltonarten,
+        FachbegriffeDynamik,
+        FachbegriffeTempo,
+        FachbegriffeArtikulation,
+        FachbegriffeAblauf
 
     }
 }

@@ -30,6 +30,12 @@ export const uebungenData: TaskData = {
           "card-header-image-url": "assets/images/Rythmus.png",
           "card-image-url": "assets/images/Rhythmus-Notes.png",
           "card-url": "/rhythmus"
+        },
+        {
+          "card-header": "Fachbegriffe",
+          "card-header-image-url": "assets/images/Toene.png",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/fachbegriffe"
         }
       ]
     },
@@ -504,6 +510,58 @@ export const rhythmusData: TaskData = {
           "card-header-image-url": "",
           "card-image-url": "assets/images/musiknoten.png",
           "card-url": "/rhythmus-mix-alle"
+        }
+      ]
+    }
+  ],
+  "task-type": "",
+  "task-url": ""
+}
+
+export const fachbegriffeData: TaskData = {
+  "header": "Musikalische Fachbegriffe",
+  "groups": [
+    {
+      "group-header": "Lautstärke",
+      "cards": [
+        {
+          "card-header": "Dynamik",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/fachbegriffe-dynamik"
+        }
+      ]
+    },
+    {
+      "group-header": "Geschwindigkeit",
+      "cards": [
+        {
+          "card-header": "Tempo",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/fachbegriffe-tempo"
+        }
+      ]
+    },
+    {
+      "group-header": "Spielweise",
+      "cards": [
+        {
+          "card-header": "Artikulation",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/fachbegriffe-artikulation"
+        }
+      ]
+    },
+    {
+      "group-header": "Sonstiges",
+      "cards": [
+        {
+          "card-header": "Ablauf & Zeichen",
+          "card-header-image-url": "",
+          "card-image-url": "assets/images/musiknoten.png",
+          "card-url": "/fachbegriffe-ablauf"
         }
       ]
     }

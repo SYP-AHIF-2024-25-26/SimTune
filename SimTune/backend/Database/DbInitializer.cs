@@ -167,6 +167,12 @@ public static class DbInitializer
             new Exercise { Key = "tonarten_alle_lesen", Description = "Erkenne alle Tonarten", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonartenAlle, ExerciseModus = ExerciseModus.Lesen },
             // 5. Paralleltonarten
             new Exercise { Key = "tonarten_paralleltonarten_lesen", Description = "Bestimme die Paralleltonart", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.TonartenParalleltonarten, ExerciseModus = ExerciseModus.Lesen },
+
+            // Fachbegriffe
+            new Exercise { Key = "fachbegriffe_dynamik_lesen", Description = "Bestimme den Dynamik-Fachbegriff", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.FachbegriffeDynamik, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "fachbegriffe_tempo_lesen", Description = "Bestimme den Tempo-Fachbegriff", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.FachbegriffeTempo, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "fachbegriffe_artikulation_lesen", Description = "Bestimme den Artikulations-Fachbegriff", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.FachbegriffeArtikulation, ExerciseModus = ExerciseModus.Lesen },
+            new Exercise { Key = "fachbegriffe_ablauf_lesen", Description = "Bestimme den Ablauf-Fachbegriff", NotationType = NotationType.Notensystem, ExerciseType = ExerciseType.FachbegriffeAblauf, ExerciseModus = ExerciseModus.Lesen },
         };
 
         // Bestehende Übungen aus DB laden
@@ -219,6 +225,34 @@ public static class DbInitializer
         }
 
         context.SaveChanges();
+
+        // Verwaiste Übungen entfernen (die nicht mehr in allExercises definiert sind)
+        var allKeys = new HashSet<string>(allExercises.Select(e => e.Key));
+        var orphanedExercises = context.Exercises
+            .Where(e => !allKeys.Contains(e.Key))
+            .ToList();
+
+        if (orphanedExercises.Any())
+        {
+            foreach (var orphan in orphanedExercises)
+            {
+                // Zugehörige UserExercises entfernen
+                var userExercises = context.UserExercises
+                    .Where(ue => ue.ExerciseId == orphan.Id)
+                    .ToList();
+                context.UserExercises.RemoveRange(userExercises);
+
+                // Zugehörige ExerciseContents entfernen
+                var contents = context.ExerciseContents
+                    .Where(ec => ec.ExerciseId == orphan.Id)
+                    .ToList();
+                context.ExerciseContents.RemoveRange(contents);
+
+                Console.WriteLine($"Verwaiste Übung entfernt: {orphan.Key} - {orphan.Description}");
+            }
+            context.Exercises.RemoveRange(orphanedExercises);
+            context.SaveChanges();
+        }
 
         // ExerciseContents laden
         var path = configuration["ExerciseContentsPath"];

@@ -17,7 +17,7 @@ export class PruefungenComponent {
   maxValue: number = 0;
   selectedNumber = signal<number | null>(5);
   isSimulationRunning = signal<boolean>(false);
-  selectedTypes = signal<string[]>(['Töne', 'Rythmus', 'Intervalle', 'Tonleitern', 'Tonarten', 'Akkorde']);
+  selectedTypes = signal<string[]>(['Töne', 'Rythmus', 'Intervalle', 'Tonleitern', 'Tonarten', 'Akkorde', 'Fachbegriffe']);
   texts: { totalQuestions: number; questions: { exerciseId: number; contentId: number; description: string; exerciseType: string; exerciseAllocation: string;}[] } | null = null;
   errorMessage = '';
   last5: any[] = [];
