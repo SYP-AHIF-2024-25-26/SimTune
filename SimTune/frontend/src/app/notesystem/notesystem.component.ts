@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
+import * as abcjs from 'abcjs';
 
 @Component({
   selector: 'app-notesystem',
@@ -87,10 +88,7 @@ export class NotesystemComponent {
           this.selectedExtraLine[index] = true;
 
           setTimeout(() => {
-            const audio = new Audio("/assets/sounds/" + this.currentQuestion + ".ogg");
-            const volume = sessionStorage.getItem('volume');
-            audio.volume = parseInt(volume || '100') / 100;
-            audio.play();
+            this.playNoteSound(this.currentQuestion!);
           }, 100);
         }
 
@@ -106,10 +104,7 @@ export class NotesystemComponent {
 
       if(this.isErasing === false)
       {
-        const audio = new Audio("/assets/sounds/" + note + ".ogg");
-        const volume = sessionStorage.getItem('volume');
-        audio.volume = parseInt(volume || '100') / 100;
-        audio.play();
+        this.playNoteSound(note);
       }
 
       this.isErasing === true ? delete this.selectedCircle[i] : this.selectedCircle[i] = true;
@@ -180,10 +175,7 @@ export class NotesystemComponent {
     if(this.isErasing === false && !this.selectedCircle[id]) {
       const note = this.allNotesRead[id-1];
 
-      const audio = new Audio("/assets/sounds/" + note + ".ogg");
-      const volume = sessionStorage.getItem('volume');
-      audio.volume = parseInt(volume || '100') / 100;
-      audio.play();
+      this.playNoteSound(note);
 
       this.selectedCircle[id] = true;
     } else if(this.isErasing === true && this.selectedCircle[id]) {
@@ -208,6 +200,48 @@ export class NotesystemComponent {
 
   eraser(): void {
     this.isErasing === true ? this.isErasing = false : this.isErasing = true;
+  }
+
+  private async playNoteSound(noteId: string): Promise<void> {
+    try {
+      let noteName = noteId.split('-')[0];
+      const octave = parseInt(noteId.split('-')[1]);
+
+      if (noteName === 'h') noteName = 'b';
+
+      let abcNote = octave === 1 ? noteName.toUpperCase() : noteName.toLowerCase();
+
+      if (noteName.includes('is')) {
+        const baseNote = noteName.substring(0, noteName.length - 2);
+        abcNote = '^' + (octave === 1 ? baseNote.toUpperCase() : baseNote.toLowerCase());
+      }
+
+      const abcNotation = `L:1/4\nK:C\n${abcNote}`;
+
+      const tempDiv = document.createElement('div');
+      tempDiv.style.display = 'none';
+      document.body.appendChild(tempDiv);
+
+      const visualObj = abcjs.renderAbc(tempDiv, abcNotation);
+
+      if (visualObj && visualObj.length > 0) {
+        const synth = new abcjs.synth.CreateSynth();
+        await synth.init({ visualObj: visualObj[0] });
+        await synth.prime();
+        synth.start();
+
+        setTimeout(() => {
+          try {
+            synth.stop();
+            if (document.body.contains(tempDiv)) {
+              document.body.removeChild(tempDiv);
+            }
+          } catch (e) {}
+        }, 1000);
+      }
+    } catch (error) {
+      console.warn('Note audio playback failed:', error);
+    }
   }
 
   getHueRotation(color: string): number {
