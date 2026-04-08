@@ -437,10 +437,17 @@ export class TaskComponent implements OnInit {
 
   async playAbcAudio(abcNotation: string): Promise<void> {
     try {
+      console.log('Playing ABC notation audio:', abcNotation);
       const tempDiv = document.createElement('div');
       tempDiv.id = 'temp-audio-' + Date.now();
       tempDiv.style.display = 'none';
       document.body.appendChild(tempDiv);
+
+      if (abcNotation === 'h') {
+        abcNotation = 'b';
+      } else if (abcNotation === 'his') {
+        abcNotation = 'bis';
+      }
 
       const visualObj = abcjs.renderAbc(tempDiv.id, abcNotation);
 
