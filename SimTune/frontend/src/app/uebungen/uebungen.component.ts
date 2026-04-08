@@ -39,6 +39,8 @@ export class UebungenComponent implements OnInit {
     }
 
     this.markDoneExercises();
+
+    console.log(this.texts, this.content(), this.breadcrumb_elements(), this.taskType());
   }
 
   async markDoneExercises() {

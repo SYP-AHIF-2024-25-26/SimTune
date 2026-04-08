@@ -69,7 +69,17 @@
 
     <div class="mt-8 md:mt-14 text-center grid grid-cols-1 lg:grid-cols-2 gap-y-8 md:gap-y-16 gap-x-0 place-items-center w-full lg:w-2/3 mx-auto px-4">
       @for (card of group['cards']; track card['card-header'];) {
-        <a [routerLink]="card['card-url']" class="block w-80 sm:w-96 rounded-3xl bg-white border-2 border-black shadow-xl transition-all duration-300 transform hover:shadow-2xl hover:-translate-y-1">
+        <a [routerLink]="!card['disabled'] ? card['card-url'] : null"
+          [ngClass]="[
+            card['disabled']
+              ? 'opacity-50 pointer-events-none'
+              : 'hover:shadow-2xl hover:-translate-y-1',
+            'block w-80 sm:w-96 rounded-3xl bg-white border-2 border-black shadow-xl transition-all duration-300 transform relative'
+          ]">
+          <div *ngIf="card['disabled']"
+              class="absolute top-4 -right-10 rotate-45 bg-red-500 text-white text-xs font-bold px-10 py-1 shadow-lg z-20">
+            Bald verfügbar
+          </div>
           <div class="h-48 sm:h-56 flex flex-col justify-between">
             <div class="flex items-center justify-center pt-6 sm:pt-8 px-4 sm:px-6 relative">
               <div class="flex items-center justify-center gap-3">

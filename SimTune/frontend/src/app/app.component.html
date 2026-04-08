@@ -80,11 +80,6 @@
               Konto erstellen
             </a>
           } @else {
-            <div class="px-3 py-2 md:px-4 md:py-3 border-b">
-              <span class="text-xs md:text-sm text-gray-600">
-                Rolle: {{ getRoleFromJwt() || 'Unbekannt' }}
-              </span>
-            </div>
             <a routerLink="/profile-page" (click)="closeDesktopDropdown()" class="block px-3 py-2 md:px-4 md:py-3 text-sm text-gray-700 hover:bg-gray-100">
               Profil
             </a>
