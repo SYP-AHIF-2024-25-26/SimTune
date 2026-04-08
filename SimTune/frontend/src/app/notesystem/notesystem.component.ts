@@ -34,9 +34,14 @@ export class NotesystemComponent {
   }
 
   showExtraCircle(i: number): void {
-    //if(Object.keys(this.selectedCircle).length + Object.keys(this.selectedExtraCircle).length >= 2) { return; }
-    if(i !== undefined && this.isClickable === true) {
-      this.isErasing === true ? delete this.selectedExtraCircle[i] : this.selectedExtraCircle[i] = true;
+    if (i !== undefined && this.isClickable === true) {
+      if (this.isErasing === true) {
+        delete this.selectedExtraCircle[i];
+      } else {
+        const note = this.allNotesRead[i - 1];
+        this.playNoteSound(note);
+        this.selectedExtraCircle[i] = true;
+      }
       sessionStorage.setItem('selectedExtraCircle', JSON.stringify(this.selectedExtraCircle));
     }
   }
